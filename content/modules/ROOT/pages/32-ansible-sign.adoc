@@ -1,4 +1,12 @@
-= Introduction
+= Lab Guide: Introducing supply chain security with ansible-sign
+:doctype: book
+:experimental:
+:notoc:
+:toc-title: Table of Contents
+:nosectnums:
+:icons: font
+
+_Learn how to sign content by using ansible-sign and apply supply-chain security measures, a major Dev Tools capability._
 
 [.sidebar]
 ****
@@ -9,146 +17,171 @@
 * **Estimated Time:** 10 - 20 minutes
 ****
 
-[abstract]
-We will explore the Red Hat OpenShift Dev Spaces environment you will be working within and learn how to launch and configure development workspaces for Ansible automation development. This includes understanding the various components available in the lab environment, authenticating with git repositories, and using the Ansible Development Tools.
+== Lab Briefing
 
-This lab walks through the various components within the lab environment including launching, configuring and using Dev Spaces on OpenShift as your primary development environment for Ansible.
+`ansible-sign`: Utility for signing and verifying Ansible project directory contents.
 
-== Learning Objectives
+Project signing and verification lets you sign files in your project directory, then verify whether or not that content has changed in any way, or files have been added or removed from the project unexpectedly. To do this, you require a private key for signing and a matching public key for verifying.
 
-After completing this module, you will be able to:
+== Lab Guide: Hands-On Tasks
 
-* Navigate the Red Hat OpenShift Dev Spaces interface
-* Launch and configure development workspaces
-* Understand the components included in the lab environment
-* Set up authentication for git repositories
-* Use basic Ansible Development Tools features
+**The Workflow for Signing AAP Projects:**
 
-== 1: Introduction: What is included in the lab environment
+* Sign your project directory containing playbooks, rulebooks, roles, etc.
+* Sync the signed project to AAP's Project Sync
+* AAP verifies the signature before execution
+* Only validated, trusted content runs
 
-. Red Hat OpenShift Cluster
-. Ansible Automation Platform
-. Red Hat OpenShift Dev Spaces
-. link:https://about.gitea.com[Gitea,window=_blank] Git Server
-. Windows 2019 managed host
-. Lab Instructions
+Using ansible-sign together with the Automation Hub collection signing feature allows to secure the supply chain end-to-end from content development to production.
 
-== 2: Contributing to this Lab Documentation
+NOTE: In this lab we will only cover the workstation side of the content signing. You can apply what you learned here to verify content on your own AAP instance later.
 
-If you see an error in this lab, fork and submit a pull request against https://github.com/rhpds/ansible-super-lab-showroom
+=== Task 1: Create a GPG key 
 
-== 3: Dev Spaces console
+To use `ansible-sign` your workstation needs to have a GPG key available to cryptographically sign the content. Although it exceeds the scope of this workshop, we will create one quickly to show the end to end steps.
 
-link:https://access.redhat.com/products/red-hat-openshift-dev-spaces/[Red Hat OpenShift Dev Spaces,window=_blank] provides consistent, reproducible development environments based on the open-source project link:https://eclipse.dev/che/[Eclipse Che,window=_blank].
-
-It provides, by default, a Visual Studio Code (VS Code) environment as configured by a link:https://devfile.io[devfile,window=_blank], a YAML file that defines the entire workspace as code—including all necessary tools, runtimes, and project source. This file is used to instantly generate a pre-configured, containerized development environment, ensuring every developer on a team has an identical setup and solving the "it works on my machine" problem.
-
-=== 3.1: Launching Dev Spaces from OpenShift
-
-. Launch the link:{openshift_cluster_console_url}[OpenShift Web Console,window=_blank]
-. Select the **htpasswd_provider** button and use the credentials provided in the xref:environment-details.adoc[Environment Details,window=_blank] page to login to the OpenShift console
-. Use the 9-block icon in the upper right to launch _Red Hat OpenShift Dev Spaces_ directly from the OpenShift console header.
+.  *Install pinentry-curses, a dependency for gpg*:
 +
-image::11-platform-dev-spaces/intro-dev_spaces_shortcut.png[OpenShift console header showing the 9-block application launcher icon for quick access to Dev Spaces]
-+
-TIP: Alternatively, the direct URL is link:https://devspaces.{openshift_cluster_ingress_domain}[https://devspaces.{openshift_cluster_ingress_domain},window=_blank] also available in xref:environment-details.adoc[Environment Details,window=_blank].
-
-== 4: Dev Spaces Workspace
-
-=== 4.1: Launching a specific Dev Spaces Workspace
-
-Once you have launched the OpenShift Dev Spaces console, use the following steps to access your Ansible Dev Space workspace.
-
-. Login via OpenShift authentication using the same credentials as the OpenShift console
-. Select **Allow selected permissions** to authorize access and launch the console
-. Scroll down and select the workspace titled **Ansible Dev Space**
-+
-image::11-platform-dev-spaces/intro3.png[Dev Spaces workspace selection page showing available workspaces including Ansible Dev Space]
-+
-NOTE: It will take a few minutes for the Dev Spaces instance to initialize. When it has loaded, a Visual Studio Code interface will appear.
-+
-image::11-platform-dev-spaces/intro4.png[Dev Spaces workspace loading screen showing VS Code interface initialization]
-+
-. Click the **Trust Publishers and Install** button to trust the extension publishers that are included within the Dev Spaces workspace
-. Click the **Yes, I trust the Authors** button to trust the workspace authors (your instructors).
-. Wait a few minutes until the additional extension icons appear for Ansible and OpenShift on the left side.
-+
-image::11-platform-dev-spaces/intro5.png[VS Code interface in Dev Spaces showing Ansible and OpenShift extension icons in the left sidebar]
-
-== 5: Ansible and OpenShift Extensions
-
-For this lab, we have have provided a link:https://code.visualstudio.com/docs/editing/workspaces/workspaces[.code-workspace,window=_blank] configuration that included these extensions along with additional configurations to curate your development environment. See https://github.com/jeffcpullen/devspaces-example/blob/main/devspaces.code-workspace for the source of this workspace configuration.
-
-. Click on the **Ansible** extension icon to access the Ansible Development Tools extension (covered in a subsequent lab)
-+
-image::11-platform-dev-spaces/intro6.png[Ansible extension interface in VS Code showing available Ansible development tools]
-
-== 6: Accessing a Terminal
-
-The majority of the exercises in this lab will be performed using the Visual Studio Code terminal.
-
-. Open a new terminal by selecting the VS Code menu starting with the hamburger (3 horizontal lines) in the top left, then selecting **Terminal** -> **New Terminal**
-+
-image::11-platform-dev-spaces/intro7.png[VS Code terminal interface showing basic command line operations in the Dev Spaces environment]
-+
-. Explore the environment:
-+
-[source,bash,role=execute,subs="verbatim,attributes"]
+[source,bash,role=execute]
 ----
-whoami
-----
-+
-[source,output]
-----
-user
-----
-. Check the Dev Spaces Workspace container OS release:
-+
-[source,bash,role=execute,subs="verbatim,attributes"]
-----
-cat /etc/redhat-release
-----
-+
-[source,output]
-----
-Red Hat Enterprise Linux release 9.7 (Plow)
-----
-. This workspacs provides access to `ansible` and additional developer tools:
-+
-[source,bash,role=execute,subs="verbatim,attributes"]
-----
-ansible --version
-----
-+
-[source,output]
-----
-ansible [core 2.19.3]
-  config file = None
-  configured module search path = ['/home/user/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  ansible python module location = /usr/local/lib/python3.11/site-packages/ansible
-  ansible collection location = /home/user/.ansible/collections:/usr/share/ansible/collections
-  executable location = /usr/local/bin/ansible
-  python version = 3.11.13 (main, Aug 21 2025, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-11)] (/usr/bin/python3.11)
-  jinja version = 3.1.6
-  pyyaml version = 6.0.3 (with libyaml v0.2.5)
+ sudo dnf install pinentry-curses -y
 ----
 
-== Conclusion
+. *Create a gpg.txt file with the following content:*
++
+[source,bash,role=execute]
+----
+cat >~/gpg.txt <<EOF
+%echo Generating a basic OpenPGP key
+Key-Type: default
+Key-Length: 4096
+Subkey-Type: default
+Subkey-Length: default
+Name-Real: workshop
+Name-Comment: with no passphrase
+Name-Email: student@localhost
+Expire-Date: 0
+%no-ask-passphrase
+%no-protection
+# Do a commit here, so that we can later print "done" :-)
+%commit
+%echo done
+EOF
+----
 
-In this lab, you have learned:
 
-. The resources provided in the lab environment
-. Assessing the OpenShift environment
-. How to launch and navigate an Red Hat OpenShift Dev Spaces workspace
-. How to provide feedback and contributions to this lab environment
+.  *Generate the gpg key:*
++
+[source,bash,role=execute]
+----
+gpg --batch --gen-key ~/gpg.txt
+----
 
-This foundation prepares you to start your Ansible Bootcamp Enablement journey.
+. *Verify the key is created:*
++
+[source,bash,role=execute]
+----
+gpg --list-secret-keys
+----
 
-== Helpful Links
+=== Task 2: Supply-chain security: Signing your Ansible collection 
 
-For additional references, refer to the following resources:
+This task demonstrates how to cryptographically sign an Ansible Project using `ansible-sign`. We will be using `myansibleproject` and our `mycowsay.yml` playbook.
 
-. https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_ansible_development_workspaces_for_automation_content_development/index[Using Ansible Development Workspaces for Automation Content Development]
-. https://docs.redhat.com/en/documentation/red_hat_openshift_dev_spaces/3.23/html/user_guide/getting-started-with-devspaces#authenticating-to-a-git-server-from-a-workspace[Authenticating to a Git server from a Workspace].
-. https://github.com/jeffcpullen/devspaces-example/[Source for the Dev Space Workspace]
-. https://github.com/rhpds/ansible-super-lab-showroom[Source for this lab content]
+---
+
+=== Task 3: Set the environment
+
+. *Make sure you are in the `myansibleproject` directory:*
++
+[source,bash,role=execute]
+----
+cd /home/rhel/myansibleproject
+----
+
+. *Switch `ade` to standard mode:* Before we can sign our packages, we need to disable editable mode to remove the recursive symlinks. 
++
+[source,bash,role=execute]
+----
+ade install /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+----
+
+
+=== Task 2: Create a MANIFEST.in File
+
+. *In VS Code, create a new file called `MANIFEST.in`* in the root of your project. Add the following content to it. We will be excluding a couple of directories and signing a REAME and playbook. This is only meant as an example, your needs might vary:
++
+[source,bash,role=execute]
+----
+# Exclude .venv FIRST before any includes
+global-exclude .venv
+global-exclude .venv/*
+prune .venv
+
+# Exclude .git
+global-exclude .git
+global-exclude .git/*
+prune .git
+
+# Now include what you want to sign
+include README.md
+include mycowsay.yml
+----
+
+NOTE: Internally, ansible-sign makes use of the distlib.manifest module of Python’s distlib library, and thus MANIFEST.in must follow the syntax that this library specifies. Check the Python Packaging User Guide for an explanation of the MANIFEST.in file directives.
+
+=== Task 3: Sign the Project with ansible-sign
+
+. *Now we can sign the files listed in the `MANIFEST.in`:* The way that ansible-sign protects content from tampering is by taking checksums (sha256) of all of the secured files in the project, compiling those into a checksum manifest file, and then finally signing that manifest file.
++
+[source,bash,role=execute]
+----
+ansible-sign project gpg-sign .
+----
++
+The output of the command above should look like this:
++
+[source,bash]
+----
+[OK   ] GPG signing successful!
+[NOTE ] Checksum manifest: ./.ansible-sign/sha256sum.txt
+[NOTE ] GPG summary: signature created
+----
+
+=== Task 4: Verifying the content with ansible-sign
+
+
+. *Confirm the files in MANIFEST.in got checksums:*
++
+[source,bash,role=execute]
+----
+cat .ansible-sign/sha256sum.txt
+----
+
+. *Verify your signed files have the correct checksum:*
++
+[source,bash,role=execute]
+----
+ansible-sign project gpg-verify .
+----
+
+. *Switch `ade` back to editable mode:*
++
+[source,bash,role=execute]
+----
+ade install --editable /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+----
+
+=== Task 5: Enabling verification in our AAP executions
+
+. *We won't cover this here, but the next steps would be:*
+.. Create a credential with our GPG Public Key
+.. Push our project to a git repository
+.. Create a project in AAP to pull from that repository and assign our GPG credential
+.. AAP will verify the content of the project at every sync
+
+
+---
+== Next Steps
+
+You have successfully signed and verified your playbook, this ensured that it can't be tampered with and continue to run unnoticed. Please click the **Next** button below to proceed to the next module.
