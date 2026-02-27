@@ -1,154 +1,202 @@
-= Introduction
+= Lab Guide: Creating a Collection with the VS Code Extension
+:doctype: book
+:notoc:
+:toc-title: Table of Contents
+:nosectnums:
+:icons: font
+:experimental:
+
+_A guide to using the Ansible extension for Visual Studio Code to scaffold a new Ansible collection and playbook project._
 
 [.sidebar]
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** Launching OpenShift Dev Spaces
+* **Prepares you for:** 
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:** 10 - 20 minutes
+* **Estimated Time:**  
 ****
 
-[abstract]
-We will explore the Red Hat OpenShift Dev Spaces environment you will be working within and learn how to launch and configure development workspaces for Ansible automation development. This includes understanding the various components available in the lab environment, authenticating with git repositories, and using the Ansible Development Tools.
+== Lab Briefing
 
-This lab walks through the various components within the lab environment including launching, configuring and using Dev Spaces on OpenShift as your primary development environment for Ansible.
+`ansible-creator` is a Command-Line Interface (CLI) tool designed for effortlessly scaffolding all your Ansible content. Whether you are initializing an Ansible collection or creating the framework for specific plugins, this tool streamlines the process with efficiency and precision based on your requirements.
 
-== Learning Objectives
+`ansible-creator` is also integrated into the VS Code user interface through the Ansible extension for VS Code for even a smoother experience when developing content.
 
-After completing this module, you will be able to:
+In this exercise, you will create an Ansible collection and a playbook using the Ansible extension's wizard in VS Code.
 
-* Navigate the Red Hat OpenShift Dev Spaces interface
-* Launch and configure development workspaces
-* Understand the components included in the lab environment
-* Set up authentication for git repositories
-* Use basic Ansible Development Tools features
+image::Jun-06-2025_at_21.02.34-image.png[VS Code editor inside the lab environment, opts="border"]
 
-== 1: Introduction: What is included in the lab environment
+---
 
-. Red Hat OpenShift Cluster
-. Ansible Automation Platform
-. Red Hat OpenShift Dev Spaces
-. link:https://about.gitea.com[Gitea,window=_blank] Git Server
-. Windows 2019 managed host
-. Lab Instructions
+== Lab Guide: Hands-On Tasks
 
-== 2: Contributing to this Lab Documentation
+In this exercise you will learn how to create, test, and deploy an Ansible collection using the `ansible-creator` tool through the Ansible extension for VS Code.
 
-If you see an error in this lab, fork and submit a pull request against https://github.com/rhpds/ansible-super-lab-showroom
+For this lab, all necessary tools and dependencies are pre-installed and configured for you.
 
-== 3: Dev Spaces console
 
-link:https://access.redhat.com/products/red-hat-openshift-dev-spaces/[Red Hat OpenShift Dev Spaces,window=_blank] provides consistent, reproducible development environments based on the open-source project link:https://eclipse.dev/che/[Eclipse Che,window=_blank].
+=== Task 0: Create a Collection Using the ansible-creator CLI
 
-It provides, by default, a Visual Studio Code (VS Code) environment as configured by a link:https://devfile.io[devfile,window=_blank], a YAML file that defines the entire workspace as code—including all necessary tools, runtimes, and project source. This file is used to instantly generate a pre-configured, containerized development environment, ensuring every developer on a team has an identical setup and solving the "it works on my machine" problem.
+Lets start by running `ansible-creator` in the command line to scaffold a collection, with the directory structure and several file templates to speed up our content development. In the following tasks we will do the same using the Ansible extension in VS Code.
 
-=== 3.1: Launching Dev Spaces from OpenShift
-
-. Launch the link:{openshift_cluster_console_url}[OpenShift Web Console,window=_blank]
-. Select the **htpasswd_provider** button and use the credentials provided in the xref:environment-details.adoc[Environment Details,window=_blank] page to login to the OpenShift console
-. Use the 9-block icon in the upper right to launch _Red Hat OpenShift Dev Spaces_ directly from the OpenShift console header.
+.   **Open the VS Code Terminal** by clicking the **Terminal** on the top VS Code menu, then **New Terminal** option. If you already have a Terminal open in VS Code you can reuse that one.
 +
-image::11-platform-dev-spaces/intro-dev_spaces_shortcut.png[OpenShift console header showing the 9-block application launcher icon for quick access to Dev Spaces]
-+
-TIP: Alternatively, the direct URL is link:https://devspaces.{openshift_cluster_ingress_domain}[https://devspaces.{openshift_cluster_ingress_domain},window=_blank] also available in xref:environment-details.adoc[Environment Details,window=_blank].
+image::vscode-devtools-terminal.png[VS Code terminal, opts="border"]
 
-== 4: Dev Spaces Workspace
-
-=== 4.1: Launching a specific Dev Spaces Workspace
-
-Once you have launched the OpenShift Dev Spaces console, use the following steps to access your Ansible Dev Space workspace.
-
-. Login via OpenShift authentication using the same credentials as the OpenShift console
-. Select **Allow selected permissions** to authorize access and launch the console
-. Scroll down and select the workspace titled **Ansible Dev Space**
+. **Scaffold a CLI collection with ansible-creator:** Using `ansible-creator` initialize a collection called `mynamespace.my_cli_collection` in the `/home/rhel/myansibleproject/collections/ansible_collections` directory:
 +
-image::11-platform-dev-spaces/intro3.png[Dev Spaces workspace selection page showing available workspaces including Ansible Dev Space]
-+
-NOTE: It will take a few minutes for the Dev Spaces instance to initialize. When it has loaded, a Visual Studio Code interface will appear.
-+
-image::11-platform-dev-spaces/intro4.png[Dev Spaces workspace loading screen showing VS Code interface initialization]
-+
-. Click the **Trust Publishers and Install** button to trust the extension publishers that are included within the Dev Spaces workspace
-. Click the **Yes, I trust the Authors** button to trust the workspace authors (your instructors).
-. Wait a few minutes until the additional extension icons appear for Ansible and OpenShift on the left side.
-+
-image::11-platform-dev-spaces/intro5.png[VS Code interface in Dev Spaces showing Ansible and OpenShift extension icons in the left sidebar]
-
-== 5: Ansible and OpenShift Extensions
-
-For this lab, we have have provided a link:https://code.visualstudio.com/docs/editing/workspaces/workspaces[.code-workspace,window=_blank] configuration that included these extensions along with additional configurations to curate your development environment. See https://github.com/jeffcpullen/devspaces-example/blob/main/devspaces.code-workspace for the source of this workspace configuration.
-
-. Click on the **Ansible** extension icon to access the Ansible Development Tools extension (covered in a subsequent lab)
-+
-image::11-platform-dev-spaces/intro6.png[Ansible extension interface in VS Code showing available Ansible development tools]
-
-== 6: Accessing a Terminal
-
-The majority of the exercises in this lab will be performed using the Visual Studio Code terminal.
-
-. Open a new terminal by selecting the VS Code menu starting with the hamburger (3 horizontal lines) in the top left, then selecting **Terminal** -> **New Terminal**
-+
-image::11-platform-dev-spaces/intro7.png[VS Code terminal interface showing basic command line operations in the Dev Spaces environment]
-+
-. Explore the environment:
-+
-[source,bash,role=execute,subs="verbatim,attributes"]
+[source,sh,role=execute]
 ----
-whoami
-----
-+
-[source,output]
-----
-user
-----
-. Check the Dev Spaces Workspace container OS release:
-+
-[source,bash,role=execute,subs="verbatim,attributes"]
-----
-cat /etc/redhat-release
-----
-+
-[source,output]
-----
-Red Hat Enterprise Linux release 9.7 (Plow)
-----
-. This workspacs provides access to `ansible` and additional developer tools:
-+
-[source,bash,role=execute,subs="verbatim,attributes"]
-----
-ansible --version
-----
-+
-[source,output]
-----
-ansible [core 2.19.3]
-  config file = None
-  configured module search path = ['/home/user/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  ansible python module location = /usr/local/lib/python3.11/site-packages/ansible
-  ansible collection location = /home/user/.ansible/collections:/usr/share/ansible/collections
-  executable location = /usr/local/bin/ansible
-  python version = 3.11.13 (main, Aug 21 2025, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-11)] (/usr/bin/python3.11)
-  jinja version = 3.1.6
-  pyyaml version = 6.0.3 (with libyaml v0.2.5)
+ansible-creator init collection mynamespace.my_cli_collection /home/rhel/myansibleproject/collections/ansible_collections
 ----
 
-== Conclusion
+. **Inspect the generated collection structure and files:**
++
+[source,sh,role=execute]
+----
+ls -lha /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/my_cli_collection
+----
 
-In this lab, you have learned:
+. **Congrats:** You created a default collection. Move to the next tasks to see how to do this in VS Code and how to customize it.
 
-. The resources provided in the lab environment
-. Assessing the OpenShift environment
-. How to launch and navigate an Red Hat OpenShift Dev Spaces workspace
-. How to provide feedback and contributions to this lab environment
+=== Task 1: Explore the Ansible Extension
 
-This foundation prepares you to start your Ansible Bootcamp Enablement journey.
+First, let's explore the Ansible extension for VS Code.
 
-== Helpful Links
+.   **Check the installed extensions section in VS Code**, look for the Ansible extension and click the blue **Reload Window** button to update to the latest version if you didn't do it in the previous step.
++
+image::vscode-devtools-extension-reload.png[Reload extensions in VS Code, opts="border"]
 
-For additional references, refer to the following resources:
+.   After the window reloads, locate and open the **Ansible extension icon on the sidebar of VS Code** and click on it. You will see the Ansible sidebar with three sections: (1) *Ansible Development Tools*, (2) *Ansible Lightspeed*, and (3) *Ansible Lightspeed Feedback*.
++
+image::vscode-devtools-ansible-icon.png[Ansible icon in VS Code sidebar, opts="border"]
 
-. https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_ansible_development_workspaces_for_automation_content_development/index[Using Ansible Development Workspaces for Automation Content Development]
-. https://docs.redhat.com/en/documentation/red_hat_openshift_dev_spaces/3.23/html/user_guide/getting-started-with-devspaces#authenticating-to-a-git-server-from-a-workspace[Authenticating to a Git server from a Workspace].
-. https://github.com/jeffcpullen/devspaces-example/[Source for the Dev Space Workspace]
-. https://github.com/rhpds/ansible-super-lab-showroom[Source for this lab content]
+.   **Collapse the Lightspeed sections** to simplify the view, as we won't be using Lightspeed features for this lab.
++
+image::Apr-29-2025_at_13.49.45-image.png[Collapsing the Lightspeed sections, opts="border"]
+
+=== Task 2: Create a Collection Project
+
+Next, you will scaffold a new Ansible collection.
+
+.   **Open the Collection project creator** by clicking the **Collection project** link in the *Ansible Development Tools* section.
++
+image::Apr-29-2025_at_13.51.07-image.png[Creating a Collection project, opts="border"]
+
+.   **Fill out the collection details** in the new tab that opens. Use the following information:
+* **Namespace:** 
++
+[source,sh,role=execute]
+----
+mynamespace
+----
+* **Collection:**
++
+[source,sh,role=execute]
+----
+mycollection
+----
+* **Init path:**
++
+[source,sh,role=execute]
+----
+/home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+----
++
+* **Check** the box for `Install collection from source code (editable mode)`
++
+image::vscode-devtools-collection-create.png[Collection creation form, opts="border"]
+* **Create the collection** by clicking the blue **Create** button. 
+* After a few moments, you should see the creation details appear in the *Logs* box.
++
+[source,text]
+----
+------- ansible-creator logs ---------
+    Note: collection project created at /home/rhel/myansibleproject/collections/
+          ansible_collections/mynamespace/mycollection
+
+
+------- ansible-dev-environment logs -------
+Note: Created virtual environment: /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/.venv
+Note: Installed collections include: ansible.utils and mynamespace.mycollection
+Note: All python requirements are installed.
+Note: All required system packages are installed.
+Note: A virtual environment was specified but has not been activated.
+Note: Please activate the virtual environment:
+source /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/.venv/bin/activate
+----
+
+=== Task 3: Create a Playbook Project
+
+Now, you will create a separate playbook project.
+
+.   **Open the Playbook project creator** by clicking the **Playbook project** link in the Ansible extension sidebar.
++
+image::May-12-2025_at_18.31.56-image.png[Creating a Playbook project, opts="border"]
+
+.   **Fill out the playbook project details** in the new tab. Use the following information:
+* **Destination directory:**
++
+[source,sh,role=execute]
+----
+/home/rhel/myansibleproject
+----
+* **Namespace:** 
++
+[source,sh,role=execute]
+----
+mynamespace
+----
+* **Collection:** 
++
+[source,sh,role=execute]
+----
+mysecondcollection
+----
++
+image::vscode-devtools-playbook-create.png[Creating a Playbook project, opts="border"]
+
+
+
+.   **Create the project** by clicking the **Create** button. After a couple of seconds, you should see a success message in the logs.
++
+[source,text]
+----
+--- ansible-creator logs ---
+Note: playbook project created at /home/rhel/myansibleproject
+----
+
+=== Task 4: Open the `mycollection` Folder
+
+Due to a lab infrastructure and VS Code limitation, you will now manually open the folder where your new collection content was created.
+
+.   **Open the file Explorer** by clicking the Explorer icon (the icon with two files) in the VS Code left sidebar.
++
+image::Apr-29-2025_at_13.57.13-image.png[VS Code Explorer icon, opts="border"]
+
+.   **Open the collection folder** by clicking the **(1) Open Folder** button. In the path field, paste the following path **(2)** and click the blue **OK** button **(3)**.
++
+[source,sh,role=execute]
+----
+/home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/
+----
++
+image::May-12-2025_at_18.45.02-image.png[Opening a folder in VS Code, opts="border"]
+
+.   **View the scaffolded files** once the VS Code screen reloads. You will see the complete directory structure and all the files created by the Ansible extension for your new collection in the left sidebar.
++
+image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Explorer view, opts="border"]
+
+
+=== Task 5: Compare the CLI-generated with the VS Code–generated collections
+
+. **Same layout**
+. **Same defaults**
+. **Same metadata files**
+
+---
+
+== Next Steps
+
+You have successfully explored how ansible-creator and VS Code work together to scaffold a collection. Please click the **Next** button below to proceed to the next module.
