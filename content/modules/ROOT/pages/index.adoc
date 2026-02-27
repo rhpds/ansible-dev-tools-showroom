@@ -17,22 +17,16 @@ Through a series of progressive labs, you'll gain practical experience with:
 Before starting this lab, ensure you have:
 
 * Basic understanding of Linux command line operations
-* Familiarity with YAML syntax
-* Knowledge of fundamental networking concepts
+* Familiarity with VS Code 
+* Basic Ansible and YAML syntax understanding
 * Access to the Red Hat Demo Platform environment
 
 == Lab Structure
 
-The following modules are included in this superlab:
-
-. Create
-[arabic]
-
-* xref:00-introduction.adoc[Introduction]
-* Modules
-** Module 1: Create 
+The following modules are included in this lab:
 
 . xref:00-introduction.adoc[Introduction]
+. Create
 .. xref:11-vscode-collection.adoc[Lab 1.1 - Creating a Collection with the VS Code Extension]
 .. xref:12-ade.adoc[Lab 1.2 - Using the Ansible Development Environment tool (ade)]
 .. xref:13-module.adoc[Lab 1.3 - Adding a Module to a Collection]
@@ -49,16 +43,12 @@ The following modules are included in this superlab:
 
 == Learning Outcomes
 
-By the end of this superlab, you will be able to:
+By the end of this workshop, you will be able to:
 
-* Set up and configure development environments for Ansible automation
-* Utilize Ansible developer tools effectively
-* Deploy and manage AAP across different platforms
-* Develop, test, and publish Ansible collections
-* Build, publish Ansible Execution Environments
-* Leverage Automation Hub for content distribution
-* Create and manage Event-Driven Ansible rulebooks and scenarios
-* Integrate AI capabilities into Ansible Automation Platform
+* Use the **Ansible extension for VS Code** features for a rich editing experience.
+* Learn all the creation tools, including `ansible-creator` to scaffold new collections and content, `adt` (Ansible development tools) for a unified command-line tools management, `ade` (Ansible development environment) for managing collection dependencies and virtual environments and `ansible-navigator` for a powerful terminal-based user interface to run and test your execution environments..
+* Test your content with `ansible-lint` for checking playbooks against best practices, `molecule` for robustly testing your collections, `pytest-ansible` for functional testing of your modules and tox-ansible for bringing it all together against in multiple combinations.
+* Deploy to production by packaging your Collection content with `ansible-galaxy` and `ansible-builder`, and applying secure supply chain practices with `ansible-sign`.
 
 == Getting Started
 
