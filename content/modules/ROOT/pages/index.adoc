@@ -1,94 +1,67 @@
-= What is Showroom?
-:navtitle: What is Showroom?
+= {lab_name}
 
-Showroom is a web-based lab instruction platform for the https://demo.redhat.com[Red Hat Demo Platform].
-It combines rendered AsciiDoc content with embedded terminals, consoles, and interactive tools -- giving workshop and demo participants everything they need in a single browser tab.
+Welcome to the {lab_name}!
 
-== What Users See
+== Overview
 
-When a participant opens their Showroom URL they get a split-pane interface:
+The {lab_name} provides a comprehensive, hands-on learning experience for understanding the developer flow for automation content.
 
-* **Left pane** -- step-by-step lab instructions rendered from an https://antora.org[Antora] site you author in AsciiDoc.
-* **Right pane** -- one or more tabs such as:
-** A web terminal (SSH to a bastion, containerised CLI tools, or both).
-** The OpenShift web console embedded in an iframe.
-** A VS Code editor (Code Server).
-** A VNC desktop (noVNC).
-** Any external URL you choose.
+Through a series of progressive labs, you'll gain practical experience with:
 
-The UI layout, tab names, and tab URLs are all controlled by a simple `ui-config.yml` file that lives in your content repository.
+* **Create** - Covers automation content creation
+* **Test** - Covers automation content testing
+* **Deploy** - Covers automation content deployment
 
-== How It Gets Deployed
+== Prerequisites
 
-This Ansible collection -- `agnosticd.showroom` -- is the primary way Showroom instances are deployed on the Red Hat Demo Platform.
-Depending on the environment type, you use one of two roles:
+Before starting this lab, ensure you have:
 
-[cols="1,3",options="header"]
-|===
-|Role |Use when...
+* Basic understanding of Linux command line operations
+* Familiarity with YAML syntax
+* Knowledge of fundamental networking concepts
+* Access to the Red Hat Demo Platform environment
 
-|`ocp4_workload_showroom`
-|Your lab runs on an OpenShift 4 cluster.
-The role deploys Showroom as a pod using a Helm chart, complete with content rendering, terminals, and an OpenShift `Route`.
+== Lab Structure
 
-|`vm_workload_showroom`
-|Your lab runs on a VM (RHEL, Fedora, etc.).
-The role deploys Showroom with rootless Podman, Traefik for TLS, and systemd for lifecycle management.
-|===
+The following modules are included in this superlab:
 
-Both roles follow the same basic flow:
+. Create
+[arabic]
 
-. Clone your Antora content repository.
-. Inject runtime variables (credentials, hostnames, GUIDs) as AsciiDoc attributes.
-. Render the content to HTML.
-. Serve the content alongside the terminal and tab services you configured.
-. Publish the final URL back to the user.
+* xref:00-introduction.adoc[Introduction]
+* Modules
+** Module 1: Create 
 
-== Key Concepts
+. xref:00-introduction.adoc[Introduction]
+.. xref:11-vscode-collection.adoc[Lab 1.1 - Creating a Collection with the VS Code Extension]
+.. xref:12-ade.adoc[Lab 1.2 - Using the Ansible Development Environment tool (ade)]
+.. xref:13-module.adoc[Lab 1.3 - Adding a Module to a Collection]
+. Test
+[arabic]
+.. xref:21-molecule.adoc[Lab 2.1 - Testing a Collection with Ansible Molecule]
+.. xref:22-pytest-ansible.adoc[Lab 2.2 - Functional testing with pytest-ansible]
+.. xref:23-tox-ansible.adoc[Lab 2.3 - Orchestrating Tests with tox-ansible]
+. Deploy
+[arabic]
+.. xref:31-ansible-builder.adoc[Lab 3.1 - Creating an Execution Environment with ansible-builder]
+.. xref:32-ansible-sign.adoc[Lab 3.2 - Introducing supply chain security with ansible-sign]
+.. xref:99-conclusion.adoc[Conclusion]
 
-Content repository::
-A Git repo containing your AsciiDoc lab instructions, structured as an Antora component.
-You typically fork https://github.com/rhpds/showroom_template_nookbag[showroom_template_nookbag] and add your own pages.
-See xref:content-repo.adoc[].
+== Learning Outcomes
 
-AgnosticV catalog item::
-The YAML configuration in the https://github.com/rhpds/agnosticv[agnosticv] repository that ties your content repo to an environment on the Red Hat Demo Platform.
-See xref:agnosticv-config.adoc[].
+By the end of this superlab, you will be able to:
 
-User data::
-A set of key-value pairs (hostnames, passwords, URLs) written by infrastructure roles during provisioning and automatically injected into your content as Antora attributes.
-See xref:user-data.adoc[].
+* Set up and configure development environments for Ansible automation
+* Utilize Ansible developer tools effectively
+* Deploy and manage AAP across different platforms
+* Develop, test, and publish Ansible collections
+* Build, publish Ansible Execution Environments
+* Leverage Automation Hub for content distribution
+* Create and manage Event-Driven Ansible rulebooks and scenarios
+* Integrate AI capabilities into Ansible Automation Platform
 
-UI configuration::
-A `ui-config.yml` file in your content repo that defines the tabs, layout width, and dynamic URLs shown alongside your lab instructions.
-See xref:ui-config.adoc[].
+== Getting Started
 
-== Where to Start
+Begin with xref:00-introduction.adoc[Introduction] to start your adventure. Each module includes detailed instructions, code examples, and verification steps.
 
-[cols="1,3",options="header"]
-|===
-|Goal |Page
-
-|Get a Showroom lab running quickly
-|xref:quick-start.adoc[]
-
-|Create or structure a content repo
-|xref:content-repo.adoc[]
-
-|Wire up an AgnosticV catalog item
-|xref:agnosticv-config.adoc[]
-
-|Understand the full architecture
-|xref:architecture.adoc[]
-
-|Contribute to Showroom itself
-|xref:contributing.adoc[]
-|===
-
-== Related Projects
-
-* https://github.com/agnosticd/showroom[agnosticd.showroom collection] -- this Ansible collection (you are here).
-* https://github.com/rhpds/showroom_template_nookbag[showroom_template_nookbag] -- the recommended content repo template.
-* https://github.com/rhpds/showroom-deployer[showroom-deployer] -- Helm charts that power OCP deployments.
-* https://github.com/rhpds/showroom-images[showroom-images] -- container images (content server, terminals, Antora, etc.).
-* https://github.com/rhpds/nookbag[nookbag] -- the zero-touch UI bundle.
+For questions or issues, refer to the xref:appendix.adoc[Appendix] or contact your instructor.
