@@ -13,3 +13,5 @@
 *** xref:31-ansible-builder.adoc[Lab 3.1 - Creating an Execution Environment with ansible-builder]
 *** xref:32-ansible-sign.adoc[Lab 3.2 - Introducing supply chain security with ansible-sign]
 ** xref:99-conclusion.adoc[Conclusion]
+* xref:environment-details.adoc[Environment Details]
+* xref:appendix.adoc[Appendix]
