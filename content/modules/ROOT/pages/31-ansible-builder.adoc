@@ -264,7 +264,7 @@ The `-vvv` flag specifies the verbosity level of the output and is not related t
 
 . *Verify the image creation:*
 +
-The build command executes the container build across four internal stages: Base, Galaxy, Builder, and Final. After the build completes successfully, you should see a message similar to this one:
+The build command executes the container build across 4 internal stages: Base, Galaxy, Builder, and Final. After the build completes successfully, you should see a message similar to this one:
 +
 [source,bash]
 ----

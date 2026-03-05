@@ -28,7 +28,7 @@ After completing this module, you will be able to:
 
 == Lab Briefing
 
-pytest-ansible is a pytest plugin that bridges the gap between Python's pytest framework and Ansible automation. It provides three key capabilities:
+pytest-ansible is a pytest plugin that bridges the gap between Python's pytest framework and Ansible automation. It provides 3 key capabilities:
 
 * *Ansible execution in tests*: Run Ansible modules and tasks directly from your test code
 * *Collection unit test runner*: Use pytest as a test runner for Ansible collections
@@ -176,7 +176,7 @@ def test_cowsay_module(ansible_module):
 +
 [NOTE]
 ====
-This test validates both the module's execution (no failures, correct change state) and its output (contains the expected message with cowsay formatting). The assertions check for structural elements that are always present in cowsay output, making the test more robust than checking for specific ASCII art.
+This test validates both the module's execution (no failures, correct change state) and its output (contains the expected message with cowsay formatting). The assertions check for structural elements that are always present in cowsay output, making the test more reliable than checking for specific ASCII art.
 ====
 
 ---

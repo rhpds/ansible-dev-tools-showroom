@@ -164,7 +164,7 @@ This automatically:
 
 === Task 5: Running a Group of Tests
 
-One of the most powerful features of tox is running multiple tests with one command.
+A key feature of tox is running multiple tests with one command.
 
 .   **Run all tests for a specific Ansible version:**
     You can use "factors" to match multiple environments.
