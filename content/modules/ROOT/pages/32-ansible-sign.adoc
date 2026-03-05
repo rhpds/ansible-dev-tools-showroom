@@ -17,6 +17,15 @@ _Learn how to sign content by using ansible-sign and apply supply-chain security
 * **Estimated Time:** 10 - 20 minutes
 ****
 
+== Learning Objectives
+
+After completing this module, you will be able to:
+
+* Create a GPG key for signing Ansible content
+* Define a `MANIFEST.in` to specify files for signing
+* Sign and verify an Ansible project using `ansible-sign`
+* Understand how signed content integrates with Ansible Automation Platform
+
 == Lab Briefing
 
 `ansible-sign`: Utility for signing and verifying Ansible project directory contents.
@@ -25,7 +34,7 @@ Project signing and verification lets you sign files in your project directory, 
 
 == Lab Guide: Hands-On Tasks
 
-**The Workflow for Signing AAP Projects:**
+**The Workflow for Signing Ansible Automation Platform (AAP) Projects:**
 
 * Sign your project directory containing playbooks, rulebooks, roles, etc.
 * Sync the signed project to AAP's Project Sync
@@ -38,7 +47,7 @@ NOTE: In this lab we will only cover the workstation side of the content signing
 
 === Task 1: Create a GPG key 
 
-To use `ansible-sign` your workstation needs to have a GPG key available to cryptographically sign the content. Although it exceeds the scope of this workshop, we will create one quickly to show the end to end steps.
+To use `ansible-sign` your workstation needs to have a GNU Privacy Guard (GPG) key available to cryptographically sign the content. Although it exceeds the scope of this workshop, we will create one quickly to show the end to end steps.
 
 .  *Install pinentry-curses, a dependency for gpg*:
 +
@@ -84,13 +93,9 @@ gpg --batch --gen-key ~/gpg.txt
 gpg --list-secret-keys
 ----
 
-=== Task 2: Supply-chain security: Signing your Ansible collection 
+=== Task 2: Set up the environment
 
 This task demonstrates how to cryptographically sign an Ansible Project using `ansible-sign`. We will be using `myansibleproject` and our `mycowsay.yml` playbook.
-
----
-
-=== Task 3: Set the environment
 
 . *Make sure you are in the `myansibleproject` directory:*
 +
@@ -107,9 +112,9 @@ ade install /home/rhel/myansibleproject/collections/ansible_collections/mynamesp
 ----
 
 
-=== Task 2: Create a MANIFEST.in File
+=== Task 3: Create a MANIFEST.in file
 
-. *In VS Code, create a new file called `MANIFEST.in`* in the root of your project. Add the following content to it. We will be excluding a couple of directories and signing a REAME and playbook. This is only meant as an example, your needs might vary:
+. *In VS Code, create a new file called `MANIFEST.in`* in the root of your project. Add the following content to it. We will be excluding a couple of directories and signing a README and playbook. This is only meant as an example, your needs might vary:
 +
 [source,bash,role=execute]
 ----
@@ -130,7 +135,7 @@ include mycowsay.yml
 
 NOTE: Internally, ansible-sign makes use of the distlib.manifest module of Python’s distlib library, and thus MANIFEST.in must follow the syntax that this library specifies. Check the Python Packaging User Guide for an explanation of the MANIFEST.in file directives.
 
-=== Task 3: Sign the Project with ansible-sign
+=== Task 4: Sign the project with ansible-sign
 
 . *Now we can sign the files listed in the `MANIFEST.in`:* The way that ansible-sign protects content from tampering is by taking checksums (sha256) of all of the secured files in the project, compiling those into a checksum manifest file, and then finally signing that manifest file.
 +
@@ -148,7 +153,7 @@ The output of the command above should look like this:
 [NOTE ] GPG summary: signature created
 ----
 
-=== Task 4: Verifying the content with ansible-sign
+=== Task 5: Verify the content with ansible-sign
 
 
 . *Confirm the files in MANIFEST.in got checksums:*
@@ -164,6 +169,13 @@ cat .ansible-sign/sha256sum.txt
 ----
 ansible-sign project gpg-verify .
 ----
++
+[source,text]
+----
+[OK   ] GPG signature verification succeeded.
+[NOTE ] Checksum manifest: ./.ansible-sign/sha256sum.txt
+[NOTE ] GPG summary: valid signature
+----
 
 . *Switch `ade` back to editable mode:*
 +
@@ -172,7 +184,7 @@ ansible-sign project gpg-verify .
 ade install --editable /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
 ----
 
-=== Task 5: Enabling verification in our AAP executions
+=== Task 6: Enable verification in AAP executions
 
 . *We won't cover this here, but the next steps would be:*
 .. Create a credential with our GPG Public Key

@@ -33,7 +33,15 @@ Ansible Dev Environment (`ade`) is a management tool for Ansible content develop
 
 In this challenge, you will explore the content that was automatically generated for the collection you just created and learn how to customize your requirements using `ade`.
 
-image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Explorer view, opts="border"]
+== Learning Objectives
+
+After completing this module, you will be able to:
+
+* Customize the `galaxy.yml` metadata for your collection
+* Use `ade` to install and manage collection dependencies
+* Understand how `ade` tracks Python and system-level requirements
+
+image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Explorer view,link=self,window=blank, opts="border"]
 
 ---
 
@@ -51,7 +59,7 @@ First, you will activate the Python virtual environment (`.venv`) that `ansible-
 
 .   **Activate the Python virtual environment** by clicking the banner that reads `Python: Select Interpreter` in the bottom status bar of VS Code. From the dropdown menu that appears at the top, select the recommended option: **Python 3.11.11 ('.venv': venv)**.
 +
-image::vscode-devtools-python-env.png[Selecting the Python virtual environment in VS Code, opts="border"]
+image::vscode-devtools-python-env.png[Selecting the Python virtual environment in VS Code,link=self,window=blank, opts="border"]
 
 NOTE: This is a convenient alternative to manually running `source .venv/bin/activate` in the terminal.
 
@@ -86,13 +94,13 @@ You will notice the `namespace` and `name` have already been auto-filled correct
 +
 You will also notice the `readme` and `license_file` are pointing to existing files, we can leave those as they are. You can modify the scaffolded README.md and LICENSE files if you wish to change those.
 +
-We will replace the following fileds:
+We will replace the following fields:
 +
 - `your name <example@domain.com>` in the `authors:` section with your own name and email.  This is used for ownership attribution, support and maintenance.
 - `your collection description` in the `description:` section with `mycowsay collection` This is used for the search results summaries in Galaxy and Automation Hub, as well as the collection landing page.
 - the `tags:` These tags are used in Galaxy and Automation Hub for discoverability and they are specially important in large catalogs. Consider the purpose of your collection for them. The available categories are `application`, `cloud`, `database`, `eda`, `infrastructure`, `linux`, `monitoring`, `networking`, `security`, `storage`, `tools`, `windows`.
 
-.  .   **Let's add a requirement to see `ade` in action:** Modify the `dependencies:` block to add `ansible.posix`. This is used for automatic dependency installation and compatibility validation. The result should look like this:
+.   **Let's add a requirement to see `ade` in action:** Modify the `dependencies:` block to add `ansible.posix`. This is used for automatic dependency installation and compatibility validation. The result should look like this:
 +
 [source,yaml]
 ----
@@ -197,7 +205,7 @@ dependencies:
 [WARNING]
 ====
 The command will fail. Don't panic! This is expected. `ade` has detected that `ansible.netcommon` requires certain system-level packages that are not installed on your workstation's operating system.
-image::vscode-devtools-netcommon-system-packages.png[Command failure showing missing system packages, opts="border"]
+image::vscode-devtools-netcommon-system-packages.png[Command failure showing missing system packages,link=self,window=blank, opts="border"]
 ====
 
 .   **Install the system dependencies** by running the following command in the VS Code terminal to install the missing OS packages:

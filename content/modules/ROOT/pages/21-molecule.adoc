@@ -18,19 +18,6 @@ _A guide to testing your Ansible collection using Ansible Molecule and a pre-con
 
 == Lab Briefing
 
-By the end of this module, you will be able to:
-
-* Understand the role of Ansible Molecule in testing Ansible collections
-* Navigate and interpret Molecule configuration files and test scenarios
-* Examine integration test files and understand assertion-based testing
-* Execute Molecule test scenarios from the command line
-* Interpret Molecule test results and understand the test lifecycle stages
-* Create new plugins and understand how they integrate with Molecule testing
-
----
-
-== Lab Briefing
-
 In this challenge, you will explore and test the collection you created in previous modules using **Ansible Molecule**.
 
 Ansible Molecule is a tool designed to aid in developing and testing Ansible playbooks, collections, and roles. It provides support for testing Ansible content across multiple instances, operating systems, and providers.
@@ -90,7 +77,7 @@ NOTE: You can also copy and paste the path: `collections/ansible_collections/myn
 
 .   **Examine the Molecule configuration.** Within the `integration_hello_world` directory, **open** the `molecule.yml` file. Molecule uses this file to define the settings and scenarios for testing the Ansible collection.
 +
-image::vscode-devtools-molecule-yml.png[Molecule configuration file in VS Code, opts="border"]
+image::vscode-devtools-molecule-yml.png[Molecule configuration file in VS Code,link=self,window=blank, opts="border"]
 
 .   **Understand the scenario configuration.** Let's examine the key sections of the `molecule.yml` file:
 +
@@ -109,7 +96,7 @@ The `molecule.yml` file is the heart of your test scenario. Understanding its st
 
 .   **Examine the test playbook.** Under the `extensions` directory, **expand** the `utils/playbooks` directory. **Open** the `converge.yml` playbook and observe how it is structured to call integration tests from the `tests/` directory.
 +
-image::vscode-devtools-molecule-converge.png[Converge playbook for the Molecule test, opts="border"]
+image::vscode-devtools-molecule-converge.png[Converge playbook for the Molecule test,link=self,window=blank, opts="border"]
 +
 This playbook runs during the **converge** stage of the Molecule lifecycle. It's the "system under test" - the playbook that exercises your collection's functionality. Notice how it references the integration tests that will validate the behavior.
 
@@ -155,7 +142,7 @@ Now that you understand how tests work, let's add a new filter plugin to your co
 
 .   **Open the Collection plugin creator.** In the VS Code sidebar, **click** the Ansible extension icon. In the *ADD* section, **click** **Collection plugin**.
 +
-image::May-12-2025_at_21.51.02-image.png[Creating a Collection plugin, opts="border"]
+image::May-12-2025_at_21.51.02-image.png[Creating a Collection plugin,link=self,window=blank, opts="border"]
 
 
 .   **Fill out the plugin details.** **Fill** out the form with the following information:
@@ -222,7 +209,7 @@ Each stage must complete successfully for the overall test to pass. If any stage
 
 .   **Observe the successful test run.** Success! You can see Molecule running the included tests and confirming that all assertions passed. Notice the output from the verify stage showing which assertions were evaluated and their results.
 +
-image::vscode-devtools-molecule-passed.png[Successful Molecule test output in the terminal, opts="border"]
+image::vscode-devtools-molecule-passed.png[Successful Molecule test output in the terminal,link=self,window=blank, opts="border"]
 +
 [NOTE]
 ====

@@ -25,7 +25,15 @@ _A guide to using the Ansible extension for Visual Studio Code to scaffold a new
 
 In this exercise, you will create an Ansible collection and a playbook using the Ansible extension's wizard in VS Code.
 
-image::Jun-06-2025_at_21.02.34-image.png[VS Code editor inside the lab environment, opts="border"]
+== Learning Objectives
+
+After completing this module, you will be able to:
+
+* Scaffold a new Ansible collection using the `ansible-creator` CLI
+* Use the Ansible VS Code extension to create collection and playbook projects
+* Compare CLI-generated and VS Code-generated collection structures
+
+image::Jun-06-2025_at_21.02.34-image.png[VS Code editor inside the lab environment,link=self,window=blank, opts="border"]
 
 ---
 
@@ -42,7 +50,7 @@ Lets start by running `ansible-creator` in the command line to scaffold a collec
 
 .   **Open the VS Code Terminal** by clicking the **Terminal** on the top VS Code menu, then **New Terminal** option. If you already have a Terminal open in VS Code you can reuse that one.
 +
-image::vscode-devtools-terminal.png[VS Code terminal, opts="border"]
+image::vscode-devtools-terminal.png[VS Code terminal,link=self,window=blank, opts="border"]
 
 . **Scaffold a CLI collection with ansible-creator:** Using `ansible-creator` initialize a collection called `mynamespace.my_cli_collection` in the `/home/rhel/myansibleproject/collections/ansible_collections` directory:
 +
@@ -57,6 +65,8 @@ ansible-creator init collection mynamespace.my_cli_collection /home/rhel/myansib
 ----
 ls -lha /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/my_cli_collection
 ----
++
+NOTE: You should see the scaffolded collection directory structure including files like `galaxy.yml`, `README.md`, `LICENSE`, and directories like `plugins/`, `tests/`, and `meta/`.
 
 . **Congrats:** You created a default collection. Move to the next tasks to see how to do this in VS Code and how to customize it.
 
@@ -66,15 +76,15 @@ First, let's explore the Ansible extension for VS Code.
 
 .   **Check the installed extensions section in VS Code**, look for the Ansible extension and click the blue **Reload Window** button to update to the latest version if you didn't do it in the previous step.
 +
-image::vscode-devtools-extension-reload.png[Reload extensions in VS Code, opts="border"]
+image::vscode-devtools-extension-reload.png[Reload extensions in VS Code,link=self,window=blank, opts="border"]
 
 .   After the window reloads, locate and open the **Ansible extension icon on the sidebar of VS Code** and click on it. You will see the Ansible sidebar with three sections: (1) *Ansible Development Tools*, (2) *Ansible Lightspeed*, and (3) *Ansible Lightspeed Feedback*.
 +
-image::vscode-devtools-ansible-icon.png[Ansible icon in VS Code sidebar, opts="border"]
+image::vscode-devtools-ansible-icon.png[Ansible icon in VS Code sidebar,link=self,window=blank, opts="border"]
 
 .   **Collapse the Lightspeed sections** to simplify the view, as we won't be using Lightspeed features for this lab.
 +
-image::Apr-29-2025_at_13.49.45-image.png[Collapsing the Lightspeed sections, opts="border"]
+image::Apr-29-2025_at_13.49.45-image.png[Collapsing the Lightspeed sections,link=self,window=blank, opts="border"]
 
 === Task 2: Create a Collection Project
 
@@ -82,7 +92,7 @@ Next, you will scaffold a new Ansible collection.
 
 .   **Open the Collection project creator** by clicking the **Collection project** link in the *Ansible Development Tools* section.
 +
-image::Apr-29-2025_at_13.51.07-image.png[Creating a Collection project, opts="border"]
+image::Apr-29-2025_at_13.51.07-image.png[Creating a Collection project,link=self,window=blank, opts="border"]
 
 .   **Fill out the collection details** in the new tab that opens. Use the following information:
 * **Namespace:** 
@@ -106,7 +116,7 @@ mycollection
 +
 * **Check** the box for `Install collection from source code (editable mode)`
 +
-image::vscode-devtools-collection-create.png[Collection creation form, opts="border"]
+image::vscode-devtools-collection-create.png[Collection creation form,link=self,window=blank, opts="border"]
 * **Create the collection** by clicking the blue **Create** button. 
 * After a few moments, you should see the creation details appear in the *Logs* box.
 +
@@ -133,7 +143,7 @@ Now, you will create a separate playbook project.
 
 .   **Open the Playbook project creator** by clicking the **Playbook project** link in the Ansible extension sidebar.
 +
-image::May-12-2025_at_18.31.56-image.png[Creating a Playbook project, opts="border"]
+image::May-12-2025_at_18.31.56-image.png[Creating a Playbook project,link=self,window=blank, opts="border"]
 
 .   **Fill out the playbook project details** in the new tab. Use the following information:
 * **Destination directory:**
@@ -155,7 +165,7 @@ mynamespace
 mysecondcollection
 ----
 +
-image::vscode-devtools-playbook-create.png[Creating a Playbook project, opts="border"]
+image::vscode-devtools-playbook-create.png[Creating a Playbook project,link=self,window=blank, opts="border"]
 
 
 
@@ -173,7 +183,7 @@ Due to a lab infrastructure and VS Code limitation, you will now manually open t
 
 .   **Open the file Explorer** by clicking the Explorer icon (the icon with two files) in the VS Code left sidebar.
 +
-image::Apr-29-2025_at_13.57.13-image.png[VS Code Explorer icon, opts="border"]
+image::Apr-29-2025_at_13.57.13-image.png[VS Code Explorer icon,link=self,window=blank, opts="border"]
 
 .   **Open the collection folder** by clicking the **(1) Open Folder** button. In the path field, paste the following path **(2)** and click the blue **OK** button **(3)**.
 +
@@ -182,11 +192,11 @@ image::Apr-29-2025_at_13.57.13-image.png[VS Code Explorer icon, opts="border"]
 /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/
 ----
 +
-image::May-12-2025_at_18.45.02-image.png[Opening a folder in VS Code, opts="border"]
+image::May-12-2025_at_18.45.02-image.png[Opening a folder in VS Code,link=self,window=blank, opts="border"]
 
 .   **View the scaffolded files** once the VS Code screen reloads. You will see the complete directory structure and all the files created by the Ansible extension for your new collection in the left sidebar.
 +
-image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Explorer view, opts="border"]
+image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Explorer view,link=self,window=blank, opts="border"]
 
 
 === Task 5: Compare the CLI-generated with the VS Code–generated collections

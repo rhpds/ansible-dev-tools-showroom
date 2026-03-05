@@ -27,7 +27,7 @@ You have successfully completed the **"Intro to creating automation with the new
 
 image:qr-ansible-forum-workshop-completed.png[QR code for Ansible Forum, opts="border"]
 
-After logging in to the Ansible Forum, link:hhttps://forum.ansible.com/t/introduce-yourself-2026-edition/45062?u=leo[introduce yourself in this topic] and feel free to mention that you just completed the Ansible Developer Tools lab!
+After logging in to the Ansible Forum, link:https://forum.ansible.com/t/introduce-yourself-2026-edition/45062?u=leo[introduce yourself in this topic] and feel free to mention that you just completed the Ansible Developer Tools lab!
 
 [IMPORTANT]
 ====
@@ -45,7 +45,7 @@ You have reached the end of the *Introduction to Ansible development tools* work
 * **`adt`** (Ansible development tools) for a unified command-line tools management.
 * **`ade`** (Ansible development environment) for managing collection dependencies.
 * **`ansible-lint`** for checking playbooks against best practices.
-* **`ansible-navigator`** for a powerful terminal-based user interface to run and test your execution environments.
+* **`ansible-navigator`** for a feature-rich terminal-based user interface to run and test your execution environments.
 * **Ansible Molecule** for robustly testing your collections.
 
 ---
@@ -58,6 +58,13 @@ If you would like to get all of these tools running on your own Windows, macOS, 
 ****
 link:https://interact.redhat.com/share/iKoPpilaNueRFTUzWnqL[Installing Ansible developer tools in VS Code in Windows, macOS or Linux using the Dev Container]
 ****
+
+== References
+
+. link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_ansible_development_workspaces_for_automation_content_development/index[Using Ansible Development Workspaces for automation content development^]
+. link:https://docs.redhat.com/en/documentation/red_hat_openshift_dev_spaces/3.23/html/user_guide/getting-started-with-devspaces#authenticating-to-a-git-server-from-a-workspace[Authenticating to a Git server from a workspace^]
+. link:https://github.com/jeffcpullen/devspaces-example/[Source for the Dev Space workspace^]
+. link:https://github.com/rhpds/ansible-dev-tools-showroom[Source for this lab content^]
 
 [IMPORTANT]
 ====

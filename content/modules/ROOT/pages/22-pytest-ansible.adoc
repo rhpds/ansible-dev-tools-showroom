@@ -16,6 +16,16 @@ _Learn how to do functional testing for your Ansible content using pytest-ansibl
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
 * **Estimated Time:**
 ****
+
+== Learning Objectives
+
+After completing this module, you will be able to:
+
+* Set up pytest-ansible for functional testing of Ansible modules
+* Write Python test files that validate module behavior
+* Configure `conftest.py` for proper module and collection path resolution
+* Interpret pytest output and use debugging flags
+
 == Lab Briefing
 
 pytest-ansible is a pytest plugin that bridges the gap between Python's pytest framework and Ansible automation. It provides three key capabilities:
@@ -193,7 +203,7 @@ pytest
 
 . *Expected output:*
 +
-[source,bash,role=execute]
+[source,text]
 ----
  tests/integration/test_integration.py::test_integration[NOTSET] s                                                   33% ███▍      
 [gw0] SKIPPED tests/integration/test_integration.py 
@@ -213,7 +223,7 @@ NOTE: You might see warnings between the Results and PASSED tests/test_cowsay.py
 
 ---
 
-=== Task 4: Verify the Test Results
+=== Task 5: Verify the test results
 
 To verify that the test is actually running your module correctly:
 

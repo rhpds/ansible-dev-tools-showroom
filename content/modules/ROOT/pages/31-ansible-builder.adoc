@@ -16,6 +16,16 @@ _A guide to automating the creation and customization of containerized execution
 * **Estimated Time:** 10 - 20 minutes
 ****
 
+== Learning Objectives
+
+After completing this module, you will be able to:
+
+* Define an execution environment using `execution-environment.yml`
+* Package a collection with `ansible-galaxy collection build`
+* Use `ansible-builder create` to inspect the generated Containerfile
+* Build and tag a custom execution environment image
+* Test the execution environment with `podman` and `ansible-navigator`
+
 == Lab Briefing
 
 In previous challenges, you authored, tested, and validated your custom Ansible collection. 
@@ -25,7 +35,7 @@ This final deployment step requires packaging all content (collections, Python d
 This exercise focuses on using the Ansible VS Code extension and Ansible Builder 3 features to efficiently define and build a custom EE directly from the VS Code environment.
 
 
-== Enhanced Developer Experience
+== Enhanced developer experience
 
 `ansible-builder` is part of the comprehensive Ansible Development Tools (ADT) suite. 
 
@@ -46,7 +56,7 @@ The EE configuration is defined in `execution-environment.yml`. To access the fe
 +
 Open the **Ansible extension** in the VS Code sidebar and click the **Execution environment project** option under the "INITIALIZE" menu.
 +
-image::vscode-devtools-ee-sidebar.png[EE wizard creator in VS Code, opts="border"]
+image::vscode-devtools-ee-sidebar.png[EE wizard creator in VS Code,link=self,window=blank, opts="border"]
 
 .   **Fill out the Execution environment project details**. Use the following information:
 * **Destination path:** 
@@ -83,7 +93,7 @@ mycollection-ee
 * **Leave all the other fields as they are**
 * Click the blue **Build** button. You might need to scroll down to find it.
 +
-image::vscode-devtools-ee-create.png[Creating an EE project, opts="border"]
+image::vscode-devtools-ee-create.png[Creating an EE project,link=self,window=blank, opts="border"]
 
 
 . *Open the `execution-environment.yml` file:*
@@ -120,7 +130,7 @@ options:
 [IMPORTANT]
 .microdnf requirement
 ====
-Because the base image (`ee-minimal-rhel8:latest`) is built on UBI-minimal, which uses `microdnf`, you must specify `package_manager_path: /usr/bin/microdnf` in the options section for the build to succeed.
+Because the base image (`ee-minimal-rhel8:latest`) is built on Universal Base Image (UBI) minimal, which uses `microdnf`, you must specify `package_manager_path: /usr/bin/microdnf` in the options section for the build to succeed.
 ====
 
 . *Let's customize the EE blueprint content:*
@@ -273,7 +283,7 @@ With podman we can run an ansible-galaxy command to list all  collections in the
 podman run mynamespace/mycollection-ee:latest ansible-galaxy collection list
 ----
 +
-This command should display `mycollection` and it's dependencies. 
+This command should display `mycollection` and its dependencies. 
 +
 [source,bash]
 ----

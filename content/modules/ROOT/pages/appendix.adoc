@@ -1,0 +1,59 @@
+= Appendix
+
+== Troubleshooting
+
+=== Common issues
+
+. **Dev Spaces workspace not loading:**
+  Refresh your browser and wait a few minutes. If the issue persists, delete the workspace and recreate it from the Dev Spaces dashboard.
+
+. **Python virtual environment not activated:**
+  Run `source .venv/bin/activate` from the collection root directory.
+
+. **Module not found errors:**
+  Verify you are in the correct directory and that your collection is installed with `ade install -e .`
+
+. **Molecule test failures:**
+  Ensure the container runtime (Podman) is running with `podman ps`. Check you are in the `extensions/` directory and specifying the scenario name with `-s`.
+
+. **ansible-builder build failures:**
+  Verify the `execution-environment.yml` syntax and that the collection tarball exists at the expected path.
+
+== Useful commands
+
+[cols="1,2",options="header"]
+|===
+| Command | Purpose
+| `adt --version`
+| Show all installed Ansible development tool versions
+
+| `ade install -e .`
+| Install collection in editable mode with dependencies
+
+| `ade tree -v`
+| Display collection dependency tree
+
+| `molecule test -s <scenario>`
+| Run a full Molecule test lifecycle
+
+| `molecule converge -s <scenario>`
+| Run only the converge stage (useful for iterating)
+
+| `pytest -v -s`
+| Run pytest with verbose output and no capture
+
+| `tox -l`
+| List all auto-discovered tox environments
+
+| `ansible-builder create`
+| Generate the Containerfile without building
+
+| `ansible-builder build -t <tag>`
+| Build the execution environment image
+
+| `ansible-sign project gpg-sign .`
+| Sign the project files listed in MANIFEST.in
+
+| `ansible-sign project gpg-verify .`
+| Verify project signatures
+|===

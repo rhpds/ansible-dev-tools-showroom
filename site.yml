@@ -1,7 +1,7 @@
 ---
 site:
-  title: Showroom Template Demo
-  url: https://github.com/rhpds/showroom_template_nookbag
+  title: Introduction to Ansible Development Tools
+  url: https://github.com/rhpds/ansible-dev-tools-showroom
   start_page: modules::index.adoc
 
 content:
@@ -23,6 +23,9 @@ antora:
 asciidoc:
   attributes:
     showroom-collection-version: v1.5.2
+
+runtime:
+  fetch: true
 
 output:
   dir: ./www

@@ -1,5 +1,9 @@
 name: modules
-title: Showroom Collection
+title: Introduction to Ansible Development Tools
 version: ~
+start_page: index.adoc
 nav:
   - modules/ROOT/nav.adoc
+asciidoc:
+  attributes:
+    lab_name: "Introduction to Ansible Development Tools"
