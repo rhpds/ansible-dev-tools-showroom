@@ -152,12 +152,12 @@ image::vscode-devtools-cowsay-run2.png[Ansible Navigator TUI,link=self,window=bl
 
 .   **Explore the Navigator output.** You are now inside the `ansible-navigator` TUI.
 * To the left of the play name, you will see the number `0`. **Press `0`** to drill down into the details for that play.
-* You can now see the three tasks from your playbook. **Press `2`** to see the output of the final "Display the result" task.
+* You can now see the 3 tasks from your playbook. **Press `2`** to see the output of the final "Display the result" task.
 * You may need to scroll down to find the cow message.
 +
 image::vscode-devtools-cowsay-navigator.png[Viewing task output in Ansible Navigator,link=self,window=blank, opts="border"]
 
-.   **Exit Ansible Navigator.** **Press** the `ESC` key three times to exit the TUI and return to the normal terminal prompt.
+.   **Exit Ansible Navigator.** **Press** the `ESC` key 3 times to exit the TUI and return to the normal terminal prompt.
 
 ---
 == Next Steps

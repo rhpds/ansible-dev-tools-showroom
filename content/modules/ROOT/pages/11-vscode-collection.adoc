@@ -78,7 +78,7 @@ First, let's explore the Ansible extension for VS Code.
 +
 image::vscode-devtools-extension-reload.png[Reload extensions in VS Code,link=self,window=blank, opts="border"]
 
-.   After the window reloads, locate and open the **Ansible extension icon on the sidebar of VS Code** and click on it. You will see the Ansible sidebar with three sections: (1) *Ansible Development Tools*, (2) *Ansible Lightspeed*, and (3) *Ansible Lightspeed Feedback*.
+.   After the window reloads, locate and open the **Ansible extension icon on the sidebar of VS Code** and click on it. You will see the Ansible sidebar with 3 sections: (1) *Ansible Development Tools*, (2) *Ansible Lightspeed*, and (3) *Ansible Lightspeed Feedback*.
 +
 image::vscode-devtools-ansible-icon.png[Ansible icon in VS Code sidebar,link=self,window=blank, opts="border"]
 

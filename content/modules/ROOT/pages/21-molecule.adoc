@@ -16,6 +16,15 @@ _A guide to testing your Ansible collection using Ansible Molecule and a pre-con
 * **Estimated Time:** 
 ****
 
+== Learning Objectives
+
+After completing this module, you will be able to:
+
+* Describe the Molecule test lifecycle and its stages
+* Configure a Molecule test scenario using `molecule.yml`
+* Write assertion-based integration tests for Ansible content
+* Run and troubleshoot Molecule test scenarios from the command line
+
 == Lab Briefing
 
 In this challenge, you will explore and test the collection you created in previous modules using **Ansible Molecule**.
@@ -31,7 +40,7 @@ Ansible Molecule is a tool designed to aid in developing and testing Ansible pla
 * **Integration:** Tests that your collection components work correctly with systems and services
 * **Assertions:** Validates that expected outcomes are achieved
 
-**Scenarios** are the starting point for Molecule's powerful functionality. Think of a scenario as a test suite for your Ansible content. Each scenario defines:
+**Scenarios** are the starting point for Molecule's core functionality. Think of a scenario as a test suite for your Ansible content. Each scenario defines:
 
 * The test environment (containers, VMs, cloud instances)
 * The sequence of actions to perform (create, converge, verify, destroy)

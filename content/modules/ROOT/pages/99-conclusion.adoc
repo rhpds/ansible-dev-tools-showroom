@@ -25,9 +25,9 @@ You have successfully completed the **"Intro to creating automation with the new
 
 **Scan** the QR code below to sign up to the Ansible Forum if you haven't yet, if you already have scan anyway and you might get a Badge for completing the workshop if you approach your instructor with your username!
 
-image:qr-ansible-forum-workshop-completed.png[QR code for Ansible Forum, opts="border"]
+image::qr-ansible-forum-workshop-completed.png[QR code for Ansible Forum,link=self,window=blank, opts="border"]
 
-After logging in to the Ansible Forum, link:https://forum.ansible.com/t/introduce-yourself-2026-edition/45062?u=leo[introduce yourself in this topic] and feel free to mention that you just completed the Ansible Developer Tools lab!
+After logging in to the Ansible Forum, link:https://forum.ansible.com/t/introduce-yourself-2026-edition/45062?u=leo[introduce yourself in this topic^] and feel free to mention that you just completed the Ansible Developer Tools lab!
 
 [IMPORTANT]
 ====
@@ -38,7 +38,7 @@ Check the "Next Steps" section below to learn how to get the Ansible development
 
 == Review of learned concepts
 
-You have reached the end of the *Introduction to Ansible development tools* workshop. In this lab, you learned about and used some of the most important tools available to Ansible developers:
+You have reached the end of the *Introduction to Ansible development tools* workshop. In this lab, you learned about and used some of the key tools available to Ansible developers:
 
 * The **Ansible extension for VS Code** for a rich editing experience.
 * **`ansible-creator`** to scaffold new collections and content.
@@ -56,7 +56,7 @@ If you would like to get all of these tools running on your own Windows, macOS, 
 
 .Interactive Guide
 ****
-link:https://interact.redhat.com/share/iKoPpilaNueRFTUzWnqL[Installing Ansible developer tools in VS Code in Windows, macOS or Linux using the Dev Container]
+link:https://interact.redhat.com/share/iKoPpilaNueRFTUzWnqL[Installing Ansible developer tools in VS Code in Windows, macOS or Linux using the Dev Container^]
 ****
 
 == References
