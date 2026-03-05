@@ -190,12 +190,26 @@ cd /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycol
 
 . *Run the `ansible-galaxy` command in the VS Code Terminal:*
 +
-Before we move on to build our Execution Environment, we need to package our collection and clean it of unneeded development files. We will be using `ansible-galaxy` for this. Run the following command in the active terminal to generate the collection tarball.
+Before we move on to build our Execution Environment, we need to package our collection and clean it of unneeded development files. We will be using `ansible-galaxy` and `ade` for this. 
+Before we package the collection in a tarball we will disable the `ade` editable environment (note the dot at the end for the path).
++
+[source,bash,role=execute]
+----
+ade install .
+----
+Run the following commands in the active terminal to generate the collection tarball. 
 +
 [source,bash,role=execute]
 ----
 ansible-galaxy collection build --output-path /home/rhel/myansibleproject/
 ----
+Let's re-enable `ade` editable mode now:
++
+[source,bash,role=execute]
+----
+ade install -e .
+----
+
 
 === Task 2: Review the Generated Containerfile (Dry Run)
 
