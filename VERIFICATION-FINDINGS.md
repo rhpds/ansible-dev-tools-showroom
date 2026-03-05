@@ -3,8 +3,14 @@
 **Date:** 2026-03-05
 **Content type:** Workshop (hands-on lab)
 **Content directory:** `content/modules/ROOT/pages/`
+
+## First Review
 **Total issues found:** 27 (4 Critical, 18 High, 5 Medium)
-**Status:** ALL 27 ISSUES RESOLVED
+**Status:** ALL 27 ISSUES RESOLVED (PRs #4-#7)
+
+## Second Review
+**Total issues found:** 8 (0 Critical, 4 High, 4 Medium)
+**Status:** 7 RESOLVED (PR #8), 1 SKIPPED (B.12 - formal Verify subsections, by agreement)
 
 ---
 
@@ -179,6 +185,62 @@
 
 ---
 
+---
+
+# Second Review (PR #8)
+
+**Scaffold:** No issues found - all scaffold files correctly configured.
+
+## High Priority Issues (4) - RESOLVED
+
+### 30. Missing Learning Objectives in molecule module - RESOLVED
+
+- **File:** `21-molecule.adoc`
+- **Was:** Only module without a `== Learning Objectives` section
+- **Resolution:** Added Learning Objectives section with 4 bullet points (describe lifecycle, configure scenarios, write assertions, run/troubleshoot)
+
+### 31. External links missing `^` caret - RESOLVED
+
+- **File:** `99-conclusion.adoc:30,59`
+- **Was:** 2 external links missing `^` for new tab behavior
+- **Resolution:** Added `^` to Ansible Forum intro link and Interactive Guide link
+
+### 32. Prohibited vague terms ("powerful", "robust") - RESOLVED
+
+- **Files:** `21-molecule.adoc:34`, `23-tox-ansible.adoc:167`, `22-pytest-ansible.adoc:179`
+- **Resolution:** "powerful functionality" → "core functionality", "most powerful features" → "key feature", "more robust" → "more reliable"
+
+### 33. Unsupported superlatives - RESOLVED
+
+- **Files:** `23-tox-ansible.adoc:167`, `99-conclusion.adoc:41`
+- **Resolution:** "most powerful features" → "key feature" (combined with #32), "most important tools" → "key tools"
+
+## Medium Priority Issues (4) - 3 RESOLVED, 1 SKIPPED
+
+### 34. QR code image missing `link=self,window=blank` - RESOLVED
+
+- **File:** `99-conclusion.adoc:28`
+- **Was:** Used inline `image:` without `link=self,window=blank`
+- **Resolution:** Changed to block `image::` with `link=self,window=blank`
+
+### 35. Numbers written as words instead of numerals - RESOLVED
+
+- **Files:** `22-pytest-ansible.adoc:31`, `11-vscode-collection.adoc:81`, `13-module.adoc:155,160`, `31-ansible-builder.adoc:267`
+- **Resolution:** "three" → "3", "four" → "4" (5 occurrences across 4 files)
+
+### 36. Missing Oxford comma - RESOLVED
+
+- **File:** `index.adoc:50`
+- **Was:** "...pytest-ansible for functional testing of your modules and tox-ansible..."
+- **Resolution:** Added comma before "and `tox-ansible`", also added missing backticks around `tox-ansible`
+
+### 37. Exercises lack formal `=== Verify` subsections - SKIPPED
+
+- **Files:** Multiple modules
+- **Reason:** Exercises already include inline expected output. Adding formal `==== Verify` headings would be a significant structural change across ~15-20 tasks for moderate benefit. Skipped by agreement.
+
+---
+
 ## Files Changed
 
 | File | Changes Made |
@@ -189,14 +251,14 @@
 | `content/modules/ROOT/nav.adoc` | Added Home link for `index.adoc` |
 | `content/modules/ROOT/pages/appendix.adoc` | **NEW** - Troubleshooting and useful commands |
 | `content/modules/ROOT/pages/environment-details.adoc` | **NEW** - Access credentials and lab components |
-| `content/modules/ROOT/pages/index.adoc` | Replaced "powerful" with "feature-rich" |
-| `content/modules/ROOT/pages/00-introduction.adoc` | Fixed typos ("have have", "workspacs"), removed Helpful Links, updated repo URL, added `link=self,window=blank` to images |
-| `content/modules/ROOT/pages/11-vscode-collection.adoc` | Added learning objectives, added `link=self,window=blank` to images, added NOTE for `ls` output |
-| `content/modules/ROOT/pages/12-ade.adoc` | Added learning objectives, fixed "fileds" typo, fixed double numbering, added `link=self,window=blank` to images |
-| `content/modules/ROOT/pages/13-module.adoc` | Added learning objectives, fixed Title Case headings, added `link=self,window=blank` to images |
-| `content/modules/ROOT/pages/21-molecule.adoc` | Removed duplicate `== Lab Briefing`, added `link=self,window=blank` to images |
-| `content/modules/ROOT/pages/22-pytest-ansible.adoc` | Added learning objectives, renamed duplicate Task 4 to Task 5, fixed executable output block |
-| `content/modules/ROOT/pages/23-tox-ansible.adoc` | Added learning objectives, removed stray bare link |
-| `content/modules/ROOT/pages/31-ansible-builder.adoc` | Added learning objectives, fixed Title Case heading, expanded "UBI", fixed "it's" to "its", added `link=self,window=blank` to images |
-| `content/modules/ROOT/pages/32-ansible-sign.adoc` | Added learning objectives, restructured tasks (1-6), expanded "AAP" and "GPG", fixed "REAME" typo, added expected output for verify command |
-| `content/modules/ROOT/pages/99-conclusion.adoc` | Fixed `hhttps://` typo, added References section, replaced "powerful", updated repo URL |
+| `content/modules/ROOT/pages/index.adoc` | R1: Replaced "powerful" with "feature-rich". R2: Added Oxford comma, backticks on `tox-ansible` |
+| `content/modules/ROOT/pages/00-introduction.adoc` | R1: Fixed typos ("have have", "workspacs"), removed Helpful Links, updated repo URL, added `link=self,window=blank` to images |
+| `content/modules/ROOT/pages/11-vscode-collection.adoc` | R1: Added learning objectives, added `link=self,window=blank` to images, added NOTE for `ls` output. R2: "three" → "3" |
+| `content/modules/ROOT/pages/12-ade.adoc` | R1: Added learning objectives, fixed "fileds" typo, fixed double numbering, added `link=self,window=blank` to images |
+| `content/modules/ROOT/pages/13-module.adoc` | R1: Added learning objectives, fixed Title Case headings, added `link=self,window=blank` to images. R2: "three" → "3" (2 occurrences) |
+| `content/modules/ROOT/pages/21-molecule.adoc` | R1: Removed duplicate `== Lab Briefing`, added `link=self,window=blank` to images. R2: Added Learning Objectives, "powerful" → "core" |
+| `content/modules/ROOT/pages/22-pytest-ansible.adoc` | R1: Added learning objectives, renamed duplicate Task 4 to Task 5, fixed executable output block. R2: "three" → "3", "robust" → "reliable" |
+| `content/modules/ROOT/pages/23-tox-ansible.adoc` | R1: Added learning objectives, removed stray bare link. R2: "most powerful" → "key feature" |
+| `content/modules/ROOT/pages/31-ansible-builder.adoc` | R1: Added learning objectives, fixed Title Case heading, expanded "UBI", fixed "it's" to "its", added `link=self,window=blank` to images. R2: "four" → "4" |
+| `content/modules/ROOT/pages/32-ansible-sign.adoc` | R1: Added learning objectives, restructured tasks (1-6), expanded "AAP" and "GPG", fixed "REAME" typo, added expected output for verify command |
+| `content/modules/ROOT/pages/99-conclusion.adoc` | R1: Fixed `hhttps://` typo, added References section, replaced "powerful", updated repo URL. R2: Added `^` to 2 links, "most important" → "key", fixed QR image macro |
