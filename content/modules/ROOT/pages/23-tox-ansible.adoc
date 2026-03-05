@@ -16,6 +16,14 @@ _A guide to automating your testing workflow using the tox-ansible plugin._
 * **Estimated Time:** 10 - 20 minutes
 ****
 
+== Learning Objectives
+
+After completing this module, you will be able to:
+
+* Configure `tox-ansible` to auto-discover test environments
+* Run linting, unit, and integration tests through a unified `tox` interface
+* Target specific Ansible versions and test types using tox factors
+
 == Lab Briefing
 
 **What is tox?**
@@ -194,4 +202,3 @@ In this lab, you utilized the **tox-ansible** plugin to dramatically simplify te
 
 With your testing pipeline automated, you are ready to package your work.
 Click the **Next** button below to proceed to **Module 08: Execution Environments**.
-. https://github.com/rhpds/ansible-super-lab-showroom[Source for this lab content]
