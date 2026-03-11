@@ -16,7 +16,7 @@ _A guide to testing your Ansible collection using Ansible Molecule and a pre-con
 * **Estimated Time:** 
 ****
 
-== Learning Objectives
+== Learning objectives
 
 After completing this module, you will be able to:
 
@@ -25,7 +25,7 @@ After completing this module, you will be able to:
 * Write assertion-based integration tests for Ansible content
 * Run and troubleshoot Molecule test scenarios from the command line
 
-== Lab Briefing
+== Lab briefing
 
 In this challenge, you will explore and test the collection you created in previous modules using **Ansible Molecule**.
 
@@ -68,14 +68,14 @@ This lifecycle ensures your content is tested in a clean, reproducible environme
 
 ---
 
-== Lab Guide: Hands-On Tasks
+== Lab guide: Hands-on tasks
 
 Now, let's explore the test scenario that was automatically added to your collection project.
 
 ---
 
 
-=== Task 1: Explore the Molecule Scenario
+=== Task 1: Explore the Molecule scenario
 
 When you created the collection in the previous modules, `ansible-creator` also generated a Molecule test scenario named `integration_hello_world`.
 
@@ -112,7 +112,7 @@ This playbook runs during the **converge** stage of the Molecule lifecycle. It's
 ---
 
 
-=== Task 2: Examine the Integration Tests
+=== Task 2: Examine the integration tests
 
 Before running tests, let's understand what those tests actually verify. This is where assertion-based testing comes into play.
 
@@ -145,7 +145,7 @@ This setup → execute → verify pattern is fundamental to effective testing.
 ---
 
 
-=== Task 3: Create a Filter Plugin
+=== Task 3: Create a filter plugin
 
 Now that you understand how tests work, let's add a new filter plugin to your collection. This demonstrates how new components integrate with the existing Molecule test framework - when you add functionality, you can immediately test it.
 
@@ -176,7 +176,7 @@ The Ansible extension creates the plugin structure automatically, including the 
 ---
 
 
-=== Task 4: Run the Molecule Test
+=== Task 4: Run the Molecule test
 
 Finally, you will use the command line to run the Molecule test scenario and observe the complete test lifecycle in action.
 
@@ -238,7 +238,7 @@ A passing Molecule test means your collection has been validated in an automated
 
 ---
 
-=== Troubleshooting Common Issues
+=== Troubleshooting common issues
 
 . **If you see "No such file or directory" errors:**
 +
@@ -308,8 +308,8 @@ The skills you've learned in this module - understanding test scenarios, writing
 
 ---
 
-== Next Steps
+== Next steps
 
-You have successfully used Molecule to test your collection. In the next module, you'll explore additional development tools and best practices for maintaining production-ready Ansible content. 
+You have successfully used Molecule to test your collection. In the next module, you'll explore additional development tools and recommended practices for maintaining production-ready Ansible content. 
 
 Please click the **Next** button below to proceed to the next module.

@@ -16,7 +16,7 @@ _A guide to automating your testing workflow using the tox-ansible plugin._
 * **Estimated Time:** 10 - 20 minutes
 ****
 
-== Learning Objectives
+== Learning objectives
 
 After completing this module, you will be able to:
 
@@ -24,7 +24,7 @@ After completing this module, you will be able to:
 * Run linting, unit, and integration tests through a unified `tox` interface
 * Target specific Ansible versions and test types using tox factors
 
-== Lab Briefing
+== Lab briefing
 
 **What is tox?**
 `tox` is a generic virtual environment management and test command line tool. It is the standard for testing Python-based projects.
@@ -41,9 +41,9 @@ This "Convention over Configuration" approach allows you to run complex test mat
 
 ---
 
-== Lab Guide: Hands-On Tasks
+== Lab guide: Hands-on tasks
 
-=== Task 1: Verify the Installation
+=== Task 1: Verify the installation
 
 Before we configure anything, let's verify that `tox` and the plugin are installed and ready.
 
@@ -69,7 +69,7 @@ Crucially, look for **`with tox-ansible`**. This confirms the plugin is active.
 cd /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/
 ----
 
-=== Task 2: Create a Minimal tox Configuration
+=== Task 2: Create a minimal Tox configuration
 
 Because we are using the plugin, we don't need to manually define every single test environment. We just need to tell tox global settings.
 
@@ -108,7 +108,7 @@ ansible_core_versions =
     * `ansible_core_versions`: The plugin normally attempts to test against *every* supported Ansible version. We limit this to 2.15 and 2.16 to keep the lab fast.
     * We do *not* have a `[testenv:lint]` or `[testenv:molecule]` section. The plugin creates these for us!
 
-=== Task 3: Explore the Auto-Generated Environments
+=== Task 3: Explore the auto-generated environments
 
 Now that the config exists, let's see what the plugin found in your project.
 
@@ -126,7 +126,7 @@ Even though your `tox.ini` is tiny, you will see a massive list of environments.
 * `py311-ansible2.16-unit` (Auto-discovered pytest)
 * `py311-ansible2.16-molecule-integration_hello_world` (Auto-discovered molecule)
 
-=== Task 4: Run the Tests
+=== Task 4: Run the tests
 
 Now we let tox orchestrate the execution.
 
@@ -162,7 +162,7 @@ This automatically:
     3.  Installs Molecule and Podman plugins.
     4.  Executes the test scenario.
 
-=== Task 5: Running a Group of Tests
+=== Task 5: Running a group of tests
 
 A key feature of tox is running multiple tests with one command.
 
@@ -198,7 +198,7 @@ In this lab, you utilized the **tox-ansible** plugin to dramatically simplify te
 * **Auto-discovery:** You learned how the plugin scans your project to generate the test matrix automatically.
 * **Matrix Testing:** You validated your code against specific Ansible Core versions (2.15, 2.16) without managing the dependencies manually.
 
-== Next Steps
+== Next steps
 
 With your testing pipeline automated, you are ready to package your work.
 Click the **Next** button below to proceed to **Module 08: Execution Environments**.

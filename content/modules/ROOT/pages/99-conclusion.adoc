@@ -21,7 +21,7 @@ _A summary of the Ansible development tools you've learned and resources for con
 
 You have successfully completed the **"Intro to creating automation with the new Ansible Development Tools"** workshop!
 
-=== Join the Ansible Forum
+=== Join the Ansible forum
 
 **Scan** the QR code below to sign up to the Ansible Forum if you haven't yet, if you already have scan anyway and you might get a Badge for completing the workshop if you approach your instructor with your username!
 
@@ -44,9 +44,9 @@ You have reached the end of the *Introduction to Ansible development tools* work
 * **`ansible-creator`** to scaffold new collections and content.
 * **`adt`** (Ansible development tools) for a unified command-line tools management.
 * **`ade`** (Ansible development environment) for managing collection dependencies.
-* **`ansible-lint`** for checking playbooks against best practices.
+* **`ansible-lint`** for checking playbooks against recommended practices.
 * **`ansible-navigator`** for a feature-rich terminal-based user interface to run and test your execution environments.
-* **Ansible Molecule** for robustly testing your collections.
+* **Ansible Molecule** for testing your collections in isolated, reproducible environments.
 
 ---
 

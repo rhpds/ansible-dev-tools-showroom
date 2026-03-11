@@ -21,7 +21,7 @@ Before starting this lab, ensure you have:
 * Basic Ansible and YAML syntax understanding
 * Access to the Red Hat Demo Platform environment
 
-== Lab Structure
+== Lab structure
 
 The following modules are included in this lab:
 
@@ -41,16 +41,16 @@ The following modules are included in this lab:
 .. xref:32-ansible-sign.adoc[Lab 3.2 - Introducing supply chain security with ansible-sign]
 . xref:99-conclusion.adoc[Conclusion]
 
-== Learning Outcomes
+== Learning outcomes
 
 By the end of this workshop, you will be able to:
 
 * Use the **Ansible extension for VS Code** features for a rich editing experience.
 * Learn all the creation tools, including `ansible-creator` to scaffold new collections and content, `adt` (Ansible development tools) for a unified command-line tools management, `ade` (Ansible development environment) for managing collection dependencies and virtual environments and `ansible-navigator` for a feature-rich terminal-based user interface to run and test your execution environments..
-* Test your content with `ansible-lint` for checking playbooks against best practices, `molecule` for robustly testing your collections, `pytest-ansible` for functional testing of your modules, and `tox-ansible` for bringing it all together against in multiple combinations.
+* Test your content with `ansible-lint` for checking playbooks against recommended practices, `molecule` for testing your collections in isolated, reproducible environments, `pytest-ansible` for functional testing of your modules, and `tox-ansible` for bringing it all together in multiple combinations.
 * Deploy to production by packaging your Collection content with `ansible-galaxy` and `ansible-builder`, and applying secure supply chain practices with `ansible-sign`.
 
-== Getting Started
+== Getting started
 
 Begin with xref:00-introduction.adoc[Introduction] to start your adventure. Each module includes detailed instructions, code examples, and verification steps.
 

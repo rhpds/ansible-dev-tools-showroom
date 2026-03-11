@@ -17,11 +17,11 @@ _A guide to adding a custom module to your Ansible collection and using it in a 
 * **Estimated Time:**
 ****
 
-== Lab Briefing
+== Lab briefing
 
 In this challenge, you will be adding content in the form of a Ansible **module plugin** to the collection you created, and then using the module for a new playbook, which you will fix with `ansible-lint` before running it with `ansible-navigator`.
 
-== Learning Objectives
+== Learning objectives
 
 After completing this module, you will be able to:
 
@@ -32,7 +32,7 @@ After completing this module, you will be able to:
 
 ---
 
-== Lab Guide: Hands-On Tasks
+== Lab guide: Hands-on tasks
 
 In this exercise, you will copy an existing Python module into your collection's `plugins/modules` directory. While you can develop your own modules from scratch, we will use a pre-written one for simplicity.
 
@@ -160,6 +160,6 @@ image::vscode-devtools-cowsay-navigator.png[Viewing task output in Ansible Navig
 .   **Exit Ansible Navigator.** **Press** the `ESC` key 3 times to exit the TUI and return to the normal terminal prompt.
 
 ---
-== Next Steps
+== Next steps
 
 You have successfully added and tested a custom module in your collection. Please click the **Next** button below to proceed to the next module.
