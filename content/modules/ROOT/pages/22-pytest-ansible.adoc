@@ -17,7 +17,7 @@ _Learn how to do functional testing for your Ansible content using pytest-ansibl
 * **Estimated Time:**
 ****
 
-== Learning Objectives
+== Learning objectives
 
 After completing this module, you will be able to:
 
@@ -26,7 +26,7 @@ After completing this module, you will be able to:
 * Configure `conftest.py` for proper module and collection path resolution
 * Interpret pytest output and use debugging flags
 
-== Lab Briefing
+== Lab briefing
 
 pytest-ansible is a pytest plugin that bridges the gap between Python's pytest framework and Ansible automation. It provides 3 key capabilities:
 
@@ -38,7 +38,7 @@ This integration allows you to write fast, isolated tests for Ansible modules, p
 
 In this lab, you'll learn how to test the custom `cowsay` module you developed earlier using pytest-ansible.
 
-== Lab Guide: Hands-On Tasks
+== Lab guide: Hands-on tasks
 
 === Why pytest-ansible?
 
@@ -55,7 +55,7 @@ These tests run quickly and are well-suited for CI pipelines.
 
 ---
 
-=== Test Scope
+=== Test scope
 
 In this task, we will test the custom `cowsay` module developed earlier in the collection:
 
@@ -65,7 +65,7 @@ In this task, we will test the custom `cowsay` module developed earlier in the c
 
 ---
 
-=== Task 1: Create the Test Inventory
+=== Task 1: Create the test inventory
 
 . *Create the `inventory` file inside the `mycollection/tests` directory:*
 +
@@ -77,7 +77,7 @@ localhost ansible_connection=local ansible_python_interpreter=python3
 
 ---
 
-=== Task 2: Create the Test Configuration
+=== Task 2: Create the test configuration
 
 . *Inside the `mycollection/tests/` directory*, create a `conftest.py` file with the following content:
 +
@@ -123,7 +123,7 @@ The `conftest.py` file is a special pytest configuration file that runs before a
 
 ---
 
-=== Task 3: Create the Test File
+=== Task 3: Create the test file
 
 . *Inside the `mycollection/tests/` directory*, create a `test_cowsay.py` file and add the following content:
 +
@@ -181,7 +181,7 @@ This test validates both the module's execution (no failures, correct change sta
 
 ---
 
-=== Task 4: Run the Test
+=== Task 4: Run the test
 
 . *Open the VS Code Terminal if you don't have one*
 
@@ -277,7 +277,7 @@ Molecule validates *how content behaves in a system context*, while pytest-ansib
 
 ---
 
-=== When to Use Each Tool
+=== When to use each tool
 
 * Use Molecule when testing:
 ** Roles
@@ -293,7 +293,7 @@ Both tools complement each other and are commonly used together in professional 
 
 ---
 
-=== Key Takeaways
+=== Key takeaways
 
 * Molecule ensures your automation works in real environments.
 * pytest-ansible ensures your building blocks behave correctly.

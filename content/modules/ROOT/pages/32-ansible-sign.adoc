@@ -17,7 +17,7 @@ _Learn how to sign content by using ansible-sign and apply supply-chain security
 * **Estimated Time:** 10 - 20 minutes
 ****
 
-== Learning Objectives
+== Learning objectives
 
 After completing this module, you will be able to:
 
@@ -26,13 +26,13 @@ After completing this module, you will be able to:
 * Sign and verify an Ansible project using `ansible-sign`
 * Understand how signed content integrates with Ansible Automation Platform
 
-== Lab Briefing
+== Lab briefing
 
 `ansible-sign`: Utility for signing and verifying Ansible project directory contents.
 
 Project signing and verification lets you sign files in your project directory, then verify whether or not that content has changed in any way, or files have been added or removed from the project unexpectedly. To do this, you require a private key for signing and a matching public key for verifying.
 
-== Lab Guide: Hands-On Tasks
+== Lab guide: Hands-on tasks
 
 **The Workflow for Signing Ansible Automation Platform (AAP) Projects:**
 
@@ -194,6 +194,6 @@ ade install --editable /home/rhel/myansibleproject/collections/ansible_collectio
 
 
 ---
-== Next Steps
+== Next steps
 
 You have successfully signed and verified your playbook, this ensured that it can't be tampered with and continue to run unnoticed. Please click the **Next** button below to proceed to the next module.

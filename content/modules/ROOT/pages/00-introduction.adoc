@@ -12,7 +12,7 @@
 [abstract]
 This module introduces the Ansible Development Tools workshop and walks you through launching your development environment in Red Hat OpenShift Dev Spaces. By the end, you will have a fully configured VS Code workspace with all the tools needed for the remaining labs.
 
-== Learning Objectives
+== Learning objectives
 
 After completing this module, you will be able to:
 

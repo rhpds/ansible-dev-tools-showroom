@@ -17,7 +17,7 @@ _A guide to using the Ansible extension for Visual Studio Code to scaffold a new
 * **Estimated Time:**  
 ****
 
-== Lab Briefing
+== Lab briefing
 
 `ansible-creator` is a Command-Line Interface (CLI) tool designed for effortlessly scaffolding all your Ansible content. Whether you are initializing an Ansible collection or creating the framework for specific plugins, this tool streamlines the process with efficiency and precision based on your requirements.
 
@@ -25,7 +25,7 @@ _A guide to using the Ansible extension for Visual Studio Code to scaffold a new
 
 In this exercise, you will create an Ansible collection and a playbook using the Ansible extension's wizard in VS Code.
 
-== Learning Objectives
+== Learning objectives
 
 After completing this module, you will be able to:
 
@@ -37,14 +37,14 @@ image::Jun-06-2025_at_21.02.34-image.png[VS Code editor inside the lab environme
 
 ---
 
-== Lab Guide: Hands-On Tasks
+== Lab guide: Hands-on tasks
 
 In this exercise you will learn how to create, test, and deploy an Ansible collection using the `ansible-creator` tool through the Ansible extension for VS Code.
 
 For this lab, all necessary tools and dependencies are pre-installed and configured for you.
 
 
-=== Task 0: Create a Collection Using the ansible-creator CLI
+=== Task 0: Create a collection using the ansible-creator CLI
 
 Lets start by running `ansible-creator` in the command line to scaffold a collection, with the directory structure and several file templates to speed up our content development. In the following tasks we will do the same using the Ansible extension in VS Code.
 
@@ -70,7 +70,7 @@ NOTE: You should see the scaffolded collection directory structure including fil
 
 . **Congrats:** You created a default collection. Move to the next tasks to see how to do this in VS Code and how to customize it.
 
-=== Task 1: Explore the Ansible Extension
+=== Task 1: Explore the Ansible extension
 
 First, let's explore the Ansible extension for VS Code.
 
@@ -86,7 +86,7 @@ image::vscode-devtools-ansible-icon.png[Ansible icon in VS Code sidebar,link=sel
 +
 image::Apr-29-2025_at_13.49.45-image.png[Collapsing the Lightspeed sections,link=self,window=blank, opts="border"]
 
-=== Task 2: Create a Collection Project
+=== Task 2: Create a collection project
 
 Next, you will scaffold a new Ansible collection.
 
@@ -137,7 +137,7 @@ Note: Please activate the virtual environment:
 source /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/.venv/bin/activate
 ----
 
-=== Task 3: Create a Playbook Project
+=== Task 3: Create a playbook project
 
 Now, you will create a separate playbook project.
 
@@ -177,7 +177,7 @@ image::vscode-devtools-playbook-create.png[Creating a Playbook project,link=self
 Note: playbook project created at /home/rhel/myansibleproject
 ----
 
-=== Task 4: Open the `mycollection` Folder
+=== Task 4: Open the mycollection folder
 
 Due to a lab infrastructure and VS Code limitation, you will now manually open the folder where your new collection content was created.
 
@@ -207,6 +207,6 @@ image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Expl
 
 ---
 
-== Next Steps
+== Next steps
 
 You have successfully explored how ansible-creator and VS Code work together to scaffold a collection. Please click the **Next** button below to proceed to the next module.

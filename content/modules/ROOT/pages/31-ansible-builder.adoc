@@ -16,7 +16,7 @@ _A guide to automating the creation and customization of containerized execution
 * **Estimated Time:** 10 - 20 minutes
 ****
 
-== Learning Objectives
+== Learning objectives
 
 After completing this module, you will be able to:
 
@@ -26,7 +26,7 @@ After completing this module, you will be able to:
 * Build and tag a custom execution environment image
 * Test the execution environment with `podman` and `ansible-navigator`
 
-== Lab Briefing
+== Lab briefing
 
 In previous challenges, you authored, tested, and validated your custom Ansible collection. 
 
@@ -43,11 +43,11 @@ The Ansible VS Code extension is actively providing an Enhanced VS Code integrat
 
 Although new features in the roadmap are coming to simplify the EE building experience, specially for operators and deploying in production, this exercise covers the development and testing.
 
-== Lab Guide: Hands-On Tasks
+== Lab guide: Hands-on tasks
 
 We will define an Execution Environment configuration file by using the Ansible extension wizard in VS Code, then use  `ansible-galaxy` to package our collection, `ansible-builder create` to inspect the generated `Containerfile`, and finally `ansible-builder build` for building the custom EE image, and finish by testing it using Podman (the default container runtime).
 
-=== Task 1: Define the Execution Environment Definition File
+=== Task 1: Define the Execution Environment definition file
 
 
 The EE configuration is defined in `execution-environment.yml`. To access the features of modern Ansible tooling, we must explicitly declare `version: 3` in the definition file.
@@ -135,7 +135,7 @@ Because the base image (`ee-minimal-rhel8:latest`) is built on Universal Base Im
 
 . *Let's customize the EE blueprint content:*
 +
-We will be making two modifications to the created file, as we are building an EE to test our local developed collection, we need to specify to `ansible-builder` we will be working with a local tarball, as our collection is not yet available in Ansible Galaxy or AAP's Automation Hub.
+We will be making two modifications to the created file, as we are building an EE to test our local developed collection, we need to specify to `ansible-builder` we will be working with a local tarball, as our collection is not yet available in Ansible Galaxy or Ansible Automation Platform's (AAP) Automation Hub.
 +
 First we will add a section called `additional_build_files`, where we will input the source (`src`) file of the collection and the destination (`dest`) for the build context
 +
@@ -211,7 +211,7 @@ ade install -e .
 ----
 
 
-=== Task 2: Review the Generated Containerfile (Dry Run)
+=== Task 2: Review the generated Containerfile (dry run)
 
 Before executing the full build, we can use the `ansible-builder create` command to generate the `Containerfile` and build context directory (`context/`). This is helpful for debugging the build steps without spending time on the full image assembly.
 
@@ -243,7 +243,7 @@ In the VS Code file explorer, locate `context/Containerfile` and open it. Review
 
 
 
-=== Task 3: Build and Tag the Custom Execution Environment
+=== Task 3: Build and tag the custom Execution Environment
 
 Now we will execute the full build process and assign a specific tag to the final container image.
 
@@ -331,6 +331,6 @@ podman run mynamespace/mycollection-ee:latest ansible-doc -t module mynamespace.
 IMPORTANT: This command should display the documentation for your custom module, but we didn't add the corresponding metadata blocks! We will leave it to you as an optional task to research and fix this issue if you have time after finishing the lab!
 
 ---
-== Next Steps
+== Next steps
 
 You have successfully packaged your automation content into an Execution Environment using `ansible-builder` and VS Code. This image is now ready for upload to an Automation Hub or deployment via Automation Controller. Please click the **Next** button below to proceed to the next module.

@@ -17,7 +17,7 @@ _A guide to exploring what `ansible-creator` and `ade` (Ansible Dev Environment)
 * **Estimated Time:** 
 ****
 
-== Lab Briefing
+== Lab briefing
 
 Ansible Dev Environment (`ade`) is a management tool for Ansible content development that provides isolated workspaces for development. `ade` manages virtual environments, collection installation and removal, and Python dependency resolution to ensure consistent, reproducible development environments.
 
@@ -33,7 +33,7 @@ Ansible Dev Environment (`ade`) is a management tool for Ansible content develop
 
 In this challenge, you will explore the content that was automatically generated for the collection you just created and learn how to customize your requirements using `ade`.
 
-== Learning Objectives
+== Learning objectives
 
 After completing this module, you will be able to:
 
@@ -45,7 +45,7 @@ image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Expl
 
 ---
 
-== Lab Guide: Hands-On Tasks
+== Lab guide: Hands-on tasks
 
 You will now set up your Ansible development environment, check the scaffolded collection content, and add a dependency to your collection's `galaxy.yml` to see how the new `ade` tool helps manage it.
 
@@ -63,7 +63,7 @@ image::vscode-devtools-python-env.png[Selecting the Python virtual environment i
 
 NOTE: This is a convenient alternative to manually running `source .venv/bin/activate` in the terminal.
 
-=== Task 2: Add Collection Dependencies
+=== Task 2: Add collection dependencies
 
 The Ansible Development Environment (`ade`) tool helps manage dependencies for your collections. 
 
@@ -158,7 +158,7 @@ pip3 install --upgrade ansible-dev-tools
 pip3 install ansible-core==2.16.15
 ----
 
-=== Task 4: Manage Dependencies with `ade`
+=== Task 4: Manage dependencies with `ade`
 
 Now you will use `ade` to install the dependencies you declared in `galaxy.yml`.
 
@@ -224,7 +224,7 @@ NOTE: Remember the "Install collection from source code (editable mode)" option 
 ---
 
 
-== Next Steps
+== Next steps
 
 You have successfully explored how Ansible Dev Tools (`adt`) and Ansible Dev Environment (`ade`) work. Please click the **Next** button below to proceed to the next module.
 
