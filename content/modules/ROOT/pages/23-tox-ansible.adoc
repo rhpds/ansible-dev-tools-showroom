@@ -11,8 +11,8 @@ _A guide to automating your testing workflow using the tox-ansible plugin._
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** Launching OpenShift Dev Spaces
-* **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
+* **Prepares you for:** Testing your Ansible content with tox-ansible
+* **Lab Type:** Optional
 * **Estimated Time:** 10 - 20 minutes
 ****
 
@@ -39,7 +39,6 @@ After completing this module, you will be able to:
 
 This "Convention over Configuration" approach allows you to run complex test matrices with a 5-line configuration file.
 
----
 
 == Lab guide: Hands-on tasks
 
@@ -116,7 +115,7 @@ Now that the config exists, let's see what the plugin found in your project.
 +
 [source,bash,role=execute]
 ----
-tox -l
+tox list
 ----
 +
 **Observe the magic:**
@@ -125,6 +124,8 @@ Even though your `tox.ini` is tiny, you will see a massive list of environments.
 * `lint` (Auto-discovered ansible-lint)
 * `py311-ansible2.16-unit` (Auto-discovered pytest)
 * `py311-ansible2.16-molecule-integration_hello_world` (Auto-discovered molecule)
++
+NOTE: The `py311` prefix reflects the Python version installed in your environment. In other environments, you may see a different version (e.g., `py312`, `py313`).
 
 === Task 4: Run the tests
 
@@ -149,7 +150,7 @@ tox -e py311-ansible2.16-unit
 
 .   **Run Integration Tests (Molecule):**
     Instead of typing the long `molecule test -s ...` command, we use the tox alias.
-    *Note: The environment name depends on the scenario you created in Module 05.*
+    *Note: The environment name depends on the scenario you created in xref:21-molecule.adoc[Lab 2.1].*
 +
 [source,bash,role=execute]
 ----
@@ -176,7 +177,6 @@ tox -f ansible2.16
 +
 This command tells tox: "Run every test environment that includes 'ansible2.16' in its name." This effectively runs your Unit tests AND Molecule tests for that version in one go.
 
----
 
 == Troubleshooting
 
@@ -188,7 +188,6 @@ If `tox -l` returns nothing or very few items:
 1. Ensure you are in the directory containing `galaxy.yml`.
 2. Ensure you actually created the `tests/unit` folder or `molecule` scenarios in previous modules. The plugin only generates environments for tests that actually exist.
 
----
 
 == Summary
 
@@ -201,4 +200,4 @@ In this lab, you utilized the **tox-ansible** plugin to dramatically simplify te
 == Next steps
 
 With your testing pipeline automated, you are ready to package your work.
-Click the **Next** button below to proceed to **Module 08: Execution Environments**.
+Click the **Next** button below to proceed to xref:31-ansible-builder.adoc[Lab 3.1 - Creating an Execution Environment with ansible-builder].
