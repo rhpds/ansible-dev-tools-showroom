@@ -1,0 +1,64 @@
+---
+# =============================================================================
+# Solver: 21-molecule - Testing a Collection with Ansible Molecule
+# =============================================================================
+#
+# Solves:
+# - Task 1: Explore the Molecule scenario (reading exercise - no solver)
+# - Task 2: Examine the integration tests (reading exercise - no solver)
+# - Task 3: Create a filter plugin (VS Code wizard -> CLI equivalent)
+# - Task 4: Run the Molecule test
+#
+# =============================================================================
+
+- name: "Solve 21-molecule: Create filter plugin and run Molecule tests"
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+    collection_dir: >-
+      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+    extensions_dir: >-
+      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/extensions
+
+  tasks:
+    # =========================================================================
+    # Task 1: Explore the Molecule scenario
+    # SKIPPED - Reading/exploration exercise. The student examines the
+    # molecule.yml file and scenario structure. No action required.
+    # =========================================================================
+
+    # =========================================================================
+    # Task 2: Examine the integration tests
+    # SKIPPED - Reading/exploration exercise. The student reviews the
+    # tests/integration/targets/hello_world/tasks/main.yml file.
+    # No action required.
+    # =========================================================================
+
+    # =========================================================================
+    # Task 3: Create a filter plugin
+    # The VS Code wizard creates a filter plugin. The CLI equivalent
+    # uses ansible-creator add plugin.
+    # =========================================================================
+    - name: "Task 3: Create hello_world filter plugin via ansible-creator"
+      ansible.builtin.command:
+        cmd: >-
+          {{ collection_dir }}/.venv/bin/ansible-creator
+          add plugin filter hello_world
+          --path {{ collection_dir }}
+        creates: "{{ collection_dir }}/plugins/filter/hello_world.py"
+
+    # =========================================================================
+    # Task 4: Run the Molecule test
+    # =========================================================================
+    - name: "Task 4: Run Molecule test with integration_hello_world scenario"
+      ansible.builtin.command:
+        cmd: >-
+          {{ collection_dir }}/.venv/bin/molecule test
+          -s integration_hello_world
+        chdir: "{{ extensions_dir }}"
+      changed_when: true
+      environment:
+        ANSIBLE_COLLECTIONS_PATH: >-
+          /home/rhel/myansibleproject/collections

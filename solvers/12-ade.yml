@@ -1,0 +1,159 @@
+---
+# =============================================================================
+# Solver: 12-ade - Using the Ansible Development Environment tool
+# =============================================================================
+#
+# Solves:
+# - Task 1: Activate Ansible Development Environment (VS Code UI - partial)
+# - Task 2: Add collection dependencies (edit galaxy.yml)
+# - Task 3: Check Ansible Development Tools versions
+# - Task 4: Manage dependencies with ade
+#
+# =============================================================================
+
+- name: "Solve 12-ade: Configure ade and manage dependencies"
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+    collection_dir: >-
+      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+
+  tasks:
+    # =========================================================================
+    # Task 1: Activate Ansible Development Environment
+    # SKIPPED - Selecting the Python interpreter in VS Code is a UI action.
+    # The .venv was created by ansible-creator in the previous lab.
+    # CLI equivalent: source .venv/bin/activate (handled by running commands
+    # within the venv context).
+    # =========================================================================
+
+    # =========================================================================
+    # Task 2: Add collection dependencies
+    # Edit galaxy.yml to add ansible.posix dependency alongside ansible.utils.
+    # Also update description field.
+    # =========================================================================
+    - name: "Task 2: Read current galaxy.yml"
+      ansible.builtin.slurp:
+        src: "{{ collection_dir }}/galaxy.yml"
+      register: r_galaxy_yml
+
+    - name: "Task 2: Load galaxy.yml content"
+      ansible.builtin.set_fact:
+        galaxy_content: "{{ r_galaxy_yml.content | b64decode | from_yaml }}"
+
+    - name: "Task 2: Update galaxy.yml with description and dependencies"
+      ansible.builtin.copy:
+        dest: "{{ collection_dir }}/galaxy.yml"
+        content: |
+          ---
+          namespace: "mynamespace"
+          name: "mycollection"
+          version: {{ galaxy_content.version | default('1.0.0') }}
+          readme: README.md
+          authors:
+            - Workshop Student <student@localhost>
+
+          description: mycowsay collection
+          license_file: LICENSE
+
+          tags: ["linux", "tools"]
+
+          dependencies:
+            "ansible.utils": "*"
+            "ansible.posix": "*"
+
+          repository: ""
+          documentation: ""
+          homepage: ""
+          issues: ""
+        mode: "0644"
+        backup: true
+
+    # =========================================================================
+    # Task 3: Check Ansible Development Tools versions
+    # =========================================================================
+    - name: "Task 3: Check adt version"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/adt --version"
+      changed_when: false
+
+    - name: "Task 3: Upgrade ansible-dev-tools in venv"
+      ansible.builtin.pip:
+        name: ansible-dev-tools
+        state: present
+        virtualenv: "{{ collection_dir }}/.venv"
+
+    - name: "Task 3: Pin ansible-core version in venv"
+      ansible.builtin.pip:
+        name: ansible-core==2.16.15
+        state: present
+        virtualenv: "{{ collection_dir }}/.venv"
+      changed_when: true
+
+    # =========================================================================
+    # Task 4: Manage dependencies with ade
+    # =========================================================================
+    - name: "Task 4: Install collection dependencies with ade"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/ade install -e ."
+        chdir: "{{ collection_dir }}"
+      changed_when: true
+
+    - name: "Task 4: Check dependency tree"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/ade tree -v"
+        chdir: "{{ collection_dir }}"
+      changed_when: false
+
+    - name: "Task 4: Update galaxy.yml to add ansible.netcommon dependency"
+      ansible.builtin.copy:
+        dest: "{{ collection_dir }}/galaxy.yml"
+        content: |
+          ---
+          namespace: "mynamespace"
+          name: "mycollection"
+          version: {{ galaxy_content.version | default('1.0.0') }}
+          readme: README.md
+          authors:
+            - Workshop Student <student@localhost>
+
+          description: mycowsay collection
+          license_file: LICENSE
+
+          tags: ["linux", "tools"]
+
+          dependencies:
+            "ansible.utils": "*"
+            "ansible.posix": "*"
+            "ansible.netcommon": "*"
+
+          repository: ""
+          documentation: ""
+          homepage: ""
+          issues: ""
+        mode: "0644"
+        backup: true
+
+    - name: "Task 4: Install system dependencies for ansible.netcommon"
+      ansible.builtin.dnf:
+        name:
+          - python3-cffi
+          - python3-cryptography
+          - python3-lxml
+          - python3-pycparser
+        state: present
+      become: true
+
+    - name: "Task 4: Re-run ade install after adding netcommon"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/ade install -e ."
+        chdir: "{{ collection_dir }}"
+      changed_when: true
+
+    - name: "Task 4: Check updated dependency tree"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/ade tree -v"
+        chdir: "{{ collection_dir }}"
+      changed_when: false

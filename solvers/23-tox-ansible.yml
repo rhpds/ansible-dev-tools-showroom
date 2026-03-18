@@ -1,0 +1,107 @@
+---
+# =============================================================================
+# Solver: 23-tox-ansible - Orchestrating Tests with tox-ansible
+# =============================================================================
+#
+# Solves:
+# - Task 1: Verify tox installation
+# - Task 2: Create a minimal tox configuration (tox.ini)
+# - Task 3: Explore auto-generated environments
+# - Task 4: Run the tests (lint, unit, integration)
+# - Task 5: Run a group of tests
+#
+# =============================================================================
+
+- name: "Solve 23-tox-ansible: Configure and run tox test orchestration"
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+    collection_dir: >-
+      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+
+  tasks:
+    # =========================================================================
+    # Task 1: Verify tox installation
+    # =========================================================================
+    - name: "Task 1: Check tox version"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/tox --version"
+      changed_when: false
+
+    # =========================================================================
+    # Task 2: Create a minimal tox configuration
+    # =========================================================================
+    - name: "Task 2: Create tox.ini"
+      ansible.builtin.copy:
+        dest: "{{ collection_dir }}/tox.ini"
+        content: |
+          [tox]
+          # Global tox settings
+          envlist = lint, unit
+          skip_missing_interpreters = True
+          requires =
+              tox-ansible
+
+          [testenv]
+          # This section configures the default behavior for all environments
+          usedevelop = true
+          deps =
+              pytest
+              pytest-ansible
+              ansible-lint
+              molecule-plugins[podman]
+
+          [ansible]
+          # Configuration specific to the tox-ansible plugin
+          # This limits the matrix to Ansible 2.15 and 2.16 to save time/resources
+          ansible_core_versions =
+              2.15
+              2.16
+        mode: "0644"
+
+    # =========================================================================
+    # Task 3: Explore auto-generated environments
+    # =========================================================================
+    - name: "Task 3: List all available tox environments"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/tox -l"
+        chdir: "{{ collection_dir }}"
+      changed_when: false
+
+    # =========================================================================
+    # Task 4: Run the tests
+    # =========================================================================
+    - name: "Task 4: Run linting environment"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/tox -e lint"
+        chdir: "{{ collection_dir }}"
+      changed_when: false
+      failed_when: false
+
+    - name: "Task 4: Run unit tests against Ansible 2.16"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/tox -e py311-ansible2.16-unit"
+        chdir: "{{ collection_dir }}"
+      changed_when: false
+      failed_when: false
+
+    - name: "Task 4: Run integration tests (Molecule) against Ansible 2.16"
+      ansible.builtin.command:
+        cmd: >-
+          {{ collection_dir }}/.venv/bin/tox
+          -e py311-ansible2.16-molecule-integration_hello_world
+        chdir: "{{ collection_dir }}"
+      changed_when: false
+      failed_when: false
+
+    # =========================================================================
+    # Task 5: Run a group of tests
+    # =========================================================================
+    - name: "Task 5: Run all tests for Ansible 2.16"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/tox -f ansible2.16"
+        chdir: "{{ collection_dir }}"
+      changed_when: false
+      failed_when: false

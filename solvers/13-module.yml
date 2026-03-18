@@ -1,0 +1,105 @@
+---
+# =============================================================================
+# Solver: 13-module - Adding a Module to a Collection
+# =============================================================================
+#
+# Solves:
+# - Task 1: Add a custom module (cowsay.py) to the collection
+# - Task 2: Create a playbook that uses the custom module
+# - Task 3: Use ansible-lint to fix the playbook
+# - Task 4: Run the playbook (VS Code UI context menu - partial)
+#
+# =============================================================================
+
+- name: "Solve 13-module: Add module and create playbook"
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+    collection_dir: >-
+      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+    project_dir: /home/rhel/myansibleproject
+
+  tasks:
+    # =========================================================================
+    # Task 1: Add a custom module to the collection
+    # =========================================================================
+    - name: "Task 1: Ensure plugins/modules directory exists"
+      ansible.builtin.file:
+        path: "{{ collection_dir }}/plugins/modules"
+        state: directory
+        mode: "0755"
+
+    - name: "Task 1: Create cowsay.py module"
+      ansible.builtin.copy:
+        dest: "{{ collection_dir }}/plugins/modules/cowsay.py"
+        content: |
+          from ansible.module_utils.basic import AnsibleModule
+          import subprocess
+
+          def run_cowsay(message):
+              result = subprocess.run(['cowsay', '-t', message], capture_output=True, text=True)
+              return result.stdout
+
+          def main():
+              module_args = dict(
+                  message=dict(type='str', required=True)
+              )
+
+              module = AnsibleModule(
+                  argument_spec=module_args,
+                  supports_check_mode=True
+              )
+
+              message = module.params['message']
+              result = run_cowsay(message)
+
+              module.exit_json(changed=False, message=result.split('\n'))
+
+          if __name__ == '__main__':
+              main()
+        mode: "0644"
+
+    # =========================================================================
+    # Task 2: Create a playbook to use the new module
+    # =========================================================================
+    - name: "Task 2: Create mycowsay.yml playbook (already lint-fixed)"
+      ansible.builtin.copy:
+        dest: "{{ project_dir }}/mycowsay.yml"
+        content: |
+          ---
+          - name: Using our cowsay module
+            hosts: localhost
+            tasks:
+              - name: Test the cowsay module
+                mynamespace.mycollection.cowsay:
+                  message: Hello, Ansible!
+                register: result
+
+              - name: Display the result
+                ansible.builtin.debug:
+                  msg: "{{ '{{' }} result.message {{ '}}' }}"
+        mode: "0644"
+
+    # =========================================================================
+    # Task 3: Use ansible-lint to fix the playbook
+    # SKIPPED - The playbook created above is already in its final lint-fixed
+    # form (includes play name, proper formatting). The VS Code lint settings
+    # configuration (enabling linter, adding --fix argument) is a UI action
+    # that doesn't require a solver.
+    # =========================================================================
+
+    # =========================================================================
+    # Task 4: Run the playbook
+    # The VS Code UI right-click "Run Ansible Playbook" and "Run with
+    # Ansible Navigator" are UI actions. We run equivalent CLI commands.
+    # =========================================================================
+    - name: "Task 4: Run playbook with ansible-playbook"
+      ansible.builtin.command:
+        cmd: >-
+          {{ collection_dir }}/.venv/bin/ansible-playbook
+          {{ project_dir }}/mycowsay.yml
+      changed_when: false
+      environment:
+        ANSIBLE_COLLECTIONS_PATH: "{{ project_dir }}/collections"
