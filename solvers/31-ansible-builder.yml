@@ -1,0 +1,139 @@
+---
+# =============================================================================
+# Solver: 31-ansible-builder - Creating an Execution Environment
+# =============================================================================
+#
+# Solves:
+# - Task 1: Define the EE definition file (VS Code wizard -> CLI equivalent)
+# - Task 2: Review the generated Containerfile (dry run)
+# - Task 3: Build and tag the custom Execution Environment
+#
+# =============================================================================
+
+- name: "Solve 31-ansible-builder: Create and build Execution Environment"
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+    collection_dir: >-
+      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+    project_dir: /home/rhel/myansibleproject
+
+  tasks:
+    # =========================================================================
+    # Task 1: Define the Execution Environment definition file
+    # The VS Code wizard creates an EE project. We create the files directly
+    # and run the equivalent CLI commands.
+    # =========================================================================
+
+    # First, disable editable mode before building the tarball
+    - name: "Task 1: Switch ade to standard mode for packaging"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/ade install ."
+        chdir: "{{ collection_dir }}"
+      changed_when: true
+
+    # Build the collection tarball
+    - name: "Task 1: Build collection tarball with ansible-galaxy"
+      ansible.builtin.command:
+        cmd: >-
+          {{ collection_dir }}/.venv/bin/ansible-galaxy collection build
+          --output-path {{ project_dir }}/
+        chdir: "{{ collection_dir }}"
+      changed_when: true
+
+    # Re-enable editable mode
+    - name: "Task 1: Re-enable ade editable mode"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/ade install -e ."
+        chdir: "{{ collection_dir }}"
+      changed_when: true
+
+    # Create the execution-environment.yml with local tarball reference
+    - name: "Task 1: Create execution-environment.yml"
+      ansible.builtin.copy:
+        dest: "{{ project_dir }}/execution-environment.yml"
+        content: |
+          ---
+          version: 3
+          images:
+            base_image:
+              name: registry.redhat.io/ansible-automation-platform-25/ee-minimal-rhel8:latest
+
+          dependencies:
+            ansible_core:
+              package_pip: ansible-core
+            ansible_runner:
+              package_pip: ansible-runner
+            galaxy:
+              collections:
+                # Tell Galaxy to look inside the local folder
+                - name: collection_tarballs/mynamespace-mycollection-1.0.0.tar.gz
+                  type: file
+            python:
+              - cowsay
+
+          # Copy the tarball into a dedicated folder named 'collection_tarballs'
+          additional_build_files:
+            - src: mynamespace-mycollection-1.0.0.tar.gz
+              dest: collection_tarballs
+
+          options:
+            tags:
+              - mycollection-ee
+            package_manager_path: /usr/bin/microdnf
+        mode: "0644"
+
+    # =========================================================================
+    # Task 2: Review the generated Containerfile (dry run)
+    # =========================================================================
+    - name: "Task 2: Run ansible-builder create to generate Containerfile"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/ansible-builder create"
+        chdir: "{{ project_dir }}"
+      changed_when: true
+
+    # =========================================================================
+    # Task 3: Build and tag the custom Execution Environment
+    # =========================================================================
+    - name: "Task 3: Build the EE image"
+      ansible.builtin.command:
+        cmd: >-
+          {{ collection_dir }}/.venv/bin/ansible-builder build
+          -t mynamespace/mycollection-ee:latest -vvv
+        chdir: "{{ project_dir }}"
+      changed_when: true
+      timeout: 600
+
+    - name: "Task 3: Verify the container image exists"
+      ansible.builtin.command:
+        cmd: podman images --format "{{ '{{' }}.Repository{{ '}}' }}:{{ '{{' }}.Tag{{ '}}' }}" --filter reference=mynamespace/mycollection-ee
+      changed_when: false
+      register: r_podman_images
+
+    - name: "Task 3: Verify collection is inside the EE"
+      ansible.builtin.command:
+        cmd: >-
+          podman run --rm mynamespace/mycollection-ee:latest
+          ansible-galaxy collection list
+      changed_when: false
+
+    - name: "Task 3: Run mycowsay.yml with ansible-navigator using the EE"
+      ansible.builtin.command:
+        cmd: >-
+          {{ collection_dir }}/.venv/bin/ansible-navigator run
+          {{ project_dir }}/mycowsay.yml
+          --execution-environment-image mycollection-ee
+          --pull-policy never
+          --mode stdout
+        chdir: "{{ project_dir }}"
+      changed_when: false
+
+    - name: "Task 3: Test cowsay module documentation inside the EE"
+      ansible.builtin.command:
+        cmd: >-
+          podman run --rm mynamespace/mycollection-ee:latest
+          ansible-doc -t module mynamespace.mycollection.cowsay
+      changed_when: false
+      failed_when: false

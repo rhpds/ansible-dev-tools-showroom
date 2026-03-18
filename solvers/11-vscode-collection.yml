@@ -1,0 +1,89 @@
+---
+# =============================================================================
+# Solver: 11-vscode-collection - Creating a Collection with the VS Code Extension
+# =============================================================================
+#
+# Solves:
+# - Task 0: Create a collection using ansible-creator CLI
+# - Task 1: Explore Ansible extension (VS Code UI - no solver needed)
+# - Task 2: Create a collection project (VS Code wizard -> CLI equivalent)
+# - Task 3: Create a playbook project (VS Code wizard -> CLI equivalent)
+# - Task 4: Open the mycollection folder (VS Code UI - no solver needed)
+# - Task 5: Compare CLI vs VS Code collections (reading exercise - no solver)
+#
+# =============================================================================
+
+- name: "Solve 11-vscode-collection: Create collection and playbook projects"
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+    base_project_dir: /home/rhel/myansibleproject
+    collections_dir: "{{ base_project_dir }}/collections/ansible_collections"
+
+  tasks:
+    # =========================================================================
+    # Task 0: Create a collection using the ansible-creator CLI
+    # =========================================================================
+    - name: "Task 0: Ensure collections directory exists"
+      ansible.builtin.file:
+        path: "{{ collections_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Task 0: Scaffold CLI collection mynamespace.my_cli_collection"
+      ansible.builtin.command:
+        cmd: >-
+          ansible-creator init collection mynamespace.my_cli_collection
+          {{ collections_dir }}
+        creates: "{{ collections_dir }}/mynamespace/my_cli_collection/galaxy.yml"
+
+    # =========================================================================
+    # Task 1: Explore the Ansible extension
+    # SKIPPED - Requires VS Code UI interaction (view extension sidebar,
+    # collapse Lightspeed sections). No CLI equivalent.
+    # =========================================================================
+
+    # =========================================================================
+    # Task 2: Create a collection project
+    # The VS Code wizard creates the collection and installs it in editable
+    # mode. The CLI equivalent uses ansible-creator + ade install -e.
+    # =========================================================================
+    - name: "Task 2: Scaffold collection mynamespace.mycollection"
+      ansible.builtin.command:
+        cmd: >-
+          ansible-creator init collection mynamespace.mycollection
+          {{ collections_dir }}/mynamespace/mycollection
+        creates: "{{ collections_dir }}/mynamespace/mycollection/galaxy.yml"
+
+    - name: "Task 2: Install collection in editable mode with ade"
+      ansible.builtin.command:
+        cmd: ade install -e .
+        chdir: "{{ collections_dir }}/mynamespace/mycollection"
+      changed_when: true
+
+    # =========================================================================
+    # Task 3: Create a playbook project
+    # The VS Code wizard creates a playbook project. The CLI equivalent
+    # uses ansible-creator init playbook.
+    # =========================================================================
+    - name: "Task 3: Scaffold playbook project with mysecondcollection"
+      ansible.builtin.command:
+        cmd: >-
+          ansible-creator init playbook
+          {{ base_project_dir }}
+          --scm-org mynamespace
+          --scm-project mysecondcollection
+        creates: "{{ base_project_dir }}/site.yml"
+
+    # =========================================================================
+    # Task 4: Open the mycollection folder
+    # SKIPPED - Requires VS Code UI interaction (File > Open Folder).
+    # No CLI equivalent needed; the folder already exists.
+    # =========================================================================
+
+    # =========================================================================
+    # Task 5: Compare CLI-generated with VS Code-generated collections
+    # SKIPPED - Reading/comparison exercise. No action required.
+    # =========================================================================

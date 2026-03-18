@@ -1,0 +1,56 @@
+---
+# =============================================================================
+# Solver: 00-introduction - Introduction
+# =============================================================================
+#
+# Solves:
+# - Task 1: Launch Dev Spaces workspace (VS Code UI - cannot be automated)
+# - Task 2: Configure extensions (VS Code UI - cannot be automated)
+# - Task 3: Verify and update development tools
+#
+# NOTE: Tasks 1 and 2 require the student to interact with the OpenShift
+# Web Console and Dev Spaces UI to launch and configure the workspace.
+# This solver only handles Task 3 (CLI verification and tool updates).
+#
+# =============================================================================
+
+- name: "Solve 00-introduction: Verify and update development environment"
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  tasks:
+    # =========================================================================
+    # Task 1: Launch Dev Spaces workspace
+    # SKIPPED - Requires VS Code UI interaction (OpenShift console login,
+    # Dev Spaces workspace selection, trust publishers dialog).
+    # The student must complete this manually.
+    # =========================================================================
+
+    # =========================================================================
+    # Task 2: Configure the extensions
+    # SKIPPED - Requires VS Code UI interaction (reload extension,
+    # click Ansible icon in sidebar). No CLI equivalent.
+    # =========================================================================
+
+    # =========================================================================
+    # Task 3: Verify the development environment
+    # =========================================================================
+    - name: "Task 3: Verify container OS release"
+      ansible.builtin.command: cat /etc/redhat-release
+      changed_when: false
+
+    - name: "Task 3: Verify adt and development tools are available"
+      ansible.builtin.command: adt --version
+      changed_when: false
+
+    - name: "Task 3: Upgrade ansible-dev-tools"
+      ansible.builtin.pip:
+        name: ansible-dev-tools
+        state: present
+
+    - name: "Task 3: Pin ansible-core version"
+      ansible.builtin.pip:
+        name: ansible-core==2.16.15
+        state: present
+      changed_when: true

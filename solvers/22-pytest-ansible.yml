@@ -1,0 +1,150 @@
+---
+# =============================================================================
+# Solver: 22-pytest-ansible - Functional testing with pytest-ansible
+# =============================================================================
+#
+# Solves:
+# - Task 1: Create the test inventory
+# - Task 2: Create the test configuration (conftest.py)
+# - Task 3: Create the test file (test_cowsay.py)
+# - Task 4: Run the test
+# - Task 5: Verify the test results
+#
+# =============================================================================
+
+- name: "Solve 22-pytest-ansible: Create test files and run pytest"
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+    collection_dir: >-
+      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+    tests_dir: >-
+      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/tests
+
+  tasks:
+    # =========================================================================
+    # Task 1: Create the test inventory
+    # =========================================================================
+    - name: "Task 1: Ensure tests directory exists"
+      ansible.builtin.file:
+        path: "{{ tests_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Task 1: Create test inventory file"
+      ansible.builtin.copy:
+        dest: "{{ tests_dir }}/inventory"
+        content: |
+          [local]
+          localhost ansible_connection=local ansible_python_interpreter=python3
+        mode: "0644"
+
+    # =========================================================================
+    # Task 2: Create the test configuration
+    # =========================================================================
+    - name: "Task 2: Create conftest.py"
+      ansible.builtin.copy:
+        dest: "{{ tests_dir }}/conftest.py"
+        content: |
+          import os
+          import sys
+          import pytest
+
+          # This block executes immediately when pytest starts,
+          # ensuring Ansible sees the correct paths before loading any plugins.
+
+          # Get the absolute path of the 'tests' directory
+          TESTS_DIR = os.path.dirname(os.path.abspath(__file__))
+
+          # Project root (mycollection folder)
+          PROJECT_ROOT = os.path.dirname(TESTS_DIR)
+
+          # 1. Set ANSIBLE_LIBRARY so Ansible can find 'cowsay' by short name
+          # This points to: .../mycollection/plugins/modules
+          # Without this, Ansible won't know where to look for your custom module
+          MODULES_PATH = os.path.join(PROJECT_ROOT, 'plugins', 'modules')
+          os.environ['ANSIBLE_LIBRARY'] = MODULES_PATH
+
+          # 2. Set ANSIBLE_COLLECTIONS_PATH so Ansible can resolve the full namespace
+          # This points to: .../myansibleproject/collections
+          # We navigate up 3 levels from PROJECT_ROOT:
+          #   mycollection -> mynamespace -> ansible_collections -> collections root
+          # This allows Ansible to find modules using FQCN (mynamespace.mycollection.cowsay)
+          COLLECTIONS_PATH = os.path.abspath(os.path.join(PROJECT_ROOT, '../../..'))
+          os.environ['ANSIBLE_COLLECTIONS_PATH'] = COLLECTIONS_PATH
+        mode: "0644"
+
+    # =========================================================================
+    # Task 3: Create the test file
+    # =========================================================================
+    - name: "Task 3: Create test_cowsay.py"
+      ansible.builtin.copy:
+        dest: "{{ tests_dir }}/test_cowsay.py"
+        content: |
+          def test_cowsay_module(ansible_module):
+              """
+              Test the cowsay module functionality.
+
+              The ansible_module fixture is provided by pytest-ansible and allows
+              us to execute Ansible modules directly from Python test code.
+              """
+
+              # 1. Define the input
+              test_message = "Hello, pytest-ansible!"
+              module_args = {
+                  "message": test_message
+              }
+
+              # 2. Run the module
+              # The ansible_module fixture executes the module on all inventory hosts
+              # In our case, that's just 'localhost' as defined in the inventory file
+              result = ansible_module.cowsay(**module_args)
+
+              # 3. Extract results for the localhost
+              # Result is a dictionary keyed by hostname
+              host_result = result['localhost']
+
+              # 4. Validation - Check module execution status
+              # Verify the module didn't fail
+              assert not host_result.get('failed', False), "Module execution failed"
+
+              # Verify the module didn't report changes (cowsay shouldn't change system state)
+              assert not host_result['changed'], "Module unexpectedly reported changes"
+
+              # 5. Reconstruct the output string from the returned message list
+              output_text = "\n".join(host_result['message'])
+
+              # 6. Validate the output content
+              # Check that our input message appears somewhere in the cowsay output
+              assert test_message in output_text, f"Expected message '{test_message}' not found in output"
+
+              # Verify it's actually cowsay output by checking for characteristic elements
+              # The cow's body typically contains these border characters
+              assert "_" in output_text or "-" in output_text, "Output doesn't look like cowsay format"
+              assert "\\" in output_text or "/" in output_text, "Missing cowsay speech bubble borders"
+              assert "(oo)" in output_text, "Checking for the cow eyes failed"
+        mode: "0644"
+
+    # =========================================================================
+    # Task 4: Run the test
+    # =========================================================================
+    - name: "Task 4: Activate venv and run pytest"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/pytest"
+        chdir: "{{ collection_dir }}"
+      changed_when: false
+      environment:
+        ANSIBLE_COLLECTIONS_PATH: /home/rhel/myansibleproject/collections
+
+    # =========================================================================
+    # Task 5: Verify the test results
+    # =========================================================================
+    - name: "Task 5: Run pytest with verbose output"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/pytest -v -s"
+        chdir: "{{ collection_dir }}"
+      changed_when: false
+      environment:
+        ANSIBLE_COLLECTIONS_PATH: /home/rhel/myansibleproject/collections
