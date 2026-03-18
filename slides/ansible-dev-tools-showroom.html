@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ansible Dev Tools — The Developer Flow for Automation Content</title>
+  <!-- Red Hat Design Tokens -->
+  <link href="https://cdn.jsdelivr.net/npm/@rhds/tokens@3.0.2/css/global.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700;900&family=Red+Hat+Text:wght@400;500;700&family=Red+Hat+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & BASE === */
+    :root { color-scheme: light; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* === COLOR VARIABLES — Core Light === */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f2f2f2;
+      --bg-surface: #e0e0e0;
+      --text-primary: #151515;
+      --text-secondary: #4d4d4d;
+      --text-muted: #707070;
+      --accent: #ee0000;
+      --accent-dark: #a60000;
+      --accent-light: #f56e6e;
+      --tag-border: #c7c7c7;
+      --icon-filter: none;
+      --icon-filter-accent: invert(12%) sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(95%);
+
+      --font-display: var(--rh-font-family-heading, 'Red Hat Display', sans-serif);
+      --font-body: var(--rh-font-family-body-text, 'Red Hat Text', sans-serif);
+      --font-mono: var(--rh-font-family-code, 'Red Hat Mono', monospace);
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* === LOGO === */
+    .rh-logo { height: 28px; width: auto; }
+    .rh-logo.small { height: 20px; }
+    .rh-logo.large { height: 40px; }
+
+    /* === ICON STYLES === */
+    .rh-icon {
+      height: 48px; width: 48px;
+      filter: var(--icon-filter);
+      vertical-align: middle;
+    }
+    .rh-icon.small { height: 24px; width: 24px; }
+    .rh-icon.medium { height: 48px; width: 48px; }
+    .rh-icon.large { height: 64px; width: 64px; }
+    .rh-icon.xl { height: 96px; width: 96px; }
+    .rh-icon.accent { filter: var(--icon-filter-accent); }
+
+    /* === SLIDE CONTAINER === */
+    .deck { width: 100vw; height: 100vh; position: relative; }
+
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--rh-space-4xl, 80px) var(--rh-space-3xl, 64px);
+      position: relative;
+      overflow: hidden;
+    }
+    .slide.active { display: flex; }
+
+    /* Alternate slide backgrounds */
+    .slide:nth-child(odd) { background: var(--bg-primary); }
+    .slide:nth-child(even) { background: var(--bg-secondary); }
+
+    /* Ambient glow */
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -10%;
+      width: 60%; height: 60%;
+      background: radial-gradient(ellipse, rgba(238,0,0,0.04) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    .slide:nth-child(3n)::before { top: -10%; right: auto; left: -15%; }
+
+    .slide > * { position: relative; z-index: 1; }
+
+    /* === BREADCRUMB === */
+    .breadcrumb {
+      display: flex; align-items: center;
+      font-family: var(--font-mono);
+      font-size: var(--rh-font-size-body-text-xs, 0.75rem);
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      position: absolute;
+      top: var(--rh-space-xl, 32px);
+      left: var(--rh-space-3xl, 64px);
+    }
+    .breadcrumb svg + span { margin-left: var(--rh-space-sm, 8px); }
+
+    /* === SLIDE LABEL === */
+    .slide-label {
+      font-family: var(--font-mono);
+      font-size: var(--rh-font-size-body-text-xs, 0.75rem);
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: var(--rh-space-lg, 24px);
+      font-weight: 500;
+    }
+
+    /* === TYPOGRAPHY === */
+    h1 {
+      font-family: var(--font-display);
+      font-size: var(--rh-font-size-heading-2xl, 3rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: var(--rh-space-lg, 24px);
+    }
+    h2 {
+      font-family: var(--font-display);
+      font-size: var(--rh-font-size-heading-lg, 2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: var(--rh-space-lg, 24px);
+    }
+    h3 {
+      font-family: var(--font-display);
+      font-size: var(--rh-font-size-heading-md, 1.5rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--rh-space-md, 16px);
+    }
+    .subtitle {
+      font-family: var(--font-body);
+      font-size: var(--rh-font-size-body-text-xl, 1.25rem);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 720px;
+      margin-bottom: var(--rh-space-xl, 32px);
+    }
+    .accent { color: var(--accent); }
+    .body-text {
+      font-size: var(--rh-font-size-body-text-lg, 1.125rem);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 780px;
+    }
+
+    /* === TAGS === */
+    .tags { display: flex; flex-wrap: wrap; gap: var(--rh-space-sm, 8px); margin-bottom: var(--rh-space-xl, 32px); }
+    .tag {
+      display: inline-block;
+      padding: var(--rh-space-xs, 4px) var(--rh-space-md, 16px);
+      border: var(--rh-border-width-sm, 1px) solid var(--tag-border);
+      border-radius: var(--rh-border-radius-pill, 64px);
+      font-family: var(--font-mono);
+      font-size: var(--rh-font-size-body-text-xs, 0.75rem);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .tag.accent { border-color: var(--accent); color: var(--accent); }
+
+    /* === ATTRIBUTION === */
+    .attribution {
+      font-family: var(--font-body);
+      font-size: var(--rh-font-size-body-text-sm, 0.875rem);
+      color: var(--text-muted);
+      margin-top: auto;
+      padding-top: var(--rh-space-xl, 32px);
+    }
+    .source {
+      font-family: var(--font-body);
+      font-size: var(--rh-font-size-body-text-xs, 0.75rem);
+      color: var(--text-muted);
+      margin-top: auto;
+      padding-top: var(--rh-space-md, 16px);
+    }
+
+    /* === BIG NUMBER === */
+    .big-number {
+      font-family: var(--font-display);
+      font-size: 6rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: var(--rh-space-md, 16px);
+    }
+    .big-number-context {
+      font-size: var(--rh-font-size-body-text-lg, 1.125rem);
+      color: var(--text-secondary);
+      max-width: 600px;
+    }
+
+    /* === TWO COLUMNS === */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--rh-space-2xl, 48px);
+      width: 100%;
+      max-width: 1100px;
+    }
+    .col { display: flex; flex-direction: column; gap: var(--rh-space-md, 16px); }
+    .col h3 { display: flex; align-items: center; gap: var(--rh-space-sm, 8px); }
+
+    /* === THREE COLUMNS === */
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--rh-space-xl, 32px);
+      width: 100%;
+      max-width: 1100px;
+    }
+    .phase-card {
+      background: var(--bg-primary);
+      border: var(--rh-border-width-sm, 1px) solid var(--tag-border);
+      border-radius: var(--rh-border-radius-default, 3px);
+      padding: var(--rh-space-lg, 24px);
+      box-shadow: var(--rh-box-shadow-sm, 0 2px 4px 0 rgba(21,21,21,0.2));
+      display: flex; flex-direction: column; gap: var(--rh-space-sm, 8px);
+    }
+    .phase-card.highlight {
+      border-color: var(--accent);
+      border-width: var(--rh-border-width-md, 2px);
+    }
+    .phase-card h3 { font-size: var(--rh-font-size-heading-sm, 1.25rem); display: flex; align-items: center; gap: var(--rh-space-sm, 8px); }
+    .phase-card p { font-size: var(--rh-font-size-body-text-md, 1rem); color: var(--text-secondary); line-height: 1.6; }
+
+    /* === FEATURE LIST === */
+    .feature-list {
+      display: flex; flex-direction: column;
+      gap: var(--rh-space-lg, 24px);
+      max-width: 800px;
+    }
+    .feature-item {
+      display: flex; align-items: flex-start;
+      gap: var(--rh-space-md, 16px);
+    }
+    .feature-item .body-text { flex: 1; }
+    .feature-item strong { color: var(--text-primary); }
+
+    /* === ARCHITECTURE DIAGRAM === */
+    .arch-flow {
+      display: flex; align-items: center;
+      gap: var(--rh-space-md, 16px);
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%; max-width: 1100px;
+    }
+    .arch-box {
+      background: rgba(242,242,242,0.8);
+      border: 1px solid #c7c7c7;
+      border-radius: var(--rh-border-radius-default, 3px);
+      padding: var(--rh-space-md, 16px) var(--rh-space-lg, 24px);
+      display: flex; flex-direction: column; align-items: center;
+      gap: var(--rh-space-xs, 4px);
+      font-family: var(--font-mono);
+      font-size: var(--rh-font-size-body-text-sm, 0.875rem);
+      color: var(--text-primary);
+      min-width: 120px; text-align: center;
+      box-shadow: var(--rh-box-shadow-sm, 0 2px 4px 0 rgba(21,21,21,0.2));
+    }
+    .arch-box.accent-box {
+      border-color: var(--accent);
+      border-width: var(--rh-border-width-md, 2px);
+      background: rgba(238,0,0,0.04);
+    }
+    .arch-box .label { font-size: var(--rh-font-size-body-text-xs, 0.75rem); color: var(--text-muted); }
+    .arch-arrow {
+      font-size: 1.5rem; color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* === QUOTE === */
+    .quote-block {
+      position: relative;
+      max-width: 800px;
+      padding-left: var(--rh-space-2xl, 48px);
+    }
+    .quote-block::before {
+      content: '\201C';
+      position: absolute;
+      left: 0; top: -10px;
+      font-family: var(--font-display);
+      font-size: 5rem;
+      color: var(--accent);
+      opacity: 0.3;
+      line-height: 1;
+    }
+    .quote-text {
+      font-family: var(--font-display);
+      font-size: var(--rh-font-size-heading-md, 1.5rem);
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text-primary);
+      margin-bottom: var(--rh-space-lg, 24px);
+    }
+    .quote-attr {
+      font-family: var(--font-body);
+      font-size: var(--rh-font-size-body-text-sm, 0.875rem);
+      color: var(--text-muted);
+    }
+
+    /* === CODE BLOCK === */
+    .code-block {
+      background: #1f1f1f;
+      color: #e0e0e0;
+      font-family: var(--font-mono);
+      font-size: var(--rh-font-size-body-text-sm, 0.875rem);
+      padding: var(--rh-space-lg, 24px);
+      border-radius: var(--rh-border-radius-default, 3px);
+      overflow-x: auto;
+      max-width: 800px;
+      line-height: 1.6;
+      box-shadow: var(--rh-box-shadow-md, 0 4px 6px 1px rgba(21,21,21,0.25));
+    }
+    .code-block .code-comment { color: #707070; }
+    .code-block .code-accent { color: #f56e6e; }
+    .code-block .code-string { color: #73c991; }
+
+    /* === LOGO FOOTER === */
+    .logo-footer {
+      display: flex; justify-content: center;
+      margin-top: var(--rh-space-xl, 32px);
+    }
+
+    /* === THANK YOU === */
+    .thank-you-center {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      flex: 1;
+    }
+    .thank-you-center h1 { margin-bottom: var(--rh-space-lg, 24px); }
+    .thank-you-center .attribution { margin-top: var(--rh-space-xl, 32px); padding-top: 0; }
+
+    /* === CONTROLS === */
+    .controls {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: var(--rh-space-md, 16px) var(--rh-space-xl, 32px);
+      font-family: var(--font-mono);
+      font-size: var(--rh-font-size-body-text-xs, 0.75rem);
+      color: var(--text-muted);
+      z-index: 100;
+      background: linear-gradient(transparent, rgba(255,255,255,0.9));
+      pointer-events: none;
+    }
+    .controls > * { pointer-events: auto; }
+    .nav-hint { opacity: 0.6; }
+    .progress .current { color: var(--accent); font-weight: 700; }
+
+    /* === NOTES PANEL === */
+    .notes-panel {
+      position: fixed; right: 0; top: 0; bottom: 0;
+      width: 360px;
+      background: var(--bg-primary);
+      border-left: var(--rh-border-width-sm, 1px) solid var(--tag-border);
+      padding: var(--rh-space-2xl, 48px) var(--rh-space-lg, 24px);
+      font-family: var(--font-body);
+      font-size: var(--rh-font-size-body-text-sm, 0.875rem);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 200;
+      box-shadow: var(--rh-box-shadow-lg, 0 6px 8px 2px rgba(21,21,21,0.3));
+    }
+    .notes-panel.visible { transform: translateX(0); }
+
+    /* === ANIMATIONS === */
+    .animate-in { opacity: 0; transform: translateY(20px); }
+    .slide.active .animate-in { animation: fadeSlideUp 0.6s ease-out forwards; }
+    .slide.active .animate-in:nth-child(2) { animation-delay: 0.1s; }
+    .slide.active .animate-in:nth-child(3) { animation-delay: 0.2s; }
+    .slide.active .animate-in:nth-child(4) { animation-delay: 0.3s; }
+    .slide.active .animate-in:nth-child(5) { animation-delay: 0.4s; }
+    .slide.active .animate-in:nth-child(6) { animation-delay: 0.5s; }
+    .slide.active .animate-in:nth-child(7) { animation-delay: 0.6s; }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .slide { padding: var(--rh-space-xl, 32px) var(--rh-space-lg, 24px); }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+      .two-col, .three-col { grid-template-columns: 1fr; }
+      .big-number { font-size: 4rem; }
+      .breadcrumb { left: var(--rh-space-lg, 24px); top: var(--rh-space-md, 16px); }
+      .arch-flow { flex-direction: column; }
+      .arch-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+
+    <!-- SLIDE 1: TITLE -->
+    <div class="slide" data-notes="Presenter tips: Arrow keys or click to navigate. Press N to toggle these contextual notes with references, links, and additional context for each slide. Works in any modern browser. For best results, use fullscreen (F11). Workshop source: github.com/rhpds/ansible-dev-tools-showroom">
+      <div class="breadcrumb">
+        <svg class="rh-logo small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 613 145" role="img" aria-label="Red Hat"><title>Red Hat</title><path d="M127.47,83.49c12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89,8.69,103.76.5,97.51.5,91.69.5,90,8,83.06,8c-6.68,0-11.64-5.6-17.89-5.6-6,0-9.91,4.09-12.93,12.5,0,0-8.41,23.72-9.49,27.16A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33C22.27,52,.5,55,.5,74.22c0,31.48,74.59,70.28,133.65,70.28,45.28,0,56.7-20.48,56.7-36.65,0-12.72-11-27.16-30.83-35.78" fill="#e00"/><path d="M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33l3.66-9.06A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45,12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42Z"/><path d="M579.74,92.8c0,11.89,7.15,17.67,20.19,17.67a52.11,52.11,0,0,0,11.89-1.68V95a24.84,24.84,0,0,1-7.68,1.16c-5.37,0-7.36-1.68-7.36-6.73V68.3h15.56V54.1H596.78v-18l-17,3.68V54.1H568.49V68.3h11.25Zm-53,.32c0-3.68,3.69-5.47,9.26-5.47a43.12,43.12,0,0,1,10.1,1.26v7.15a21.51,21.51,0,0,1-10.63,2.63c-5.46,0-8.73-2.1-8.73-5.57m5.2,17.56c6,0,10.84-1.26,15.36-4.31v3.37h16.82V74.08c0-13.56-9.14-21-24.39-21-8.52,0-16.94,2-26,6.1l6.1,12.52c6.52-2.74,12-4.42,16.83-4.42,7,0,10.62,2.73,10.62,8.31v2.73a49.53,49.53,0,0,0-12.62-1.58c-14.31,0-22.93,6-22.93,16.73,0,9.78,7.78,17.24,20.19,17.24m-92.44-.94h18.09V80.92h30.29v28.82H506V36.12H487.93V64.41H457.64V36.12H439.55ZM370.62,81.87c0-8,6.31-14.1,14.62-14.1A17.22,17.22,0,0,1,397,72.09V91.54A16.36,16.36,0,0,1,385.24,96c-8.2,0-14.62-6.1-14.62-14.09m26.61,27.87h16.83V32.44l-17,3.68V57.05a28.3,28.3,0,0,0-14.2-3.68c-16.19,0-28.92,12.51-28.92,28.5a28.25,28.25,0,0,0,28.4,28.6,25.12,25.12,0,0,0,14.93-4.83ZM320,67c5.36,0,9.88,3.47,11.67,8.83H308.47C310.15,70.3,314.36,67,320,67M291.33,82c0,16.2,13.25,28.82,30.28,28.82,9.36,0,16.2-2.53,23.25-8.42l-11.26-10c-2.63,2.74-6.52,4.21-11.14,4.21a14.39,14.39,0,0,1-13.68-8.83h39.65V83.55c0-17.67-11.88-30.39-28.08-30.39a28.57,28.57,0,0,0-29,28.81M262,51.58c6,0,9.36,3.78,9.36,8.31S268,68.2,262,68.2H244.11V51.58Zm-36,58.16h18.09V82.92h13.77l13.89,26.82H292l-16.2-29.45a22.27,22.27,0,0,0,13.88-20.72c0-13.25-10.41-23.45-26-23.45H226Z" fill="#151515"/></svg>
+        <span>&#8250; Ansible Dev Tools Showroom</span>
+      </div>
+      <div class="slide-label animate-in">&mdash;&mdash; Hands-On Workshop</div>
+      <h1 class="animate-in">The <span class="accent">Developer Flow</span><br>for Automation Content</h1>
+      <p class="subtitle animate-in">A hands-on journey through the complete Ansible content lifecycle &mdash; from scaffolding collections to signing deployable artifacts.</p>
+      <div class="tags animate-in">
+        <span class="tag accent">Create</span>
+        <span class="tag accent">Test</span>
+        <span class="tag accent">Deploy</span>
+        <span class="tag">Ansible Dev Tools</span>
+        <span class="tag">Hands-On Lab</span>
+      </div>
+      <div class="attribution animate-in">Ansible Dev Tools Showroom &middot; Red Hat</div>
+    </div>
+
+    <!-- SLIDE 2: THE PAIN -->
+    <div class="slide" data-notes="Many Ansible practitioners learned by writing playbooks ad hoc, then copying them across projects. This works for small scale but breaks down quickly when multiple authors, multiple platforms, and production SLAs enter the picture. The problem is not Ansible itself but the lack of a structured development workflow around it.">
+      <div class="slide-label animate-in">&mdash;&mdash; The Challenge</div>
+      <h2 class="animate-in">Automation Content <span class="accent">Without a Workflow</span> Is a Liability</h2>
+      <div class="feature-list animate-in">
+        <div class="feature-item">
+          <img class="rh-icon medium accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/alert.svg" alt="">
+          <div class="body-text"><strong>No standard structure.</strong> Every team scaffolds collections differently. Onboarding takes weeks instead of minutes.</div>
+        </div>
+        <div class="feature-item">
+          <img class="rh-icon medium accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/bug.svg" alt="">
+          <div class="body-text"><strong>No testing discipline.</strong> Playbooks ship untested. Failures surface in production, not in development.</div>
+        </div>
+        <div class="feature-item">
+          <img class="rh-icon medium accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/vulnerability.svg" alt="">
+          <div class="body-text"><strong>No supply chain trust.</strong> Content flows from repo to production with no verification of integrity or authorship.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: THE INSIGHT -->
+    <div class="slide" data-notes="Ansible Dev Tools is a curated bundle of CLI tools with known-good versions and predictable integration. All tools ship as a single pip-installable bundle. Reference: docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5">
+      <div class="slide-label animate-in">&mdash;&mdash; The Insight</div>
+      <h2 class="animate-in">One Curated Toolchain Covers the <span class="accent">Entire Lifecycle</span></h2>
+      <p class="subtitle animate-in">Ansible Dev Tools is a curated bundle of CLI tools &mdash; known-good versions with predictable integration &mdash; that support every phase of content development.</p>
+      <div class="arch-flow animate-in">
+        <div class="arch-box">
+          <img class="rh-icon small" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/blueprints.svg" alt="">
+          <span>ansible-creator</span>
+          <span class="label">Scaffold</span>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box">
+          <img class="rh-icon small" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/gear.svg" alt="">
+          <span>ade</span>
+          <span class="label">Manage Deps</span>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box">
+          <img class="rh-icon small" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/checklist.svg" alt="">
+          <span>ansible-lint</span>
+          <span class="label">Validate</span>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box">
+          <img class="rh-icon small" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/test-tube.svg" alt="">
+          <span>molecule / pytest</span>
+          <span class="label">Test</span>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box accent-box">
+          <img class="rh-icon small accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/container.svg" alt="">
+          <span>ansible-builder</span>
+          <span class="label">Package</span>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box">
+          <img class="rh-icon small" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/padlock-locked.svg" alt="">
+          <span>ansible-sign</span>
+          <span class="label">Secure</span>
+        </div>
+      </div>
+      <div class="source animate-in">All tools ship as a single pip-installable bundle: <code style="font-family:var(--font-mono);">pip install ansible-dev-tools</code></div>
+    </div>
+
+    <!-- SLIDE 4: CREATE - SCAFFOLD -->
+    <div class="slide" data-notes="Create phase tools: ansible-creator (CLI and VS Code extension for scaffolding), ade (manages virtual environments, collection dependencies, editable installs), VS Code Ansible Extension (rich editing, linting inline, navigator integration). Lab modules: 1.1 (VS Code + Collection), 1.2 (ade), 1.3 (Custom Module).">
+      <div class="slide-label animate-in">&mdash;&mdash; Phase 1: Create</div>
+      <h2 class="animate-in">Scaffold Collections <span class="accent">in Seconds</span>, Not Hours</h2>
+      <div class="two-col animate-in">
+        <div class="col">
+          <h3><img class="rh-icon small accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/blueprints.svg" alt=""> ansible-creator</h3>
+          <p class="body-text">Generate complete collection scaffolds from the CLI or VS Code with a single command. Consistent structure every time &mdash; galaxy.yml, plugins, tests, molecule scenarios, all pre-wired.</p>
+          <div class="code-block">
+<span class="code-comment"># From the CLI</span>
+$ ansible-creator init collection \
+    mynamespace.mycollection /path
+
+<span class="code-comment"># Or click "Collection project" in VS Code</span>
+          </div>
+        </div>
+        <div class="col">
+          <h3><img class="rh-icon small accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/gear-group.svg" alt=""> ade</h3>
+          <p class="body-text">Manage isolated virtual environments, install collections with full dependency tracking, and resolve Python and system requirements automatically.</p>
+          <div class="code-block">
+<span class="code-comment"># Install collection in editable mode</span>
+$ ade install -e .
+
+<span class="code-comment"># View dependency tree</span>
+$ ade tree -v
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: CREATE - MODULE + LINT -->
+    <div class="slide" data-notes="Students create a cowsay.py module inside their collection, write a playbook to use it, then use ansible-lint with --fix to auto-correct formatting. They run the playbook two ways: ansible-playbook (direct) and ansible-navigator (TUI with drill-down). The VS Code Ansible extension provides inline linting, auto-fix on save, and integrated playbook execution.">
+      <div class="slide-label animate-in">&mdash;&mdash; Phase 1: Create</div>
+      <h2 class="animate-in">Write Modules, <span class="accent">Lint on Save</span>, Run from the IDE</h2>
+      <p class="subtitle animate-in">Add custom modules and plugins to your collection, then validate and execute without leaving VS Code.</p>
+      <div class="feature-list animate-in">
+        <div class="feature-item">
+          <img class="rh-icon medium" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/code.svg" alt="">
+          <div class="body-text"><strong>Custom modules</strong> &mdash; Write Python modules inside your collection's <code style="font-family:var(--font-mono);">plugins/modules/</code> directory. Full argument spec, check mode support, and FQCN resolution out of the box.</div>
+        </div>
+        <div class="feature-item">
+          <img class="rh-icon medium" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/automation.svg" alt="">
+          <div class="body-text"><strong>ansible-lint --fix</strong> &mdash; Enable auto-fix in VS Code settings. Every save corrects formatting, enforces naming conventions, and flags issues inline.</div>
+        </div>
+        <div class="feature-item">
+          <img class="rh-icon medium" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/command-line.svg" alt="">
+          <div class="body-text"><strong>ansible-navigator TUI</strong> &mdash; Run playbooks in a terminal UI that lets you drill into plays, tasks, and output interactively.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: TEST OVERVIEW -->
+    <div class="slide" data-notes="Testing pyramid: Bottom (fast, many) = pytest-ansible for unit/functional tests. Middle (medium) = Molecule for integration tests with ephemeral containers. Top (slow, few) = tox-ansible for cross-version matrix orchestration. Lab modules: 2.1 (Molecule), 2.2 (pytest-ansible), 2.3 (tox-ansible).">
+      <div class="slide-label animate-in">&mdash;&mdash; Phase 2: Test</div>
+      <h2 class="animate-in">Validate at <span class="accent">Every Layer</span> Before Production</h2>
+      <div class="three-col animate-in">
+        <div class="phase-card">
+          <h3><img class="rh-icon small accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/test-tube.svg" alt=""> Molecule</h3>
+          <p>Integration testing with ephemeral containers. Runs the full lifecycle: create, converge, verify, destroy. Tests roles across multiple OSes and platforms.</p>
+          <div class="tags" style="margin-top:auto; margin-bottom:0;">
+            <span class="tag">Integration</span>
+            <span class="tag">Multi-OS</span>
+          </div>
+        </div>
+        <div class="phase-card">
+          <h3><img class="rh-icon small accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/beaker.svg" alt=""> pytest-ansible</h3>
+          <p>Unit and functional testing for individual modules, filters, and plugins. Fast, isolated, CI-friendly. Uses pytest fixtures for Ansible execution.</p>
+          <div class="tags" style="margin-top:auto; margin-bottom:0;">
+            <span class="tag">Unit Tests</span>
+            <span class="tag">Fast</span>
+          </div>
+        </div>
+        <div class="phase-card highlight">
+          <h3><img class="rh-icon small accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/orchestration.svg" alt=""> tox-ansible</h3>
+          <p>Orchestrates all tests with a 5-line config. Auto-discovers lint, unit, sanity, and molecule environments. Cross-version matrix testing.</p>
+          <div class="tags" style="margin-top:auto; margin-bottom:0;">
+            <span class="tag accent">Orchestration</span>
+            <span class="tag">Matrix</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: MOLECULE LIFECYCLE -->
+    <div class="slide" data-notes="Molecule test lifecycle (10 stages): 1. Dependency, 2. Cleanup, 3. Destroy, 4. Syntax, 5. Create, 6. Prepare, 7. Converge, 8. Verify, 9. Cleanup, 10. Destroy. Useful commands: molecule converge -s (converge without destroying), molecule login -s (SSH into test container), molecule verify -s (run verification only).">
+      <div class="slide-label animate-in">&mdash;&mdash; Phase 2: Test</div>
+      <h2 class="animate-in">Molecule Runs the <span class="accent">Full Test Lifecycle</span> Automatically</h2>
+      <div class="arch-flow animate-in" style="flex-wrap:wrap; gap: 12px;">
+        <div class="arch-box"><span>Dependency</span></div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box"><span>Cleanup</span></div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box"><span>Destroy</span></div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box"><span>Syntax</span></div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box accent-box"><span>Create</span></div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box"><span>Prepare</span></div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box accent-box"><span>Converge</span></div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box accent-box"><span>Verify</span></div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box"><span>Cleanup</span></div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box"><span>Destroy</span></div>
+      </div>
+      <div class="code-block animate-in" style="margin-top: var(--rh-space-xl, 32px);">
+<span class="code-comment"># Run the complete test lifecycle for a scenario</span>
+$ molecule test -s integration_hello_world
+
+<span class="code-comment"># Converge without destroying (for debugging)</span>
+$ molecule converge -s integration_hello_world
+      </div>
+      <div class="source animate-in">Each scenario defines: platforms (containers/VMs), provisioner config, verifier, and action sequence</div>
+    </div>
+
+    <!-- SLIDE 8: TOX-ANSIBLE -->
+    <div class="slide" data-notes="The tox-ansible plugin scans your collection structure and auto-generates test environments for every combination of Python version, Ansible core version, and test type (lint, unit, molecule scenarios). You only write 5 lines of config. Lab output from tox list: lint (ansible-lint), py311-ansible2.16-unit (pytest), py311-ansible2.16-molecule-integration_hello_world.">
+      <div class="slide-label animate-in">&mdash;&mdash; Phase 2: Test</div>
+      <h2 class="animate-in">Five Lines of Config. <span class="accent">Every Test Discovered.</span></h2>
+      <div class="two-col animate-in">
+        <div class="col">
+          <h3>tox.ini</h3>
+          <div class="code-block">
+<span class="code-comment">[tox]</span>
+envlist = lint, unit
+skip_missing_interpreters = True
+requires =
+    <span class="code-accent">tox-ansible</span>
+
+<span class="code-comment">[ansible]</span>
+ansible_core_versions =
+    2.15
+    2.16
+          </div>
+        </div>
+        <div class="col">
+          <h3>Auto-discovered environments</h3>
+          <div class="code-block">
+$ tox list
+
+<span class="code-string">lint</span>
+  ansible-lint
+
+<span class="code-string">py311-ansible2.16-unit</span>
+  pytest
+
+<span class="code-string">py311-ansible2.16-molecule-
+  integration_hello_world</span>
+  molecule scenario
+          </div>
+          <p class="body-text" style="margin-top: var(--rh-space-md, 16px);">Convention over configuration. The plugin scans your collection and creates test environments automatically.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: DEPLOY - BUILDER -->
+    <div class="slide" data-notes="An Execution Environment is a container image that packages Ansible core, collections, Python dependencies, and system packages into a single portable artifact. The 4-stage Containerfile: 1. Base (starting image, UBI minimal), 2. Galaxy (collection installation), 3. Builder (Python/system dependencies), 4. Final (runtime image). Students build an EE containing their custom collection and verify it with podman run.">
+      <div class="slide-label animate-in">&mdash;&mdash; Phase 3: Deploy</div>
+      <h2 class="animate-in">Package Everything Into <span class="accent">Portable Execution Environments</span></h2>
+      <p class="subtitle animate-in">ansible-builder creates container images with your collections, Python dependencies, and system packages &mdash; ready for Ansible Automation Platform.</p>
+      <div class="arch-flow animate-in">
+        <div class="arch-box">
+          <img class="rh-icon small" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/blueprints.svg" alt="">
+          <span>execution-</span>
+          <span>environment.yml</span>
+          <span class="label">Define</span>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box">
+          <img class="rh-icon small" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/flowchart.svg" alt="">
+          <span>ansible-builder</span>
+          <span>create</span>
+          <span class="label">Generate</span>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box accent-box">
+          <img class="rh-icon small accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/container-image.svg" alt="">
+          <span>ansible-builder</span>
+          <span>build -t my-ee</span>
+          <span class="label">Build</span>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-box">
+          <img class="rh-icon small" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/container-registry.svg" alt="">
+          <span>Push to</span>
+          <span>Registry</span>
+          <span class="label">Ship</span>
+        </div>
+      </div>
+      <div class="code-block animate-in" style="margin-top: var(--rh-space-xl, 32px);">
+<span class="code-comment"># Build and tag the execution environment</span>
+$ ansible-builder build -t mynamespace/mycollection-ee:latest -vvv
+
+<span class="code-comment"># Verify collections inside the image</span>
+$ podman run mycollection-ee:latest ansible-galaxy collection list
+      </div>
+    </div>
+
+    <!-- SLIDE 10: DEPLOY - SIGN -->
+    <div class="slide" data-notes="How ansible-sign works: 1. Computes SHA-256 checksums of all files listed in MANIFEST.in, 2. Compiles checksums into .ansible-sign/sha256sum.txt, 3. GPG-signs the manifest file, 4. On verify: re-computes checksums, validates GPG signature, confirms no tampering. AAP integration: Create AAP credential with GPG public key, push signed project to Git, create AAP project with GPG credential, AAP verifies signatures at every sync.">
+      <div class="slide-label animate-in">&mdash;&mdash; Phase 3: Deploy</div>
+      <h2 class="animate-in">Sign Content for <span class="accent">Supply Chain Trust</span></h2>
+      <div class="two-col animate-in">
+        <div class="col">
+          <p class="body-text">ansible-sign uses GPG signatures to ensure content integrity from development to production. Every file gets checksummed, the manifest gets signed, and AAP verifies before execution.</p>
+          <div class="code-block">
+<span class="code-comment"># Sign the project</span>
+$ ansible-sign project gpg-sign .
+<span class="code-string">GPG signing successful!</span>
+
+<span class="code-comment"># Verify integrity</span>
+$ ansible-sign project gpg-verify .
+<span class="code-string">GPG signature verification succeeded!</span>
+          </div>
+        </div>
+        <div class="col">
+          <h3>Trust Chain</h3>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div class="arch-box" style="width:100%;">
+              <img class="rh-icon small" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/developer.svg" alt="">
+              <span>Developer signs with GPG key</span>
+            </div>
+            <span class="arch-arrow" style="text-align:center;">&darr;</span>
+            <div class="arch-box" style="width:100%;">
+              <img class="rh-icon small" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/code-branch.svg" alt="">
+              <span>Push signed project to Git</span>
+            </div>
+            <span class="arch-arrow" style="text-align:center;">&darr;</span>
+            <div class="arch-box accent-box" style="width:100%;">
+              <img class="rh-icon small accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/shield.svg" alt="">
+              <span>AAP verifies signature at every sync</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: STAT SLIDE -->
+    <div class="slide" data-notes="The bundle includes: ansible-builder, ansible-core, ansible-creator, ansible-dev-environment (ade), ansible-lint, ansible-navigator, ansible-sign, molecule, pytest-ansible, tox-ansible. All installable with pip install ansible-dev-tools. All versioned together for known-good compatibility.">
+      <div class="slide-label animate-in">&mdash;&mdash; The Result</div>
+      <h2 class="animate-in">One Bundle. <span class="accent">Ten Tools.</span> Every Phase Covered.</h2>
+      <div style="display:flex; align-items:center; gap: var(--rh-space-2xl, 48px); margin-top: var(--rh-space-xl, 32px);" class="animate-in">
+        <div>
+          <div class="big-number">10</div>
+          <div class="big-number-context">curated CLI tools ship together as <code style="font-family:var(--font-mono); color:var(--accent);">ansible-dev-tools</code>, with known-good versions and predictable integration across the entire content lifecycle.</div>
+        </div>
+      </div>
+      <div class="tags animate-in" style="margin-top: var(--rh-space-xl, 32px);">
+        <span class="tag">ansible-creator</span>
+        <span class="tag">ade</span>
+        <span class="tag">ansible-lint</span>
+        <span class="tag">ansible-navigator</span>
+        <span class="tag">molecule</span>
+        <span class="tag">pytest-ansible</span>
+        <span class="tag">tox-ansible</span>
+        <span class="tag">ansible-builder</span>
+        <span class="tag">ansible-sign</span>
+        <span class="tag">ansible-core</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 12: COMPLETE FLOW -->
+    <div class="slide" data-notes="This diagram maps the entire developer workflow from the workshop. Each card corresponds to a lab module group. The flow is linear but iterative. Lab environment: Red Hat OpenShift Dev Spaces (Eclipse Che-based), OpenShift cluster + Ansible Automation Platform, Gitea Git server, VS Code in the browser with Ansible extension pre-installed.">
+      <div class="slide-label animate-in">&mdash;&mdash; The Complete Picture</div>
+      <h2 class="animate-in">The <span class="accent">Developer Flow</span> End to End</h2>
+      <div class="three-col animate-in" style="margin-top: var(--rh-space-xl, 32px);">
+        <div class="phase-card">
+          <h3><span class="accent" style="font-size:1.5rem; font-weight:900;">1</span> Create</h3>
+          <p><strong>ansible-creator</strong> scaffolds collections</p>
+          <p><strong>ade</strong> manages dependencies</p>
+          <p><strong>VS Code</strong> extension provides rich editing</p>
+          <p><strong>ansible-lint</strong> auto-fixes on save</p>
+        </div>
+        <div class="phase-card highlight">
+          <h3><span class="accent" style="font-size:1.5rem; font-weight:900;">2</span> Test</h3>
+          <p><strong>Molecule</strong> runs integration tests in containers</p>
+          <p><strong>pytest-ansible</strong> validates individual components</p>
+          <p><strong>tox-ansible</strong> orchestrates the full matrix</p>
+        </div>
+        <div class="phase-card">
+          <h3><span class="accent" style="font-size:1.5rem; font-weight:900;">3</span> Deploy</h3>
+          <p><strong>ansible-builder</strong> packages execution environments</p>
+          <p><strong>ansible-sign</strong> secures the supply chain</p>
+          <p><strong>AAP</strong> verifies and runs trusted content</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 13: QUOTE -->
+    <div class="slide" data-notes="The Zen of Ansible principles: Ansible is not Python, it is YAML describing desired state. Complexity kills productivity. Readability counts. Every play, task, and role should have a name. Keep it simple, keep it readable, keep it working.">
+      <div class="slide-label animate-in">&mdash;&mdash; Philosophy</div>
+      <div class="quote-block animate-in">
+        <p class="quote-text">Test-driven development with automated CI/CD pipelines ensures high-quality, production-ready Ansible content. The tools exist. The workflow is defined. <span class="accent">The only step left is yours.</span></p>
+        <p class="quote-attr">&mdash; Ansible Dev Tools Showroom Workshop</p>
+      </div>
+    </div>
+
+    <!-- SLIDE 14: CTA -->
+    <div class="slide" data-notes="Resources: Workshop source on GitHub (github.com/rhpds/ansible-dev-tools-showroom), AAP 2.5 Documentation (docs.redhat.com), Ansible Forum (forum.ansible.com), Red Hat CoP Automation Good Practices (redhat-cop.github.io/automation-good-practices/). Local setup: Install ansible-dev-tools on Windows/macOS/Linux and use the VS Code Dev Container guide.">
+      <div class="slide-label animate-in">&mdash;&mdash; Get Started</div>
+      <h2 class="animate-in">Take the <span class="accent">Next Step</span></h2>
+      <div class="feature-list animate-in">
+        <div class="feature-item">
+          <img class="rh-icon medium accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/install.svg" alt="">
+          <div class="body-text"><strong>Install locally</strong> &mdash; <code style="font-family:var(--font-mono);">pip install ansible-dev-tools</code> on your own machine. Works on Windows, macOS, and Linux.</div>
+        </div>
+        <div class="feature-item">
+          <img class="rh-icon medium accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/laptop.svg" alt="">
+          <div class="body-text"><strong>VS Code Dev Containers</strong> &mdash; Use the interactive setup guide for a consistent, isolated development environment on any OS.</div>
+        </div>
+        <div class="feature-item">
+          <img class="rh-icon medium accent" src="https://cdn.jsdelivr.net/npm/@rhds/icons@2.1.0/standard/community-people.svg" alt="">
+          <div class="body-text"><strong>Join the community</strong> &mdash; Introduce yourself on the Ansible Forum and connect with other automation developers.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 15: THANK YOU -->
+    <div class="slide" style="background: var(--bg-primary);" data-notes="Thank you for attending! Workshop source: github.com/rhpds/ansible-dev-tools-showroom. Share this deck directly as a single HTML file.">
+      <div class="thank-you-center">
+        <div class="slide-label animate-in">&mdash;&mdash; Ansible Dev Tools Showroom</div>
+        <h1 class="animate-in" style="font-size: var(--rh-font-size-heading-2xl, 3rem);">Thank <span class="accent">You</span></h1>
+        <div class="attribution animate-in">
+          Ansible Dev Tools Showroom &middot; Red Hat
+        </div>
+        <div class="logo-footer animate-in" style="margin-top: var(--rh-space-2xl, 48px);">
+          <svg class="rh-logo large" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 613 145" role="img" aria-label="Red Hat"><title>Red Hat</title><path d="M127.47,83.49c12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89,8.69,103.76.5,97.51.5,91.69.5,90,8,83.06,8c-6.68,0-11.64-5.6-17.89-5.6-6,0-9.91,4.09-12.93,12.5,0,0-8.41,23.72-9.49,27.16A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33C22.27,52,.5,55,.5,74.22c0,31.48,74.59,70.28,133.65,70.28,45.28,0,56.7-20.48,56.7-36.65,0-12.72-11-27.16-30.83-35.78" fill="#e00"/><path d="M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33l3.66-9.06A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45,12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42Z"/><path d="M579.74,92.8c0,11.89,7.15,17.67,20.19,17.67a52.11,52.11,0,0,0,11.89-1.68V95a24.84,24.84,0,0,1-7.68,1.16c-5.37,0-7.36-1.68-7.36-6.73V68.3h15.56V54.1H596.78v-18l-17,3.68V54.1H568.49V68.3h11.25Zm-53,.32c0-3.68,3.69-5.47,9.26-5.47a43.12,43.12,0,0,1,10.1,1.26v7.15a21.51,21.51,0,0,1-10.63,2.63c-5.46,0-8.73-2.1-8.73-5.57m5.2,17.56c6,0,10.84-1.26,15.36-4.31v3.37h16.82V74.08c0-13.56-9.14-21-24.39-21-8.52,0-16.94,2-26,6.1l6.1,12.52c6.52-2.74,12-4.42,16.83-4.42,7,0,10.62,2.73,10.62,8.31v2.73a49.53,49.53,0,0,0-12.62-1.58c-14.31,0-22.93,6-22.93,16.73,0,9.78,7.78,17.24,20.19,17.24m-92.44-.94h18.09V80.92h30.29v28.82H506V36.12H487.93V64.41H457.64V36.12H439.55ZM370.62,81.87c0-8,6.31-14.1,14.62-14.1A17.22,17.22,0,0,1,397,72.09V91.54A16.36,16.36,0,0,1,385.24,96c-8.2,0-14.62-6.1-14.62-14.09m26.61,27.87h16.83V32.44l-17,3.68V57.05a28.3,28.3,0,0,0-14.2-3.68c-16.19,0-28.92,12.51-28.92,28.5a28.25,28.25,0,0,0,28.4,28.6,25.12,25.12,0,0,0,14.93-4.83ZM320,67c5.36,0,9.88,3.47,11.67,8.83H308.47C310.15,70.3,314.36,67,320,67M291.33,82c0,16.2,13.25,28.82,30.28,28.82,9.36,0,16.2-2.53,23.25-8.42l-11.26-10c-2.63,2.74-6.52,4.21-11.14,4.21a14.39,14.39,0,0,1-13.68-8.83h39.65V83.55c0-17.67-11.88-30.39-28.08-30.39a28.57,28.57,0,0,0-29,28.81M262,51.58c6,0,9.36,3.78,9.36,8.31S268,68.2,262,68.2H244.11V51.58Zm-36,58.16h18.09V82.92h13.77l13.89,26.82H292l-16.2-29.45a22.27,22.27,0,0,0,13.88-20.72c0-13.25-10.41-23.45-26-23.45H226Z" fill="#151515"/></svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NOTES PANEL -->
+  <div class="notes-panel" id="notesPanel"></div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="nav-hint">&larr; &rarr; or click to navigate &middot; N for additional context</div>
+    <div class="progress"><span class="current">1</span> / <span class="total">15</span></div>
+  </div>
+
+  <script>
+    (function() {
+      var slides = document.querySelectorAll('.slide');
+      var currentEl = document.querySelector('.current');
+      var totalEl = document.querySelector('.total');
+      var notesPanel = document.getElementById('notesPanel');
+      var idx = 0;
+      var notesVisible = false;
+
+      totalEl.textContent = slides.length;
+
+      function updateNotes(i) {
+        if (!notesVisible || !notesPanel) return;
+        var note = slides[i].getAttribute('data-notes') || '';
+        // Notes content is authored inline in this file (not user input),
+        // so DOM parsing is used safely for rich formatting.
+        notesPanel.textContent = '';
+        var temp = document.createElement('div');
+        temp.innerHTML = note;
+        while (temp.firstChild) {
+          notesPanel.appendChild(temp.firstChild);
+        }
+      }
+
+      function show(i) {
+        for (var j = 0; j < slides.length; j++) {
+          if (j === i) {
+            slides[j].classList.add('active');
+            slides[j].style.display = 'flex';
+          } else {
+            slides[j].classList.remove('active');
+            slides[j].style.display = 'none';
+          }
+        }
+        currentEl.textContent = i + 1;
+        updateNotes(i);
+      }
+
+      function next() { if (idx < slides.length - 1) { idx++; show(idx); } }
+      function prev() { if (idx > 0) { idx--; show(idx); } }
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+        if (e.key === 'ArrowLeft') { prev(); }
+        if (e.key === 'n' || e.key === 'N') {
+          notesVisible = !notesVisible;
+          if (notesPanel) {
+            if (notesVisible) {
+              notesPanel.classList.add('visible');
+            } else {
+              notesPanel.classList.remove('visible');
+            }
+          }
+          show(idx);
+        }
+      });
+
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('.controls') || e.target.closest('.notes-panel')) return;
+        var x = e.clientX / window.innerWidth;
+        if (x > 0.5) { next(); } else { prev(); }
+      });
+
+      // Touch support
+      var touchStartX = 0;
+      document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+      document.addEventListener('touchend', function(e) {
+        var diff = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(diff) > 50) { if (diff < 0) { next(); } else { prev(); } }
+      });
+
+      show(0);
+    })();
+  </script>
+</body>
+</html>
