@@ -46,7 +46,7 @@ The following modules are included in this lab:
 By the end of this workshop, you will be able to:
 
 * Use the **Ansible extension for VS Code** features for a rich editing experience.
-* Learn all the creation tools, including `ansible-creator` to scaffold new collections and content, `adt` (Ansible development tools) for a unified command-line tools management, `ade` (Ansible development environment) for managing collection dependencies and virtual environments and `ansible-navigator` for a feature-rich terminal-based user interface to run and test your execution environments..
+* Learn all the creation tools, including `ansible-creator` to scaffold new collections and content, `adt` (Ansible development tools) for a unified command-line tools management, `ade` (Ansible development environment) for managing collection dependencies and virtual environments and `ansible-navigator` for a feature-rich terminal-based user interface to run and test your execution environments.
 * Test your content with `ansible-lint` for checking playbooks against recommended practices, `molecule` for testing your collections in isolated, reproducible environments, `pytest-ansible` for functional testing of your modules, and `tox-ansible` for bringing it all together in multiple combinations.
 * Deploy to production by packaging your Collection content with `ansible-galaxy` and `ansible-builder`, and applying secure supply chain practices with `ansible-sign`.
 

@@ -53,14 +53,14 @@ image::vscode-devtools-terminal.png[VS Code terminal,link=self,window=blank, opt
 
 . **Scaffold a CLI collection with ansible-creator:** Using `ansible-creator` initialize a collection called `mynamespace.my_cli_collection` in the `/home/rhel/myansibleproject/collections/ansible_collections` directory:
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 ansible-creator init collection mynamespace.my_cli_collection /home/rhel/myansibleproject/collections/ansible_collections
 ----
 
 . **Inspect the generated collection structure and files:**
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 ls -lha /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/my_cli_collection
 ----
@@ -96,19 +96,19 @@ image::Apr-29-2025_at_13.51.07-image.png[Creating a Collection project,link=self
 .   **Fill out the collection details** in the new tab that opens. Use the following information:
 * **Namespace:** 
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 mynamespace
 ----
 * **Collection:**
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 mycollection
 ----
 * **Init path:**
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
 ----
@@ -147,19 +147,19 @@ image::May-12-2025_at_18.31.56-image.png[Creating a Playbook project,link=self,w
 .   **Fill out the playbook project details** in the new tab. Use the following information:
 * **Destination directory:**
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 /home/rhel/myansibleproject
 ----
 * **Namespace:** 
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 mynamespace
 ----
 * **Collection:** 
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 mysecondcollection
 ----
@@ -186,7 +186,7 @@ image::Apr-29-2025_at_13.57.13-image.png[VS Code Explorer icon,link=self,window=
 
 .   **Open the collection folder** by clicking the **(1) Open Folder** button. In the path field, paste the following path **(2)** and click the blue **OK** button **(3)**.
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/
 ----

@@ -134,7 +134,7 @@ NOTE: The output will show the versions of all installed Ansible development too
 
 . Due to workshop limitations, update the tools and pin the `ansible-core` version:
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 pip3 install --upgrade ansible-dev-tools
 pip3 install ansible-core==2.16.15
