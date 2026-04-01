@@ -12,9 +12,9 @@ _Learn how to sign content by using ansible-sign and apply supply-chain security
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** Launching OpenShift Dev Spaces
+* **Prepares you for:** xref:99-conclusion.adoc[Conclusion]
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:** 10 - 20 minutes
+* **Estimated Time:** 15 minutes
 ****
 
 == Learning objectives
@@ -193,7 +193,15 @@ ade install --editable /home/rhel/myansibleproject/collections/ansible_collectio
 .. AAP will verify the content of the project at every sync
 
 
----
+== Summary
+
+In this lab, you have:
+
+* Created a GPG key for signing Ansible content
+* Defined a `MANIFEST.in` to specify files for signing
+* Signed and verified an Ansible project using `ansible-sign`
+* Learned how signed content integrates with Ansible Automation Platform
+
 == Next steps
 
-You have successfully signed and verified your playbook, this ensured that it can't be tampered with and continue to run unnoticed. Please click the **Next** button below to proceed to the next module.
+Please click the **Next** button below to proceed to xref:99-conclusion.adoc[Conclusion].

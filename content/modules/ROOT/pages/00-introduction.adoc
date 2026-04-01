@@ -65,7 +65,9 @@ Before we begin, here are some tips to improve your lab experience:
 
 * The lab consists of several **Modules**. Each module contains one or more **Tasks**. When you finish a module, click the **Next** button at the bottom of the instructions sidebar to proceed.
 
-== Task 1: Launch the Dev Spaces workspace
+== Lab guide: Hands-on tasks
+
+=== Task 1: Launch the Dev Spaces workspace
 
 . Launch the link:{openshift_cluster_console_url}[OpenShift Web Console^]
 . Select the **htpasswd_provider** button and use the credentials provided in the xref:environment-details.adoc[Environment Details] page to log in to the OpenShift console
@@ -91,7 +93,7 @@ image::11-platform-dev-spaces/intro4.png[Dev Spaces workspace loading screen sho
 +
 image::11-platform-dev-spaces/intro5.png[VS Code interface in Dev Spaces showing Ansible and OpenShift extension icons in the left sidebar,link=self,window=blank]
 
-== Task 2: Configure the extensions
+=== Task 2: Configure the extensions
 
 . Check the **Extensions** section in VS Code, look for the Ansible extension and click the blue **Reload Window** button to update to the latest version
 +
@@ -101,7 +103,7 @@ image::vscode-devtools-extension-reload.png[Reload extensions in VS Code,link=se
 +
 image::11-platform-dev-spaces/intro6.png[Ansible extension interface in VS Code showing available Ansible development tools,link=self,window=blank]
 
-== Task 3: Verify the development environment
+=== Task 3: Verify the development environment
 
 The majority of the exercises in this lab will be performed using the VS Code terminal.
 
@@ -138,7 +140,7 @@ pip3 install --upgrade ansible-dev-tools
 pip3 install ansible-core==2.16.15
 ----
 
-== Conclusion
+== Summary
 
 In this module, you have:
 
@@ -148,6 +150,6 @@ In this module, you have:
 
 This foundation prepares you for the remaining labs where you will create, test, and deploy Ansible automation content.
 
-== Contributing to this lab
+== Next steps
 
-If you see an error in this lab, fork and submit a pull request against link:https://github.com/rhpds/ansible-dev-tools-showroom[https://github.com/rhpds/ansible-dev-tools-showroom^]
+Please click the **Next** button below to proceed to xref:11-vscode-collection.adoc[Lab 1.1 - Creating a Collection with the VS Code Extension].

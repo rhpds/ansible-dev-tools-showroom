@@ -12,18 +12,10 @@ _A guide to using the Ansible extension for Visual Studio Code to scaffold a new
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** 
+* **Prepares you for:** xref:12-ade.adoc[Lab 1.2 - Using the Ansible Development Environment tool (ade)]
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:**  
+* **Estimated Time:** 20 minutes
 ****
-
-== Lab briefing
-
-`ansible-creator` is a Command-Line Interface (CLI) tool designed for effortlessly scaffolding all your Ansible content. Whether you are initializing an Ansible collection or creating the framework for specific plugins, this tool streamlines the process with efficiency and precision based on your requirements.
-
-`ansible-creator` is also integrated into the VS Code user interface through the Ansible extension for VS Code for even a smoother experience when developing content.
-
-In this exercise, you will create an Ansible collection and a playbook using the Ansible extension's wizard in VS Code.
 
 == Learning objectives
 
@@ -33,9 +25,16 @@ After completing this module, you will be able to:
 * Use the Ansible VS Code extension to create collection and playbook projects
 * Compare CLI-generated and VS Code-generated collection structures
 
+== Lab briefing
+
+`ansible-creator` is a Command-Line Interface (CLI) tool designed for effortlessly scaffolding all your Ansible content. Whether you are initializing an Ansible collection or creating the framework for specific plugins, this tool streamlines the process with efficiency and precision based on your requirements.
+
+`ansible-creator` is also integrated into the VS Code user interface through the Ansible extension for VS Code for even a smoother experience when developing content.
+
+In this section, you will create an Ansible collection and a playbook using the Ansible extension's wizard in VS Code.
+
 image::Jun-06-2025_at_21.02.34-image.png[VS Code editor inside the lab environment,link=self,window=blank, opts="border"]
 
----
 
 == Lab guide: Hands-on tasks
 
@@ -205,8 +204,15 @@ image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Expl
 . **Same defaults**
 . **Same metadata files**
 
----
+
+== Summary
+
+In this lab, you have:
+
+* Scaffolded a collection using the `ansible-creator` CLI
+* Used the Ansible VS Code extension to create collection and playbook projects
+* Opened and explored the generated collection structure
 
 == Next steps
 
-You have successfully explored how ansible-creator and VS Code work together to scaffold a collection. Please click the **Next** button below to proceed to the next module.
+Please click the **Next** button below to proceed to xref:12-ade.adoc[Lab 1.2 - Using the Ansible Development Environment tool (ade)].

@@ -178,6 +178,15 @@ tox -f ansible2.16
 This command tells tox: "Run every test environment that includes 'ansible2.16' in its name." This effectively runs your Unit tests AND Molecule tests for that version in one go.
 
 
+== Summary
+
+In this lab, you have:
+
+* Configured `tox-ansible` to auto-discover test environments
+* Explored the auto-generated test matrix from a minimal configuration
+* Run linting, unit, and integration tests through a unified `tox` interface
+* Targeted specific Ansible versions and test types using tox factors
+
 == Troubleshooting
 
 **"InterpreterNotFound"**
@@ -188,16 +197,6 @@ If `tox -l` returns nothing or very few items:
 1. Ensure you are in the directory containing `galaxy.yml`.
 2. Ensure you actually created the `tests/unit` folder or `molecule` scenarios in previous modules. The plugin only generates environments for tests that actually exist.
 
-
-== Summary
-
-In this lab, you utilized the **tox-ansible** plugin to dramatically simplify test automation.
-
-* **Orchestration:** You replaced manual `ansible-lint`, `pytest`, and `molecule` commands with a unified `tox` interface.
-* **Auto-discovery:** You learned how the plugin scans your project to generate the test matrix automatically.
-* **Matrix Testing:** You validated your code against specific Ansible Core versions (2.15, 2.16) without managing the dependencies manually.
-
 == Next steps
 
-With your testing pipeline automated, you are ready to package your work.
-Click the **Next** button below to proceed to xref:31-ansible-builder.adoc[Lab 3.1 - Creating an Execution Environment with ansible-builder].
+Please click the **Next** button below to proceed to xref:31-ansible-builder.adoc[Lab 3.1 - Creating an Execution Environment with ansible-builder].

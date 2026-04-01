@@ -11,9 +11,9 @@ _A guide to automating the creation and customization of containerized execution
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** Launching OpenShift Dev Spaces
+* **Prepares you for:** xref:32-ansible-sign.adoc[Lab 3.2 - Introducing supply chain security with ansible-sign]
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:** 10 - 20 minutes
+* **Estimated Time:** 25 minutes
 ****
 
 == Learning objectives
@@ -330,7 +330,16 @@ podman run mynamespace/mycollection-ee:latest ansible-doc -t module mynamespace.
 +
 IMPORTANT: This command should display the documentation for your custom module, but we didn't add the corresponding metadata blocks! We will leave it to you as an optional task to research and fix this issue if you have time after finishing the lab!
 
----
+== Summary
+
+In this lab, you have:
+
+* Defined an execution environment using `execution-environment.yml`
+* Packaged a collection with `ansible-galaxy collection build`
+* Inspected the generated Containerfile with `ansible-builder create`
+* Built and tagged a custom execution environment image
+* Tested the execution environment with `podman` and `ansible-navigator`
+
 == Next steps
 
-You have successfully packaged your automation content into an Execution Environment using `ansible-builder` and VS Code. This image is now ready for upload to an Automation Hub or deployment via Automation Controller. Please click the **Next** button below to proceed to the next module.
+Please click the **Next** button below to proceed to xref:32-ansible-sign.adoc[Lab 3.2 - Introducing supply chain security with ansible-sign].

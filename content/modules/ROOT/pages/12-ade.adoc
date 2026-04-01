@@ -12,10 +12,18 @@ _A guide to exploring what `ansible-creator` and `ade` (Ansible Dev Environment)
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** 
+* **Prepares you for:** xref:13-module.adoc[Lab 1.3 - Adding a Module to a Collection]
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:** 
+* **Estimated Time:** 20 minutes
 ****
+
+== Learning objectives
+
+After completing this module, you will be able to:
+
+* Customize the `galaxy.yml` metadata for your collection
+* Use `ade` to install and manage collection dependencies
+* Understand how `ade` tracks Python and system-level requirements
 
 == Lab briefing
 
@@ -31,19 +39,10 @@ Ansible Dev Environment (`ade`) is a management tool for Ansible content develop
 - Providing configurable workspace isolation
 
 
-In this challenge, you will explore the content that was automatically generated for the collection you just created and learn how to customize your requirements using `ade`.
-
-== Learning objectives
-
-After completing this module, you will be able to:
-
-* Customize the `galaxy.yml` metadata for your collection
-* Use `ade` to install and manage collection dependencies
-* Understand how `ade` tracks Python and system-level requirements
+In this section, you will explore the content that was automatically generated for the collection you just created and learn how to customize your requirements using `ade`.
 
 image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Explorer view,link=self,window=blank, opts="border"]
 
----
 
 == Lab guide: Hands-on tasks
 
@@ -221,10 +220,15 @@ sudo dnf install -y python3-cffi python3-cryptography python3-lxml python3-pycpa
 
 NOTE: Remember the "Install collection from source code (editable mode)" option you selected during the Collection creation wizard? That option used `ade install -e` to automatically create the virtual environment (`.venv`) that you are using now.
 
----
+== Summary
 
+In this lab, you have:
+
+* Customized the `galaxy.yml` metadata for your collection
+* Used `ade` to install and manage collection dependencies
+* Resolved system-level package requirements with `ade`
 
 == Next steps
 
-You have successfully explored how Ansible Dev Tools (`adt`) and Ansible Dev Environment (`ade`) work. Please click the **Next** button below to proceed to the next module.
+Please click the **Next** button below to proceed to xref:13-module.adoc[Lab 1.3 - Adding a Module to a Collection].
 

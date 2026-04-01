@@ -12,14 +12,10 @@ _A guide to adding a custom module to your Ansible collection and using it in a 
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** 
+* **Prepares you for:** xref:21-molecule.adoc[Lab 2.1 - Testing a Collection with Ansible Molecule]
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:**
+* **Estimated Time:** 15 minutes
 ****
-
-== Lab briefing
-
-In this challenge, you will be adding content in the form of a Ansible **module plugin** to the collection you created, and then using the module for a new playbook, which you will fix with `ansible-lint` before running it with `ansible-navigator`.
 
 == Learning objectives
 
@@ -30,7 +26,10 @@ After completing this module, you will be able to:
 * Use `ansible-lint` to detect and auto-fix playbook issues
 * Run playbooks with both `ansible-playbook` and `ansible-navigator`
 
----
+== Lab briefing
+
+In this section, you will be adding content in the form of a Ansible **module plugin** to the collection you created, and then using the module for a new playbook, which you will fix with `ansible-lint` before running it with `ansible-navigator`.
+
 
 == Lab guide: Hands-on tasks
 
@@ -159,7 +158,15 @@ image::vscode-devtools-cowsay-navigator.png[Viewing task output in Ansible Navig
 
 .   **Exit Ansible Navigator.** **Press** the `ESC` key 3 times to exit the TUI and return to the normal terminal prompt.
 
----
+== Summary
+
+In this lab, you have:
+
+* Added a custom Python module to your Ansible collection
+* Created a playbook that uses the custom module
+* Used `ansible-lint` to detect and auto-fix playbook issues
+* Run the playbook with both `ansible-playbook` and `ansible-navigator`
+
 == Next steps
 
-You have successfully added and tested a custom module in your collection. Please click the **Next** button below to proceed to the next module.
+Please click the **Next** button below to proceed to xref:21-molecule.adoc[Lab 2.1 - Testing a Collection with Ansible Molecule].

@@ -11,9 +11,9 @@ _A guide to testing your Ansible collection using Ansible Molecule and a pre-con
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** 
+* **Prepares you for:** xref:22-pytest-ansible.adoc[Lab 2.2 - Functional testing with pytest-ansible]
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:** 
+* **Estimated Time:** 25 minutes
 ****
 
 == Learning objectives
@@ -27,7 +27,7 @@ After completing this module, you will be able to:
 
 == Lab briefing
 
-In this challenge, you will explore and test the collection you created in previous modules using **Ansible Molecule**.
+In this section, you will explore and test the collection you created in previous modules using **Ansible Molecule**.
 
 Ansible Molecule is a tool designed to aid in developing and testing Ansible playbooks, collections, and roles. It provides support for testing Ansible content across multiple instances, operating systems, and providers.
 
@@ -66,13 +66,10 @@ When you run `molecule test`, it executes these stages in sequence:
 
 This lifecycle ensures your content is tested in a clean, reproducible environment every time.
 
----
 
 == Lab guide: Hands-on tasks
 
 Now, let's explore the test scenario that was automatically added to your collection project.
-
----
 
 
 === Task 1: Explore the Molecule scenario
@@ -109,8 +106,6 @@ image::vscode-devtools-molecule-converge.png[Converge playbook for the Molecule 
 +
 This playbook runs during the **converge** stage of the Molecule lifecycle. It's the "system under test" - the playbook that exercises your collection's functionality. Notice how it references the integration tests that will validate the behavior.
 
----
-
 
 === Task 2: Examine the integration tests
 
@@ -142,8 +137,6 @@ Assertion-based testing is a common pattern in Ansible testing. Think of asserti
 This setup → execute → verify pattern is fundamental to effective testing.
 
 
----
-
 
 === Task 3: Create a filter plugin
 
@@ -172,8 +165,6 @@ image::May-12-2025_at_21.51.02-image.png[Creating a Collection plugin,link=self,
 ====
 The Ansible extension creates the plugin structure automatically, including the skeleton code and proper file placement. In a real development workflow, you would then write tests for this new plugin and verify them with Molecule before considering the feature complete.
 ====
-
----
 
 
 === Task 4: Run the Molecule test
@@ -236,9 +227,16 @@ A passing Molecule test means your collection has been validated in an automated
 * `molecule destroy -s <scenario>` - Tear down the test environment
 ====
 
----
+== Summary
 
-=== Troubleshooting common issues
+In this lab, you have:
+
+* Explored a Molecule test scenario structure and configuration
+* Examined integration test files and assertion-based testing patterns
+* Created a new filter plugin using the Ansible VS Code extension
+* Executed the complete Molecule test lifecycle for an Ansible collection
+
+== Troubleshooting
 
 . **If you see "No such file or directory" errors:**
 +
@@ -281,35 +279,6 @@ Ensure you have network connectivity and that any required Ansible Galaxy collec
 +
 Review the syntax error message carefully. It will point you to the specific file and line number where the issue was detected. Use `ansible-lint` (covered in earlier modules) to catch these issues before running Molecule tests.
 
----
-
-== Summary
-
-In this lab, you have:
-
-* Explored a Molecule test scenario structure and understood its purpose in Ansible development
-* Examined Molecule configuration files (`molecule.yml`) and learned how they define test behavior
-* Reviewed integration test files to understand assertion-based testing patterns
-* Created a new filter plugin using the Ansible VS Code extension
-* Successfully executed the complete Molecule test lifecycle for an Ansible collection
-* Observed how Molecule validates collection functionality automatically through multiple stages
-* Learned troubleshooting techniques for common Molecule issues
-
-Molecule is essential for maintaining high-quality Ansible content. The automated testing approach you've learned ensures that:
-
-* Code changes don't break existing functionality (regression testing)
-* New features work as expected before deployment
-* Your collection behaves consistently across different environments
-* Integration with other Ansible components works correctly
-
-In production environments, these tests run automatically in CI/CD pipelines (such as GitHub Actions, GitLab CI, or Jenkins), ensuring every code change is validated before merging. This "test-driven development" approach catches bugs early when they're cheapest to fix, and gives teams confidence to make changes without fear of breaking things.
-
-The skills you've learned in this module - understanding test scenarios, writing assertions, and running automated tests - are fundamental to professional Ansible development and will serve you well as you build more complex automation solutions.
-
----
-
 == Next steps
 
-You have successfully used Molecule to test your collection. In the next module, you'll explore additional development tools and recommended practices for maintaining production-ready Ansible content. 
-
-Please click the **Next** button below to proceed to the next module.
+Please click the **Next** button below to proceed to xref:22-pytest-ansible.adoc[Lab 2.2 - Functional testing with pytest-ansible].

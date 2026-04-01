@@ -57,3 +57,7 @@
 | `ansible-sign project gpg-verify .`
 | Verify project signatures
 |===
+
+== Contributing to this lab
+
+If you see an error in this lab, fork and submit a pull request against link:https://github.com/rhpds/ansible-dev-tools-showroom[https://github.com/rhpds/ansible-dev-tools-showroom^]

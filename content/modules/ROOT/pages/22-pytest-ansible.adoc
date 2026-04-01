@@ -12,9 +12,9 @@ _Learn how to do functional testing for your Ansible content using pytest-ansibl
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** 
+* **Prepares you for:** xref:23-tox-ansible.adoc[Lab 2.3 - Orchestrating Tests with tox-ansible]
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:**
+* **Estimated Time:** 15 minutes
 ****
 
 == Learning objectives
@@ -36,15 +36,9 @@ pytest-ansible is a pytest plugin that bridges the gap between Python's pytest f
 
 This integration allows you to write fast, isolated tests for Ansible modules, plugins, and other components using familiar Python testing patterns. While Molecule excels at integration testing with real infrastructure, pytest-ansible focuses on functional and unit-level validation of individual Ansible components.
 
-In this lab, you'll learn how to test the custom `cowsay` module you developed earlier using pytest-ansible.
+In this section, you'll learn how to test the custom `cowsay` module you developed earlier using pytest-ansible.
 
-== Lab guide: Hands-on tasks
-
-=== Why pytest-ansible?
-
-pytest-ansible integrates Ansible with pytest by exposing fixtures that allow Ansible content to be executed and inspected as part of standard Python tests.
-
-This is especially useful for:
+pytest-ansible integrates Ansible with pytest by exposing fixtures that allow Ansible content to be executed and inspected as part of standard Python tests. This is especially useful for:
 
 * Custom modules
 * Filter plugins
@@ -53,17 +47,13 @@ This is especially useful for:
 
 These tests run quickly and are well-suited for CI pipelines.
 
----
-
-=== Test scope
-
-In this task, we will test the custom `cowsay` module developed earlier in the collection:
+In this lab, we will test the custom `cowsay` module developed earlier in the collection:
 
 * Module: `mynamespace.mycollection.cowsay`
 * Test type: Functional test
 * Target: Local test host
 
----
+== Lab guide: Hands-on tasks
 
 === Task 1: Create the test inventory
 
@@ -75,7 +65,6 @@ In this task, we will test the custom `cowsay` module developed earlier in the c
 localhost ansible_connection=local ansible_python_interpreter=python3
 ----
 
----
 
 === Task 2: Create the test configuration
 
@@ -121,7 +110,6 @@ The `conftest.py` file is a special pytest configuration file that runs before a
 ====
 
 
----
 
 === Task 3: Create the test file
 
@@ -179,7 +167,6 @@ def test_cowsay_module(ansible_module):
 This test validates both the module's execution (no failures, correct change state) and its output (contains the expected message with cowsay formatting). The assertions check for structural elements that are always present in cowsay output, making the test more reliable than checking for specific ASCII art.
 ====
 
----
 
 === Task 4: Run the test
 
@@ -221,7 +208,6 @@ Results (1.15s):
 NOTE: You might see warnings between the Results and PASSED tests/test_cowsay.py. That's ok. 
 
 
----
 
 === Task 5: Verify the test results
 
@@ -259,9 +245,7 @@ pytest -v -s
 ** The test validated the cowsay-specific formatting
 
 
----
-
-=== Molecule vs pytest-ansible
+== Molecule vs pytest-ansible
 
 [cols="1,3",options="header"]
 |===
@@ -275,33 +259,18 @@ pytest -v -s
 
 Molecule validates *how content behaves in a system context*, while pytest-ansible validates *how individual components behave in isolation*.
 
----
-
-=== When to use each tool
-
-* Use Molecule when testing:
-** Roles
-** Complex interactions
-** OS-specific behavior
-
-* Use pytest-ansible when testing:
-** Custom modules
-** Plugins
-** Small, fast logic checks
-
 Both tools complement each other and are commonly used together in professional Ansible content pipelines.
 
----
+== Summary
 
-=== Key takeaways
+In this lab, you have:
 
-* Molecule ensures your automation works in real environments.
-* pytest-ansible ensures your building blocks behave correctly.
-* Using both provides layered confidence in your Ansible content.
+* Set up pytest-ansible for functional testing of Ansible modules
+* Written a Python test file that validates module behavior
+* Configured `conftest.py` for module and collection path resolution
+* Used pytest debugging flags to interpret test output
 
----
-
-=== Troubleshooting
+== Troubleshooting
 
 If tests fail, use these debugging techniques:
 
@@ -323,3 +292,7 @@ Common issues:
 * *Module not found*: Check that `conftest.py` paths are correct and your collection structure matches expectations
 * *Assertion failures*: Use `-s` to see the actual output and verify what the module returned
 * *Import errors*: Ensure pytest-ansible is installed and your Python environment is activated
+
+== Next steps
+
+Please click the **Next** button below to proceed to xref:23-tox-ansible.adoc[Lab 2.3 - Orchestrating Tests with tox-ansible].
