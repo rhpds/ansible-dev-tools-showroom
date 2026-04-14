@@ -90,7 +90,6 @@
         name: ansible-core==2.16.15
         state: present
         virtualenv: "{{ collection_dir }}/.venv"
-      changed_when: true
 
     # =========================================================================
     # Task 4: Manage dependencies with ade

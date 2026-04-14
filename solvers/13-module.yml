@@ -60,6 +60,7 @@
           if __name__ == '__main__':
               main()
         mode: "0644"
+        backup: true
 
     # =========================================================================
     # Task 2: Create a playbook to use the new module
@@ -81,6 +82,7 @@
                 ansible.builtin.debug:
                   msg: "{{ '{{' }} result.message {{ '}}' }}"
         mode: "0644"
+        backup: true
 
     # =========================================================================
     # Task 3: Use ansible-lint to fix the playbook

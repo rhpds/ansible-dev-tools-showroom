@@ -60,6 +60,7 @@
               2.15
               2.16
         mode: "0644"
+        backup: true
 
     # =========================================================================
     # Task 3: Explore auto-generated environments

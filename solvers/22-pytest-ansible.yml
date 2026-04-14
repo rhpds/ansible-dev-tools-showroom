@@ -40,6 +40,7 @@
           [local]
           localhost ansible_connection=local ansible_python_interpreter=python3
         mode: "0644"
+        backup: true
 
     # =========================================================================
     # Task 2: Create the test configuration
@@ -75,6 +76,7 @@
           COLLECTIONS_PATH = os.path.abspath(os.path.join(PROJECT_ROOT, '../../..'))
           os.environ['ANSIBLE_COLLECTIONS_PATH'] = COLLECTIONS_PATH
         mode: "0644"
+        backup: true
 
     # =========================================================================
     # Task 3: Create the test file
@@ -126,6 +128,7 @@
               assert "\\" in output_text or "/" in output_text, "Missing cowsay speech bubble borders"
               assert "(oo)" in output_text, "Checking for the cow eyes failed"
         mode: "0644"
+        backup: true
 
     # =========================================================================
     # Task 4: Run the test

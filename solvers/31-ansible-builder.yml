@@ -84,6 +84,7 @@
               - mycollection-ee
             package_manager_path: /usr/bin/microdnf
         mode: "0644"
+        backup: true
 
     # =========================================================================
     # Task 2: Review the generated Containerfile (dry run)
