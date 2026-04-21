@@ -45,12 +45,3 @@
       ansible.builtin.command: adt --version
       changed_when: false
 
-    - name: "Task 3: Upgrade ansible-dev-tools"
-      ansible.builtin.pip:
-        name: ansible-dev-tools
-        state: present
-
-    - name: "Task 3: Pin ansible-core version"
-      ansible.builtin.pip:
-        name: ansible-core==2.16.15
-        state: present
