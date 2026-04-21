@@ -150,14 +150,6 @@ tox-ansible                              26.1.0
 +
 NOTE: Versions might differ, don't worry. The list above is an example.
 
-. *Again, due to workshop limitations we need to change the ansible-core version inside the `venv`:** Run the following command in the Terminal
-+
-[source,sh,role=execute]
-----
-pip3 install --upgrade ansible-dev-tools 
-pip3 install ansible-core==2.16.15
-----
-
 === Task 4: Manage dependencies with `ade`
 
 Now you will use `ade` to install the dependencies you declared in `galaxy.yml`.

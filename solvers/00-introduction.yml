@@ -37,20 +37,11 @@
     # Task 3: Verify the development environment
     # =========================================================================
     - name: "Task 3: Verify container OS release"
-      ansible.builtin.command: cat /etc/redhat-release
-      changed_when: false
+      ansible.builtin.slurp:
+        src: /etc/redhat-release
+      register: r_os_release
 
     - name: "Task 3: Verify adt and development tools are available"
       ansible.builtin.command: adt --version
       changed_when: false
 
-    - name: "Task 3: Upgrade ansible-dev-tools"
-      ansible.builtin.pip:
-        name: ansible-dev-tools
-        state: present
-
-    - name: "Task 3: Pin ansible-core version"
-      ansible.builtin.pip:
-        name: ansible-core==2.16.15
-        state: present
-      changed_when: true

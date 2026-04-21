@@ -79,18 +79,6 @@
         cmd: "{{ collection_dir }}/.venv/bin/adt --version"
       changed_when: false
 
-    - name: "Task 3: Upgrade ansible-dev-tools in venv"
-      ansible.builtin.pip:
-        name: ansible-dev-tools
-        state: present
-        virtualenv: "{{ collection_dir }}/.venv"
-
-    - name: "Task 3: Pin ansible-core version in venv"
-      ansible.builtin.pip:
-        name: ansible-core==2.16.15
-        state: present
-        virtualenv: "{{ collection_dir }}/.venv"
-      changed_when: true
 
     # =========================================================================
     # Task 4: Manage dependencies with ade

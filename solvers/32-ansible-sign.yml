@@ -52,6 +52,7 @@
           %commit
           %echo done
         mode: "0644"
+        backup: true
 
     - name: "Task 1: Check if GPG key already exists"
       ansible.builtin.command:
@@ -103,6 +104,7 @@
           include README.md
           include mycowsay.yml
         mode: "0644"
+        backup: true
 
     # =========================================================================
     # Task 4: Sign the project with ansible-sign
@@ -117,10 +119,9 @@
     # Task 5: Verify the content with ansible-sign
     # =========================================================================
     - name: "Task 5: Display checksum manifest"
-      ansible.builtin.command:
-        cmd: cat .ansible-sign/sha256sum.txt
-        chdir: "{{ project_dir }}"
-      changed_when: false
+      ansible.builtin.slurp:
+        src: "{{ project_dir }}/.ansible-sign/sha256sum.txt"
+      register: r_checksum_manifest
 
     - name: "Task 5: Verify signed content"
       ansible.builtin.command:

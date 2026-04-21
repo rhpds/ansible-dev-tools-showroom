@@ -75,13 +75,9 @@ image::11-platform-dev-spaces/intro-dev_spaces_shortcut.png[OpenShift console he
 +
 TIP: Alternatively, the direct URL is link:https://devspaces.{openshift_cluster_ingress_domain}[https://devspaces.{openshift_cluster_ingress_domain}^] also available in xref:environment-details.adoc[Environment Details].
 
-. Log in via OpenShift authentication using the same credentials as the OpenShift console
-. Select **Allow selected permissions** to authorize access and launch the console
-. Scroll down and select the workspace titled **Ansible Dev Space**
+. The **Ansible Dev Space** workspace will start automatically. Wait a few minutes for the Dev Spaces instance to initialize.
 +
-image::11-platform-dev-spaces/intro3.png[Dev Spaces workspace selection page showing available workspaces including Ansible Dev Space,link=self,window=blank]
-+
-NOTE: It will take a few minutes for the Dev Spaces instance to initialize. When it has loaded, a Visual Studio Code interface will appear.
+NOTE: When it has loaded, a Visual Studio Code interface will appear.
 +
 image::11-platform-dev-spaces/intro4.png[Dev Spaces workspace loading screen showing VS Code interface initialization,link=self,window=blank]
 
@@ -129,14 +125,6 @@ adt --version
 ----
 +
 NOTE: The output will show the versions of all installed Ansible development tools. Versions may differ from the examples in the lab, this is expected.
-
-. Due to workshop limitations, update the tools and pin the `ansible-core` version:
-+
-[source,sh,role=execute]
-----
-pip3 install --upgrade ansible-dev-tools
-pip3 install ansible-core==2.16.15
-----
 
 == Conclusion
 
