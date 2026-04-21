@@ -11,6 +11,9 @@ view_switcher:
   default_mode: split
 
 tabs:
+  - name: Dev Spaces
+    url: 'https://devspaces.${DOMAIN}'
+
   - name: Terminal
     path: /wetty
     port: 443
