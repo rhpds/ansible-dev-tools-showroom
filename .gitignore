@@ -36,3 +36,40 @@ package-lock.json
 
 # Ignore yarn.lock for Yarn
 yarn.lock
+
+# ============================================
+# Claude Code
+# ============================================
+.claude/settings.local.json
+.claude/settings.json
+.claude/*.local.md
+.claude/ai-gitignore-baseline.json
+.claude/commands/
+.mcp.json
+
+# ============================================
+# AI-generated content (common patterns)
+# ============================================
+CLAUDE.md
+SUMMARY.md
+ANALYSIS.md
+REPORT.md
+TODO.md
+PLAN.md
+NOTES.md
+*-summary.md
+*-analysis.md
+*-report.md
+*-generated.*
+ai-output/
+generated/
+.specify/
+
+# ============================================
+# Editor and OS (additional)
+# ============================================
+Thumbs.db
+*.swp
+*.swo
+*.orig
+*.bak

@@ -135,6 +135,7 @@ image::vscode-devtools-lint-fix.png[Ansible Lint settings,link=self,window=blank
     - name: Display the result
       ansible.builtin.debug:
         msg: "{{ result.message }}"
+        verbosity: 0
 
 ----
 
