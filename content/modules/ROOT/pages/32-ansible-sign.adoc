@@ -95,20 +95,20 @@ gpg --list-secret-keys
 
 === Task 2: Set up the environment
 
-This task demonstrates how to cryptographically sign an Ansible Project using `ansible-sign`. We will be using `myansibleproject` and our `mycowsay.yml` playbook.
+This task demonstrates how to cryptographically sign an Ansible Project using `ansible-sign`. We will be using the workspace project directory and our `mycowsay.yml` playbook.
 
-. *Make sure you are in the `myansibleproject` directory:*
+. *Make sure you are in the workspace project directory:*
 +
 [source,bash,role=execute]
 ----
-cd /home/rhel/myansibleproject
+cd /projects/ansible-dev-tools-workspace
 ----
 
 . *Switch `ade` to standard mode:* Before we can sign our packages, we need to disable editable mode to remove the recursive symlinks. 
 +
 [source,bash,role=execute]
 ----
-ade install /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+ade install /projects/ansible-dev-tools-workspace/mynamespace/mycollection
 ----
 
 
@@ -181,7 +181,7 @@ ansible-sign project gpg-verify .
 +
 [source,bash,role=execute]
 ----
-ade install --editable /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+ade install --editable /projects/ansible-dev-tools-workspace/mynamespace/mycollection
 ----
 
 === Task 6: Enable verification in AAP executions

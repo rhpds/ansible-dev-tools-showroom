@@ -103,7 +103,7 @@ MODULES_PATH = os.path.join(PROJECT_ROOT, 'plugins', 'modules')
 os.environ['ANSIBLE_LIBRARY'] = MODULES_PATH
 
 # 2. Set ANSIBLE_COLLECTIONS_PATH so Ansible can resolve the full namespace
-# This points to: .../myansibleproject/collections
+# This points to: .../ansible-dev-tools-workspace
 # We navigate up 3 levels from PROJECT_ROOT:
 #   mycollection -> mynamespace -> ansible_collections -> collections root
 # This allows Ansible to find modules using FQCN (mynamespace.mycollection.cowsay)
@@ -190,7 +190,7 @@ This test validates both the module's execution (no failures, correct change sta
 +
 [source,ini,role=execute]
 ----
-cd /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+cd /projects/ansible-dev-tools-workspace/mynamespace/mycollection
 source .venv/bin/activate
 ----
 

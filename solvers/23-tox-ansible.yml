@@ -19,7 +19,7 @@
 
   vars:
     collection_dir: >-
-      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+      /projects/ansible-dev-tools-workspace/mynamespace/mycollection
 
   tasks:
     # =========================================================================

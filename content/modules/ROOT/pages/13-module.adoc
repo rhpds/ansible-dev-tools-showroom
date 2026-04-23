@@ -78,7 +78,7 @@ Now, you will switch to your playbook project folder and create a new playbook t
 
 .   **Open the playbook project folder.** In the VS Code top menu, select **File** → **Open Folder...**.
 
-.   **Enter the correct path.** In the prompt, **enter** the path `/home/rhel/myansibleproject` and **click** the blue **OK** button.
+.   **Enter the correct path.** In the prompt, **enter** the path `/projects/ansible-dev-tools-workspace` and **click** the blue **OK** button.
 +
 image::vscode-devtools-folder-myansibleproject.png[Open Ansible Playbook Project,link=self,window=blank, opts="border"]
 

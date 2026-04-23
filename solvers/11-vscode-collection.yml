@@ -19,8 +19,8 @@
   become: false
 
   vars:
-    base_project_dir: /home/rhel/myansibleproject
-    collections_dir: "{{ base_project_dir }}/collections/ansible_collections"
+    base_project_dir: /projects/ansible-dev-tools-workspace
+    collections_dir: "{{ base_project_dir }}"
 
   tasks:
     # =========================================================================

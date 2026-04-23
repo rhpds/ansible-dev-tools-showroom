@@ -63,7 +63,7 @@ image::vscode-devtools-ee-sidebar.png[EE wizard creator in VS Code,link=self,win
 +
 [source,bash,role=execute]
 ----
-/home/rhel/myansibleproject
+/projects/ansible-dev-tools-workspace
 ----
 +
 * **Base image:** Select the `registry.redhat.io` option from the dropdown to use the Red Hat supported image. 
@@ -98,7 +98,7 @@ image::vscode-devtools-ee-create.png[Creating an EE project,link=self,window=bla
 
 . *Open the `execution-environment.yml` file:*
 +
-In the VS Code file explorer view, look for and open the newly created file named `execution-environment.yml`. It should be in the root of the `myansibleproject`. 
+In the VS Code file explorer view, look for and open the newly created file named `execution-environment.yml`. It should be in the root of the workspace project directory. 
 
 . *Check the EE blueprint content:*
 +
@@ -185,7 +185,7 @@ Ensure your VS Code terminal is operating in the directory containing your newly
 +
 [source,bash,role=execute]
 ----
-cd /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+cd /projects/ansible-dev-tools-workspace/mynamespace/mycollection
 ----
 
 . *Run the `ansible-galaxy` command in the VS Code Terminal:*
@@ -201,7 +201,7 @@ Run the following commands in the active terminal to generate the collection tar
 +
 [source,bash,role=execute]
 ----
-ansible-galaxy collection build --output-path /home/rhel/myansibleproject/
+ansible-galaxy collection build --output-path /projects/ansible-dev-tools-workspace/
 ----
 Let's re-enable `ade` editable mode now:
 +
@@ -215,13 +215,13 @@ ade install -e .
 
 Before executing the full build, we can use the `ansible-builder create` command to generate the `Containerfile` and build context directory (`context/`). This is helpful for debugging the build steps without spending time on the full image assembly.
 
-. *Make sure you are in the myansibleproject directory:*
+. *Make sure you are in the workspace project directory:*
 +
 Ensure your VS Code terminal is operating in the directory containing your newly created execution-environment.yml
 +
 [source,bash,role=execute]
 ----
-cd /home/rhel/myansibleproject
+cd /projects/ansible-dev-tools-workspace
 ----
 
 . *Run the `ansible-builder create` command in the VS Code Terminal:*
@@ -274,7 +274,7 @@ The build command executes the container build across 4 internal stages: Base, G
 Successfully tagged localhost/mynamespace/mycollection-ee:latest
 6492fc97cd316aba11934f050e9ff5b8edf52972c80934ca70e122f1965bf62c
 
-Complete! The build context can be found at: /home/rhel/myansibleproject/context
+Complete! The build context can be found at: /projects/ansible-dev-tools-workspace/context
 ----
 
 . *Verify the container image exists:*

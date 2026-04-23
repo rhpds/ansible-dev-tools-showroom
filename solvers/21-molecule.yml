@@ -18,9 +18,9 @@
 
   vars:
     collection_dir: >-
-      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+      /projects/ansible-dev-tools-workspace/mynamespace/mycollection
     extensions_dir: >-
-      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/extensions
+      /projects/ansible-dev-tools-workspace/mynamespace/mycollection/extensions
 
   tasks:
     # =========================================================================
@@ -61,4 +61,4 @@
       changed_when: true
       environment:
         ANSIBLE_COLLECTIONS_PATH: >-
-          /home/rhel/myansibleproject/collections
+          /projects/ansible-dev-tools-workspace/collections

@@ -82,7 +82,7 @@ When you created the collection in the previous modules, `ansible-creator` also 
 .   **Locate the Molecule scenario.** In the VS Code file explorer, **expand** the following directory path: __collections > ansible_collections > mynamespace > mycollection > extensions > molecule
  > integration_hello_world__. 
  
-NOTE: You can also copy and paste the path: `collections/ansible_collections/mynamespace/mycollection/extensions/molecule/integration_hello_world`.
+NOTE: You can also copy and paste the path: `mynamespace.mycollection/extensions/molecule/integration_hello_world`.
 
 .   **Examine the Molecule configuration.** Within the `integration_hello_world` directory, **open** the `molecule.yml` file. Molecule uses this file to define the settings and scenarios for testing the Ansible collection.
 +
@@ -160,7 +160,7 @@ image::May-12-2025_at_21.51.02-image.png[Creating a Collection plugin,link=self,
 +
 [source,text,role=execute]
 ----
-/home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/
+/projects/ansible-dev-tools-workspace/mynamespace/mycollection/
 ----
 +
 * **Plugin type:** `Filter`
@@ -184,7 +184,7 @@ Finally, you will use the command line to run the Molecule test scenario and obs
 +
 [source,bash,role=execute]
 ----
-cd /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/extensions/
+cd /projects/ansible-dev-tools-workspace/mynamespace/mycollection/extensions/
 ----
 
 .   **Run a bare Molecule test.** First, run `molecule test` without specifying a scenario. 
@@ -246,7 +246,7 @@ Verify you're in the correct directory by running `pwd`. You should be in:
 +
 [source,bash]
 ----
-/home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/extensions/
+/projects/ansible-dev-tools-workspace/mynamespace/mycollection/extensions/
 ----
 
 . **If you see "No scenario name provided" errors:**

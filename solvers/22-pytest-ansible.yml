@@ -19,9 +19,9 @@
 
   vars:
     collection_dir: >-
-      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+      /projects/ansible-dev-tools-workspace/mynamespace/mycollection
     tests_dir: >-
-      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/tests
+      /projects/ansible-dev-tools-workspace/mynamespace/mycollection/tests
 
   tasks:
     # =========================================================================
@@ -69,7 +69,7 @@
           os.environ['ANSIBLE_LIBRARY'] = MODULES_PATH
 
           # 2. Set ANSIBLE_COLLECTIONS_PATH so Ansible can resolve the full namespace
-          # This points to: .../myansibleproject/collections
+          # This points to: .../ansible-dev-tools-workspace
           # We navigate up 3 levels from PROJECT_ROOT:
           #   mycollection -> mynamespace -> ansible_collections -> collections root
           # This allows Ansible to find modules using FQCN (mynamespace.mycollection.cowsay)
@@ -139,7 +139,7 @@
         chdir: "{{ collection_dir }}"
       changed_when: false
       environment:
-        ANSIBLE_COLLECTIONS_PATH: /home/rhel/myansibleproject/collections
+        ANSIBLE_COLLECTIONS_PATH: /projects/ansible-dev-tools-workspace/collections
 
     # =========================================================================
     # Task 5: Verify the test results
@@ -150,4 +150,4 @@
         chdir: "{{ collection_dir }}"
       changed_when: false
       environment:
-        ANSIBLE_COLLECTIONS_PATH: /home/rhel/myansibleproject/collections
+        ANSIBLE_COLLECTIONS_PATH: /projects/ansible-dev-tools-workspace/collections
