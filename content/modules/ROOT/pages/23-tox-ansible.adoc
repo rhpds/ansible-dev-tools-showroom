@@ -65,7 +65,7 @@ Crucially, look for **`with tox-ansible`**. This confirms the plugin is active.
 +
 [source,bash,role=execute]
 ----
-cd /projects/ansible-dev-tools-workspace/mynamespace/mycollection/
+cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection/
 ----
 
 === Task 2: Create a minimal Tox configuration

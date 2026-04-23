@@ -108,7 +108,7 @@ cd /projects/ansible-dev-tools-workspace
 +
 [source,bash,role=execute]
 ----
-ade install /projects/ansible-dev-tools-workspace/mynamespace/mycollection
+ade install /projects/ansible-dev-tools-workspace/mynamespace.mycollection
 ----
 
 
@@ -181,7 +181,7 @@ ansible-sign project gpg-verify .
 +
 [source,bash,role=execute]
 ----
-ade install --editable /projects/ansible-dev-tools-workspace/mynamespace/mycollection
+ade install --editable /projects/ansible-dev-tools-workspace/mynamespace.mycollection
 ----
 
 === Task 6: Enable verification in AAP executions

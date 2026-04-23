@@ -19,9 +19,9 @@
 
   vars:
     collection_dir: >-
-      /projects/ansible-dev-tools-workspace/mynamespace/mycollection
+      /projects/ansible-dev-tools-workspace/mynamespace.mycollection
     tests_dir: >-
-      /projects/ansible-dev-tools-workspace/mynamespace/mycollection/tests
+      /projects/ansible-dev-tools-workspace/mynamespace.mycollection/tests
 
   tasks:
     # =========================================================================

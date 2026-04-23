@@ -32,12 +32,12 @@
         state: directory
         mode: "0755"
 
-    - name: "Task 0: Scaffold CLI collection mynamespace.my_cli_collection"
+    - name: "Task 0: Scaffold CLI collection mynamespace.creatorcollection"
       ansible.builtin.command:
         cmd: >-
-          ansible-creator init collection mynamespace.my_cli_collection
-          {{ collections_dir }}
-        creates: "{{ collections_dir }}/mynamespace/my_cli_collection/galaxy.yml"
+          ansible-creator init collection mynamespace.creatorcollection
+          {{ collections_dir }}/mynamespace.creatorcollection
+        creates: "{{ collections_dir }}/mynamespace.creatorcollection/galaxy.yml"
 
     # =========================================================================
     # Task 1: Explore the Ansible extension
@@ -54,13 +54,13 @@
       ansible.builtin.command:
         cmd: >-
           ansible-creator init collection mynamespace.mycollection
-          {{ collections_dir }}/mynamespace/mycollection
-        creates: "{{ collections_dir }}/mynamespace/mycollection/galaxy.yml"
+          {{ collections_dir }}/mynamespace.mycollection
+        creates: "{{ collections_dir }}/mynamespace.mycollection/galaxy.yml"
 
     - name: "Task 2: Install collection in editable mode with ade"
       ansible.builtin.command:
         cmd: ade install -e .
-        chdir: "{{ collections_dir }}/mynamespace/mycollection"
+        chdir: "{{ collections_dir }}/mynamespace.mycollection"
       changed_when: true
 
     # =========================================================================

@@ -52,23 +52,23 @@ Lets start by running `ansible-creator` in the command line to scaffold a collec
 +
 image::vscode-devtools-terminal.png[VS Code terminal,link=self,window=blank, opts="border"]
 
-. **Scaffold a CLI collection with ansible-creator:** Using `ansible-creator` initialize a collection called `mynamespace.my_cli_collection` in the `/projects/ansible-dev-tools-workspace` directory:
+. **Scaffold a CLI collection with ansible-creator:** Using `ansible-creator` initialize a collection called `mynamespace.creatorcollection`:
 +
 [source,sh,role=execute]
 ----
-ansible-creator init collection mynamespace.my_cli_collection /projects/ansible-dev-tools-workspace
+ansible-creator init collection mynamespace.creatorcollection /projects/ansible-dev-tools-workspace/mynamespace.creatorcollection
 ----
 
 . **Inspect the generated collection structure and files:**
 +
 [source,sh,role=execute]
 ----
-ls -lha /projects/ansible-dev-tools-workspace/mynamespace/my_cli_collection
+ls -lha /projects/ansible-dev-tools-workspace/mynamespace.creatorcollection
 ----
 +
 NOTE: You should see the scaffolded collection directory structure including files like `galaxy.yml`, `README.md`, `LICENSE`, and directories like `plugins/`, `tests/`, and `meta/`.
 
-. **Congrats:** You created a default collection. Move to the next tasks to see how to do this in VS Code and how to customize it.
+. **Congrats:** You created a default collection. This collection was created for demonstration purposes only — in the following tasks you will create the collection used throughout the rest of the lab.
 
 === Task 1: Explore the Ansible extension
 
@@ -105,7 +105,7 @@ mycollection
 +
 [source,sh,role=execute]
 ----
-/projects/ansible-dev-tools-workspace/mynamespace/mycollection
+/projects/ansible-dev-tools-workspace/mynamespace.mycollection
 ----
 +
 * **Check** the box for `Install collection from source code (editable mode)`
@@ -117,18 +117,18 @@ image::vscode-devtools-collection-create.png[Collection creation form,link=self,
 [source,text]
 ----
 ------- ansible-creator logs ---------
-    Note: collection project created at /projects/ansible-dev-tools-workspace/collections/
-          ansible_collections/mynamespace/mycollection
+    Note: collection project created at /projects/ansible-dev-tools-workspace/
+          mynamespace.mycollection
 
 
 ------- ansible-dev-environment logs -------
-Note: Created virtual environment: /projects/ansible-dev-tools-workspace/mynamespace/mycollection/.venv
+Note: Created virtual environment: /projects/ansible-dev-tools-workspace/mynamespace.mycollection/.venv
 Note: Installed collections include: ansible.utils and mynamespace.mycollection
 Note: All python requirements are installed.
 Note: All required system packages are installed.
 Note: A virtual environment was specified but has not been activated.
 Note: Please activate the virtual environment:
-source /projects/ansible-dev-tools-workspace/mynamespace/mycollection/.venv/bin/activate
+source /projects/ansible-dev-tools-workspace/mynamespace.mycollection/.venv/bin/activate
 ----
 
 === Task 3: Create a playbook project
@@ -183,7 +183,7 @@ image::Apr-29-2025_at_13.57.13-image.png[VS Code Explorer icon,link=self,window=
 +
 [source,sh,role=execute]
 ----
-/projects/ansible-dev-tools-workspace/mynamespace/mycollection/
+/projects/ansible-dev-tools-workspace/mynamespace.mycollection/
 ----
 +
 image::May-12-2025_at_18.45.02-image.png[Opening a folder in VS Code,link=self,window=blank, opts="border"]
