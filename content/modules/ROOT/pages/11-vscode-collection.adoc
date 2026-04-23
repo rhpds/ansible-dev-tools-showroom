@@ -169,9 +169,9 @@ image::vscode-devtools-playbook-create.png[Creating a Playbook project,link=self
 Note: playbook project created at /projects/ansible-dev-tools-workspace/myplaybook
 ----
 
-=== Task 4: Open the mycollection folder
+=== Task 4: Open the collection folder and configure the Python environment
 
-Due to a lab infrastructure and VS Code limitation, you will now manually open the folder where your new collection content was created.
+Now you will open the collection folder in VS Code and configure the Python interpreter to use the virtual environment that was created with the collection.
 
 .   **Open the file Explorer** by clicking the Explorer icon (the icon with two files) in the VS Code left sidebar.
 +
@@ -190,8 +190,15 @@ image::May-12-2025_at_18.45.02-image.png[Opening a folder in VS Code,link=self,w
 +
 image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Explorer view,link=self,window=blank, opts="border"]
 
+.   **Activate the Ansible extension** by clicking on the `galaxy.yml` file in the file explorer. This ensures VS Code recognizes the project as an Ansible collection and activates the Ansible language features.
 
-=== Task 5: Compare the CLI-generated with the VS Code–generated collections
+.   **Copy the virtual environment path.** In the file explorer sidebar, locate the `.venv` folder, **right-click** on it, and select **Copy Path**.
+
+.   **Open the Python interpreter selector** by clicking the Python version indicator in the bottom-right corner of the VS Code status bar.
+
+.   In the dropdown that appears at the top of the screen, select **Enter interpreter path...** and paste the `.venv` path you copied. This configures VS Code to use the collection's virtual environment, which includes all the Ansible development tools and dependencies.
+
+=== Task 5: Compare the CLI-generated with the VS Code-generated collections
 
 . **Same layout**
 . **Same defaults**
