@@ -144,31 +144,29 @@ image::May-12-2025_at_18.31.56-image.png[Creating a Playbook project,link=self,w
 +
 [source,sh,role=execute]
 ----
-/projects/ansible-dev-tools-workspace
+/projects/ansible-dev-tools-workspace/myplaybook
 ----
-* **Namespace:** 
+* **Namespace:**
 +
 [source,sh,role=execute]
 ----
 mynamespace
 ----
-* **Collection:** 
+* **Collection:**
 +
 [source,sh,role=execute]
 ----
-mysecondcollection
+playbookcollection
 ----
 +
 image::vscode-devtools-playbook-create.png[Creating a Playbook project,link=self,window=blank, opts="border"]
-
-
 
 .   **Create the project** by clicking the **Create** button. After a couple of seconds, you should see a success message in the logs.
 +
 [source,text]
 ----
 --- ansible-creator logs ---
-Note: playbook project created at /projects/ansible-dev-tools-workspace
+Note: playbook project created at /projects/ansible-dev-tools-workspace/myplaybook
 ----
 
 === Task 4: Open the mycollection folder
