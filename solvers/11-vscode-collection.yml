@@ -41,8 +41,8 @@
 
     # =========================================================================
     # Task 1: Explore the Ansible extension
-    # SKIPPED - Requires VS Code UI interaction (view extension sidebar,
-    # collapse Lightspeed sections). No CLI equivalent.
+    # SKIPPED - Requires VS Code UI interaction (view extension sidebar).
+    # No CLI equivalent.
     # =========================================================================
 
     # =========================================================================

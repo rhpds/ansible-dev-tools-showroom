@@ -67,35 +67,57 @@ Before we begin, here are some tips to improve your lab experience:
 
 == Task 1: Launch the Dev Spaces workspace
 
-. Launch the link:{openshift_cluster_console_url}[OpenShift Web Console^]
-. Select the **htpasswd_provider** button and use the credentials provided in the xref:environment-details.adoc[Environment Details] page to log in to the OpenShift console
-. Use the 9-block icon in the upper right to launch _Red Hat OpenShift Dev Spaces_ directly from the OpenShift console header
-+
-image::11-platform-dev-spaces/intro-dev_spaces_shortcut.png[OpenShift console header showing the 9-block application launcher icon for quick access to Dev Spaces,link=self,window=blank]
-+
-TIP: Alternatively, the direct URL is link:https://devspaces.{openshift_cluster_ingress_domain}[https://devspaces.{openshift_cluster_ingress_domain}^] also available in xref:environment-details.adoc[Environment Details].
+Red Hat OpenShift Dev Spaces gives you a full VS Code environment running in your browser, with all Ansible development tools pre-installed and configured. Instead of spending time installing tools locally, every participant gets an identical, ready-to-use workspace backed by an enterprise container platform.
 
-. The **Ansible Dev Space** workspace will start automatically. Wait a few minutes for the Dev Spaces instance to initialize.
+. In the lab instructions toolbar at the top of this page, click the **Split** button to open a side-by-side view. The right panel will load the Dev Spaces dashboard.
 +
-NOTE: When it has loaded, a Visual Studio Code interface will appear.
-+
-image::11-platform-dev-spaces/intro4.png[Dev Spaces workspace loading screen showing VS Code interface initialization,link=self,window=blank]
+// PLACEHOLDER: screenshot of the floating toolbar highlighting the Split option
+image::00-introduction/showroom-split-toolbar.png[Showroom floating toolbar with Instructions, Split, and Tabs options — Split is highlighted,link=self,window=blank]
 
-. Click the **Trust Publishers and Install** button to trust the extension publishers that are included within the Dev Spaces workspace
-. Click the **Yes, I trust the Authors** button to trust the workspace authors
-. Wait a few minutes until the additional extension icons appear for Ansible and OpenShift on the left side
+. In the Dev Spaces dashboard on the right, click the **Log in with OpenShift** button.
 +
-image::11-platform-dev-spaces/intro5.png[VS Code interface in Dev Spaces showing Ansible and OpenShift extension icons in the left sidebar,link=self,window=blank]
+// PLACEHOLDER: improve screenshot
+image::00-introduction/devspaces-login-openshift.png[Dev Spaces login page showing the Log in with OpenShift button,link=self,window=blank]
 
-== Task 2: Configure the extensions
-
-. Check the **Extensions** section in VS Code, look for the Ansible extension and click the blue **Reload Window** button to update to the latest version
+. Enter your credentials from the xref:environment-details.adoc[Environment Details] page (`{username}` / `{user_password}`) and click **Sign In**.
 +
-image::vscode-devtools-extension-reload.png[Reload extensions in VS Code,link=self,window=blank, opts="border"]
+// PLACEHOLDER: improve screenshot
+image::00-introduction/devspaces-sso-login.png[SSO sign-in form with username and password fields,link=self,window=blank]
 
-. Click on the **Ansible** extension icon in the left sidebar to verify the Ansible Development Tools extension is available
+. Once logged in, you will see the Dev Spaces dashboard. Paste the following Git repository URL into the **Import from Git** field:
 +
-image::11-platform-dev-spaces/intro6.png[Ansible extension interface in VS Code showing available Ansible development tools,link=self,window=blank]
+// PLACEHOLDER: confirm the final Git URL for participants
+[source,text]
+----
+https://github.com/rhpds/ansible-dev-tools-workspace.git
+----
++
+Then click **Create & Open**.
++
+// PLACEHOLDER: screenshot of the Dev Spaces dashboard with the Git URL field and Create & Open button
+image::00-introduction/devspaces-create-workspace.png[Dev Spaces dashboard showing the Git URL input field and Create & Open button,link=self,window=blank]
+
+. A new browser tab (or window) will open showing a short task list while your workspace provisions. After a few seconds, the VS Code interface will appear.
++
+// PLACEHOLDER: screenshot of VS Code fully loaded in the browser
+image::00-introduction/devspaces-vscode-ready.png[VS Code running in the browser inside Dev Spaces with the workspace loaded,link=self,window=blank]
+
+. Switch back to the **browser tab with these lab instructions** to continue with the next task.
++
+TIP: Keep both tabs open throughout the lab — you will switch between the instructions and your VS Code workspace frequently.
+
+. Click the **Trust Publishers and Install** button to trust the extension publishers that are included within the Dev Spaces workspace.
+. Click the **Yes, I trust the Authors** button to trust the workspace authors.
+. Wait a few moments until the Ansible extension icon appears on the left sidebar.
+
+== Task 2: Explore the Ansible extension
+
+. Click on the **Ansible** extension icon (the "A" logo) in the left activity bar to open the Ansible panel. You will see the **Ansible Development Tools** section with shortcuts and guided wizards to scaffold projects, manage execution environments, and perform other common Ansible development tasks. You will use several of these throughout the lab.
+
+. Click **Getting Started** at the top of the Ansible sidebar to open the Ansible Development Tools welcome page. This page gives you an overview of all the available tools, quick-start links, and walkthroughs.
++
+// PLACEHOLDER: screenshot of the Ansible Development Tools welcome page
+image::00-introduction/ansible-getting-started.png[Ansible Development Tools welcome page showing available tools and walkthroughs,link=self,window=blank]
 
 == Task 3: Verify the development environment
 
