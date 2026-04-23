@@ -8,10 +8,8 @@ persist_url_state: true
 
 view_switcher:
   enabled: true
-  default_mode: split
+  default_mode: instructions
 
 tabs:
   - name: Dev Spaces
     url: 'https://devspaces.${DOMAIN}'
-  - name: OCP Console
-    url: 'https://console-openshift-console.${DOMAIN}'
