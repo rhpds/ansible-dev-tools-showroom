@@ -46,7 +46,7 @@
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-creator
           add plugin filter hello_world
-          --path {{ collection_dir }}
+          {{ collection_dir }}
         creates: "{{ collection_dir }}/plugins/filter/hello_world.py"
 
     # =========================================================================

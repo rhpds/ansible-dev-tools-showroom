@@ -72,9 +72,8 @@
       ansible.builtin.command:
         cmd: >-
           ansible-creator init playbook
+          mynamespace.playbookcollection
           {{ base_project_dir }}/myplaybook
-          --scm-org mynamespace
-          --scm-project playbookcollection
         creates: "{{ base_project_dir }}/myplaybook/site.yml"
 
     # =========================================================================
