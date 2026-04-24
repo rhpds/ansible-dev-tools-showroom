@@ -65,6 +65,12 @@
     # =========================================================================
     # Task 2: Create a playbook to use the new module (pre-lint form)
     # =========================================================================
+    - name: "Task 2: Ensure playbooks directory exists"
+      ansible.builtin.file:
+        path: "{{ collection_dir }}/playbooks"
+        state: directory
+        mode: "0755"
+
     - name: "Task 2: Create mycowsay.yml playbook (pre-lint version)"
       ansible.builtin.copy:
         dest: "{{ collection_dir }}/playbooks/mycowsay.yml"
