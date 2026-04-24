@@ -137,9 +137,40 @@ image::vscode-devtools-lint-fix.png[Ansible Lint settings,link=self,window=blank
 
 === Task 4: Run the playbook
 
-Now that your playbook is lint-free, let's run it using both `ansible-playbook` and `ansible-navigator`. Go back to the **VS Code file Explorer** view.
+Now that your playbook is lint-free, let's run it. Go back to the **VS Code file Explorer** view.
 
-.   **Run with `ansible-playbook`.** In the VS Code file explorer, **right-click** your `mycowsay.yml` playbook. From the context menu, select **Run Ansible Playbook**. The output in the terminal should display a friendly cow saying "Hello, Ansible!".
+.   **Run with `ansible-playbook`.** In the VS Code file explorer, **right-click** your `mycowsay.yml` playbook. From the context menu, select **Run Ansible Playbook**.
++
+The playbook will **fail** with an error similar to:
++
+[source,text]
+----
+No such file or directory: 'cowsay'
+----
++
+This is expected! Your module calls the `cowsay` command, but the Python package that provides it is not installed in your virtual environment yet.
+
+.   **Add the missing Python dependency.** Open the `requirements.txt` file in the collection root. This file declares the Python packages your collection needs. Add `cowsay` to it:
++
+[source,text,role=execute]
+----
+cowsay
+----
++
+Save the file.
++
+NOTE: The `requirements.txt` file is for **Python packages** that can be installed with `pip`. In the previous module you saw how `ade` handles **system packages** (installed with `dnf`). When a dependency is available as a Python package, prefer `requirements.txt` — it works in any environment, including containers where the system filesystem may be read-only.
+
+.   **Re-run `ade install` to pick up the new dependency:**
++
+[source,bash,role=execute]
+----
+ade install -e .
+----
++
+You should see `cowsay` included in the installed packages.
+
+.   **Run the playbook again.** **Right-click** your `mycowsay.yml` playbook and select **Run Ansible Playbook**. This time it should succeed and display a friendly cow saying "Hello, Ansible!".
 +
 image::vscode-devtools-cowsay-run1.png[Playbook output with cowsay message,link=self,window=blank, opts="border"]
 

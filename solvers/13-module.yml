@@ -128,14 +128,25 @@
 
     # =========================================================================
     # Task 4: Run the playbook
-    # The VS Code UI right-click "Run Ansible Playbook" and "Run with
-    # Ansible Navigator" are UI actions. We run equivalent CLI commands.
+    # First run fails (cowsay not installed), then add to requirements.txt
+    # and re-run ade install, then run again successfully.
     # =========================================================================
+    - name: "Task 4: Add cowsay to requirements.txt"
+      ansible.builtin.lineinfile:
+        path: "{{ collection_dir }}/requirements.txt"
+        line: "cowsay"
+        create: true
+        mode: "0644"
+
+    - name: "Task 4: Re-run ade install to pick up cowsay dependency"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/ade install -e ."
+        chdir: "{{ collection_dir }}"
+      changed_when: true
+
     - name: "Task 4: Run playbook with ansible-playbook"
       ansible.builtin.command:
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-playbook
           {{ collection_dir }}/playbooks/mycowsay.yml
       changed_when: false
-      environment:
-        ANSIBLE_COLLECTIONS_PATH: "{{ project_dir }}/collections"
