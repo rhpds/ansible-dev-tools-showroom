@@ -76,7 +76,9 @@ if __name__ == '__main__':
 
 Now, you will switch to your playbook project folder and create a new playbook that calls your custom module.
 
-.   **Create a new playbook file.** In the VS Code file explorer on the left, expand the `myplaybook` folder in the workspace root (next to `mynamespace.mycollection`), **right-click** on `myplaybook` and select **New File**. Name the file `mycowsay.yml`.
+.   **Create a `playbooks` directory.** In the VS Code file explorer on the left, **right-click** on `mynamespace.mycollection` and select **New Folder**. Name it `playbooks`.
+
+.   **Create a new playbook file.** **Right-click** on the newly created `playbooks` folder and select **New File**. Name the file `mycowsay.yml`.
 
 .   **Add the playbook content.** **Copy** and **paste** the following content into the `mycowsay.yml` file:
 +

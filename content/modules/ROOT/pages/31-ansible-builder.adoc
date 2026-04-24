@@ -290,7 +290,7 @@ Use `ansible-navigator` to run your `mycowsay.yml` playbook with your newly crea
 +
 [source,bash,role=execute]
 ----
-ansible-navigator run mycowsay.yml --execution-environment-image mycollection-ee --pull-policy never
+ansible-navigator run /projects/ansible-dev-tools-workspace/mynamespace.mycollection/playbooks/mycowsay.yml --execution-environment-image mycollection-ee --pull-policy never
 ----
 
 . *Test the cowsay module documentation:*

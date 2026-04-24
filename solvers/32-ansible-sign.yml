@@ -77,7 +77,7 @@
     # =========================================================================
     - name: "Task 3: Create MANIFEST.in file"
       ansible.builtin.copy:
-        dest: "{{ project_dir }}/MANIFEST.in"
+        dest: "{{ collection_dir }}/MANIFEST.in"
         content: |
           # Exclude .venv FIRST before any includes
           global-exclude .venv
@@ -91,7 +91,7 @@
 
           # Now include what you want to sign
           include README.md
-          include mycowsay.yml
+          include playbooks/mycowsay.yml
         mode: "0644"
         backup: true
 
@@ -101,7 +101,7 @@
     - name: "Task 4: Sign the project files"
       ansible.builtin.command:
         cmd: "{{ collection_dir }}/.venv/bin/ansible-sign project gpg-sign ."
-        chdir: "{{ project_dir }}"
+        chdir: "{{ collection_dir }}"
       changed_when: true
 
     # =========================================================================
@@ -109,13 +109,13 @@
     # =========================================================================
     - name: "Task 5: Display checksum manifest"
       ansible.builtin.slurp:
-        src: "{{ project_dir }}/.ansible-sign/sha256sum.txt"
+        src: "{{ collection_dir }}/.ansible-sign/sha256sum.txt"
       register: r_checksum_manifest
 
     - name: "Task 5: Verify signed content"
       ansible.builtin.command:
         cmd: "{{ collection_dir }}/.venv/bin/ansible-sign project gpg-verify ."
-        chdir: "{{ project_dir }}"
+        chdir: "{{ collection_dir }}"
       changed_when: false
 
 

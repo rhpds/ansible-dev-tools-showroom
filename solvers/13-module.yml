@@ -67,7 +67,7 @@
     # =========================================================================
     - name: "Task 2: Create mycowsay.yml playbook (pre-lint version)"
       ansible.builtin.copy:
-        dest: "{{ project_dir }}/mycowsay.yml"
+        dest: "{{ collection_dir }}/playbooks/mycowsay.yml"
         content: |
           ---
           - hosts: localhost
@@ -91,7 +91,7 @@
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-lint
           --fix --nocolor
-          {{ project_dir }}/mycowsay.yml
+          {{ collection_dir }}/playbooks/mycowsay.yml
         chdir: "{{ collection_dir }}"
       changed_when: true
       failed_when: false
@@ -99,7 +99,7 @@
 
     - name: "Task 3: Apply final manual fix (add play name)"
       ansible.builtin.copy:
-        dest: "{{ project_dir }}/mycowsay.yml"
+        dest: "{{ collection_dir }}/playbooks/mycowsay.yml"
         content: |
           ---
           - name: Using our cowsay module
@@ -122,7 +122,7 @@
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-lint
           --nocolor
-          {{ project_dir }}/mycowsay.yml
+          {{ collection_dir }}/playbooks/mycowsay.yml
         chdir: "{{ collection_dir }}"
       changed_when: false
 
@@ -135,7 +135,7 @@
       ansible.builtin.command:
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-playbook
-          {{ project_dir }}/mycowsay.yml
+          {{ collection_dir }}/playbooks/mycowsay.yml
       changed_when: false
       environment:
         ANSIBLE_COLLECTIONS_PATH: "{{ project_dir }}/collections"

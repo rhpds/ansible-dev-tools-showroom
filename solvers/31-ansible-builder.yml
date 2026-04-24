@@ -109,7 +109,7 @@
       ansible.builtin.command:
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-navigator run
-          {{ project_dir }}/mycowsay.yml
+          {{ collection_dir }}/playbooks/mycowsay.yml
           --execution-environment-image mycollection-ee
           --pull-policy never
           --mode stdout
