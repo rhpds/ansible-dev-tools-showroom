@@ -40,7 +40,7 @@ In this exercise, you will copy an existing Python module into your collection's
 
 First, you will create a new Python file and add the code for a simple `cowsay` module.
 
-.   **Create the module file.** In the VS Code file explorer on the left, expand the `plugins` directory, then right-click on the `modules` directory and select **New File**. Name the file `cowsay.py`.
+.   **Create the module file.** In the VS Code file explorer on the left, expand the `mynamespace.mycollection` > `plugins` > `modules` directory path, then right-click on `modules` and select **New File**. Name the file `cowsay.py`.
 
 .   **Add the Python code.** **Copy** the following Python code and **paste** it into the `cowsay.py` file you just created.
 +
@@ -76,13 +76,7 @@ if __name__ == '__main__':
 
 Now, you will switch to your playbook project folder and create a new playbook that calls your custom module.
 
-.   **Open the playbook project folder.** In the VS Code top menu, select **File** → **Open Folder...**.
-
-.   **Enter the correct path.** In the prompt, **enter** the path `/projects/ansible-dev-tools-workspace` and **click** the blue **OK** button.
-+
-image::vscode-devtools-folder-myansibleproject.png[Open Ansible Playbook Project,link=self,window=blank, opts="border"]
-
-.   After the window reloads, **create a new playbook file.** In the file explorer on the left, **right-click** in the empty space below `site.yml` and select **New File**. Name the file `mycowsay.yml`.
+.   **Create a new playbook file.** In the VS Code file explorer on the left, expand the `myplaybook` folder in the workspace root (next to `mynamespace.mycollection`), **right-click** on `myplaybook` and select **New File**. Name the file `mycowsay.yml`.
 
 .   **Add the playbook content.** **Copy** and **paste** the following content into the `mycowsay.yml` file:
 +
@@ -113,7 +107,7 @@ image::vscode-devtools-extension-settings.png[Ansible Extension Settings,link=se
 
 .   **Enable the linter and auto-fix.** In the search bar at the top, type `lint` to filter the settings.
 * Make sure the checkbox for `Ansible › Validation › Lint: Enabled` is checked.
-* In the `Ansible › Validation › Lint: Arguments` field below, enter `--fix`. This tells the linter to automatically fix issues it finds.
+* Check the `Ansible › Validation › Lint: Auto Fix On Save` checkbox. This tells the linter to automatically fix issues when you save a file.
 +
 image::vscode-devtools-lint-fix.png[Ansible Lint settings,link=self,window=blank, opts="border"]
 

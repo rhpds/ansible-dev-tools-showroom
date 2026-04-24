@@ -186,15 +186,14 @@ This test validates both the module's execution (no failures, correct change sta
 . *Open the VS Code Terminal if you don't have one*
 
 
-. *Verify the VS Code Terminal is in the venv:*
+. *Make sure the VS Code terminal is in the collection directory:*
 +
-[source,ini,role=execute]
+[source,bash,role=execute]
 ----
 cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection
-source .venv/bin/activate
 ----
 
-. *From the root of the collection repository (`mycollection/`), run:*
+. *Run the tests:*
 +
 [source,bash,role=execute]
 ----

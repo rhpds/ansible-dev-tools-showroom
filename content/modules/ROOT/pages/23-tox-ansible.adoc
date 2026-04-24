@@ -68,123 +68,120 @@ Crucially, look for **`with tox-ansible`**. This confirms the plugin is active.
 cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection/
 ----
 
-=== Task 2: Create a minimal Tox configuration
+=== Task 2: Configure tox-ansible
 
-Because we are using the plugin, we don't need to manually define every single test environment. We just need to tell tox global settings.
+When `ansible-creator` scaffolded your collection, it created a `tox-ansible.ini` file. This is the configuration file for the `tox-ansible` plugin — it is separate from `tox.ini` on purpose, so it does not interfere with standard tox workflows.
 
-.   **Create the `tox.ini` file.**
-    Right-click the collection root folder, select **New File**, name it `tox.ini`, and paste the following:
+The plugin uses `tox-ansible.ini` to control which Python versions and Ansible versions to include or skip in the test matrix. Without it, `tox-ansible` would generate environments for every supported Python and Ansible version combination, resulting in a very large matrix.
+
+.   **Open the `tox-ansible.ini` file** in the collection root and replace its contents with:
 
 +
 [source,ini]
 ----
-[tox]
-# Global tox settings
-envlist = lint, unit
-skip_missing_interpreters = True
-requires =
-    tox-ansible
-
-[testenv]
-# This section configures the default behavior for all environments
-usedevelop = true
-deps =
-    pytest
-    pytest-ansible
-    ansible-lint
-    molecule-plugins[podman]
-
 [ansible]
-# Configuration specific to the tox-ansible plugin
-# This limits the matrix to Ansible 2.15 and 2.16 to save time/resources
-ansible_core_versions =
+skip =
+    py3.7
+    py3.8
+    py3.9
+    py3.10
+    py3.11
+    py3.13
+    py3.14
+    2.9
+    2.10
+    2.11
+    2.12
+    2.13
+    2.14
     2.15
     2.16
+    2.17
+    2.18
+    2.19
+    devel
+    milestone
 ----
 
 .   **Understanding the config:**
-    * `requires = tox-ansible`: Ensures the plugin is present before running.
-    * `ansible_core_versions`: The plugin normally attempts to test against *every* supported Ansible version. We limit this to 2.15 and 2.16 to keep the lab fast.
-    * We do *not* have a `[testenv:lint]` or `[testenv:molecule]` section. The plugin creates these for us!
+    * The `skip` list excludes Python versions and Ansible versions that are not available in our environment. This leaves only `py3.12` and `ansible-core 2.20`, keeping the test matrix small and fast.
+    * You do *not* need a `tox.ini` file — the plugin handles environment creation, dependency installation, and test execution automatically.
+    * You do *not* need to define `[testenv:lint]` or `[testenv:molecule]` sections. The plugin creates these for you!
 
 === Task 3: Explore the auto-generated environments
 
-Now that the config exists, let's see what the plugin found in your project.
+Now that the config is updated, let's see what the plugin found in your project. The `--ansible` flag activates the plugin and `-c tox-ansible.ini` tells tox to use our configuration file.
 
 .   **List all available environments:**
 +
 [source,bash,role=execute]
 ----
-tox list
+tox --ansible -c tox-ansible.ini list
 ----
 +
 **Observe the magic:**
-Even though your `tox.ini` is tiny, you will see a massive list of environments. The plugin found your `tests/unit` folder, your `molecule` scenarios, and your linting needs. You should see entries like:
+Even though your `tox-ansible.ini` only contains a skip list, the plugin scanned your collection and auto-generated test environments. You should see entries like:
 +
-* `lint` (Auto-discovered ansible-lint)
-* `py311-ansible2.16-unit` (Auto-discovered pytest)
-* `py311-ansible2.16-molecule-integration_hello_world` (Auto-discovered molecule)
+* `galaxy` (Build and validate collection artifact)
+* `integration-py3.12-2.20` (Auto-discovered molecule scenarios)
+* `sanity-py3.12-2.20` (Auto-discovered sanity tests)
+* `unit-py3.12-2.20` (Auto-discovered pytest)
 +
-NOTE: The `py311` prefix reflects the Python version installed in your environment. In other environments, you may see a different version (e.g., `py312`, `py313`).
+NOTE: The `py3.12` and `2.20` reflect the Python and Ansible versions available in your environment. The plugin automatically matched them based on what is installed and what we did not skip.
 
 === Task 4: Run the tests
 
-Now we let tox orchestrate the execution.
+Now we let tox orchestrate the execution. Remember to always pass `--ansible -c tox-ansible.ini` so the plugin is activated with the correct config.
 
-.   **Run the Linting environment:**
+.   **Run Sanity Tests:**
 +
 [source,bash,role=execute]
 ----
-tox -e lint
+tox --ansible -c tox-ansible.ini -e sanity-py3.12-2.20
 ----
 +
-Tox creates a virtual environment, installs `ansible-lint`, and runs it against your collection.
+Tox creates a virtual environment, installs the required dependencies, and runs `ansible-test sanity` against your collection.
 
 .   **Run Unit Tests:**
-    The plugin allows you to target specific parts of the matrix. Let's run unit tests against Ansible 2.16.
 +
 [source,bash,role=execute]
 ----
-tox -e py311-ansible2.16-unit
+tox --ansible -c tox-ansible.ini -e unit-py3.12-2.20
 ----
 
 .   **Run Integration Tests (Molecule):**
-    Instead of typing the long `molecule test -s ...` command, we use the tox alias.
-    *Note: The environment name depends on the scenario you created in xref:21-molecule.adoc[Lab 2.1].*
+    Instead of typing the long `molecule test -s ...` command, we use the tox environment.
 +
 [source,bash,role=execute]
 ----
-tox -e py311-ansible2.16-molecule-integration_hello_world
+tox --ansible -c tox-ansible.ini -e integration-py3.12-2.20
 ----
 +
 This automatically:
-    1.  Creates a fresh environment.
-    2.  Installs Ansible Core 2.16.
-    3.  Installs Molecule and Podman plugins.
-    4.  Executes the test scenario.
+    1.  Creates a fresh virtual environment.
+    2.  Installs Ansible Core 2.20.
+    3.  Installs Molecule and its dependencies.
+    4.  Executes the test scenarios.
 
-=== Task 5: Running a group of tests
+=== Task 5: Build and validate the collection
 
-A key feature of tox is running multiple tests with one command.
+The `galaxy` environment builds your collection tarball and runs `galaxy-importer` to validate it.
 
-.   **Run all tests for a specific Ansible version:**
-    You can use "factors" to match multiple environments.
+.   **Run the galaxy environment:**
 +
 [source,bash,role=execute]
 ----
-tox -f ansible2.16
+tox --ansible -c tox-ansible.ini -e galaxy
 ----
-+
-This command tells tox: "Run every test environment that includes 'ansible2.16' in its name." This effectively runs your Unit tests AND Molecule tests for that version in one go.
 
 
 == Troubleshooting
 
-**"InterpreterNotFound"**
-If you see `SKIPPED: InterpreterNotFound: python3.9`, this is normal. We added `skip_missing_interpreters = True` to your config. It simply means the lab environment doesn't have that specific Python version installed.
+**"provided environments not found"**
+Make sure you are passing both `--ansible` and `-c tox-ansible.ini`. Without `--ansible`, the plugin does not activate and the auto-generated environments won't exist.
 
 **"No environments matched"**
-If `tox -l` returns nothing or very few items:
+If `tox --ansible -c tox-ansible.ini list` returns no environments:
 1. Ensure you are in the directory containing `galaxy.yml`.
 2. Ensure you actually created the `tests/unit` folder or `molecule` scenarios in previous modules. The plugin only generates environments for tests that actually exist.
 
@@ -193,9 +190,9 @@ If `tox -l` returns nothing or very few items:
 
 In this lab, you utilized the **tox-ansible** plugin to dramatically simplify test automation.
 
-* **Orchestration:** You replaced manual `ansible-lint`, `pytest`, and `molecule` commands with a unified `tox` interface.
-* **Auto-discovery:** You learned how the plugin scans your project to generate the test matrix automatically.
-* **Matrix Testing:** You validated your code against specific Ansible Core versions (2.15, 2.16) without managing the dependencies manually.
+* **Orchestration:** You replaced manual `pytest`, `molecule`, and `ansible-test` commands with a unified `tox` interface.
+* **Auto-discovery:** You learned how the plugin scans your collection structure and the `tox-ansible.ini` config to generate the test matrix automatically.
+* **Convention over Configuration:** You ran sanity, unit, integration, and galaxy validation tests with a single configuration file and no manual environment definitions.
 
 == Next steps
 

@@ -15,6 +15,8 @@ www/
 # Ignore logs and temporary files
 *.log
 *.tmp
+tmp/
+docs-local/
 
 # Ignore environment-specific files
 .env
