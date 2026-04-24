@@ -211,6 +211,20 @@ sudo dnf install -y python3-cffi python3-cryptography python3-lxml python3-pycpa
 
 .   **Check the new dependency tree.** Finally, run `ade tree -v` again. The output will now show that `ade` has successfully added the `ansible.netcommon` collection to your environment, along with its Python requirements.
 
+.   **Update `build_ignore` in `galaxy.yml`.** When `ade` manages your collection, it creates directories like `.venv` and `collections` inside the collection root. These are development artifacts that should not be included when building the collection tarball. The `build_ignore` field in `galaxy.yml` tells `ansible-galaxy collection build` to exclude them. Open `galaxy.yml` and update the `build_ignore` section to:
++
+[source,yaml]
+----
+build_ignore:
+  - .gitignore
+  - changelogs/.plugin-cache.yaml
+  - .venv
+  - collections
+  - .tox
+----
++
+This ensures that development tooling directories are excluded from the packaged collection artifact. The `.venv` and `collections` entries prevent `ade`-managed content from bloating the tarball, and `.tox` excludes test runner artifacts from `tox-ansible`. We are adding these entries manually due to a known bug — in a future version, `ade` is expected to handle this automatically.
+
 NOTE: Remember the "Install collection from source code (editable mode)" option you selected during the Collection creation wizard? That option used `ade install -e` to automatically create the virtual environment (`.venv`) that you are using now.
 
 ---

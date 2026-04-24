@@ -73,17 +73,6 @@
       changed_when: false
 
     # =========================================================================
-    # Task 2: Set up the environment
-    # =========================================================================
-    - name: "Task 2: Switch ade to standard mode (remove recursive symlinks)"
-      ansible.builtin.command:
-        cmd: >-
-          {{ collection_dir }}/.venv/bin/ade install
-          {{ collection_dir }}
-        chdir: "{{ project_dir }}"
-      changed_when: true
-
-    # =========================================================================
     # Task 3: Create a MANIFEST.in file
     # =========================================================================
     - name: "Task 3: Create MANIFEST.in file"
@@ -129,13 +118,6 @@
         chdir: "{{ project_dir }}"
       changed_when: false
 
-    - name: "Task 5: Switch ade back to editable mode"
-      ansible.builtin.command:
-        cmd: >-
-          {{ collection_dir }}/.venv/bin/ade install --editable
-          {{ collection_dir }}
-        chdir: "{{ project_dir }}"
-      changed_when: true
 
     # =========================================================================
     # Task 6: Enable verification in AAP executions

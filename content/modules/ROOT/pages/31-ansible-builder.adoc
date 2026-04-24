@@ -190,24 +190,11 @@ cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection
 
 . *Run the `ansible-galaxy` command in the VS Code Terminal:*
 +
-Before we move on to build our Execution Environment, we need to package our collection and clean it of unneeded development files. We will be using `ansible-galaxy` and `ade` for this. 
-Before we package the collection in a tarball we will disable the `ade` editable environment (note the dot at the end for the path).
-+
-[source,bash,role=execute]
-----
-ade install .
-----
-Run the following commands in the active terminal to generate the collection tarball. 
+Before we move on to build our Execution Environment, we need to package our collection into a tarball. The `build_ignore` entries you added to `galaxy.yml` earlier ensure that development directories (`.venv`, `collections`, `.tox`) are excluded from the package.
 +
 [source,bash,role=execute]
 ----
 ansible-galaxy collection build --output-path /projects/ansible-dev-tools-workspace/
-----
-Let's re-enable `ade` editable mode now:
-+
-[source,bash,role=execute]
-----
-ade install -e .
 ----
 
 

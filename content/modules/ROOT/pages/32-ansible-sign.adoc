@@ -104,14 +104,6 @@ This task demonstrates how to cryptographically sign an Ansible Project using `a
 cd /projects/ansible-dev-tools-workspace
 ----
 
-. *Switch `ade` to standard mode:* Before we can sign our packages, we need to disable editable mode to remove the recursive symlinks. 
-+
-[source,bash,role=execute]
-----
-ade install /projects/ansible-dev-tools-workspace/mynamespace.mycollection
-----
-
-
 === Task 3: Create a MANIFEST.in file
 
 . *In VS Code, create a new file called `MANIFEST.in`* in the root of your project. Add the following content to it. We will be excluding a couple of directories and signing a README and playbook. This is only meant as an example, your needs might vary:
@@ -175,13 +167,6 @@ ansible-sign project gpg-verify .
 [OK   ] GPG signature verification succeeded.
 [NOTE ] Checksum manifest: ./.ansible-sign/sha256sum.txt
 [NOTE ] GPG summary: valid signature
-----
-
-. *Switch `ade` back to editable mode:*
-+
-[source,bash,role=execute]
-----
-ade install --editable /projects/ansible-dev-tools-workspace/mynamespace.mycollection
 ----
 
 === Task 6: Enable verification in AAP executions

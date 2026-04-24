@@ -27,26 +27,11 @@
     # and run the equivalent CLI commands.
     # =========================================================================
 
-    # First, disable editable mode before building the tarball
-    - name: "Task 1: Switch ade to standard mode for packaging"
-      ansible.builtin.command:
-        cmd: "{{ collection_dir }}/.venv/bin/ade install ."
-        chdir: "{{ collection_dir }}"
-      changed_when: true
-
-    # Build the collection tarball
     - name: "Task 1: Build collection tarball with ansible-galaxy"
       ansible.builtin.command:
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-galaxy collection build
           --output-path {{ project_dir }}/
-        chdir: "{{ collection_dir }}"
-      changed_when: true
-
-    # Re-enable editable mode
-    - name: "Task 1: Re-enable ade editable mode"
-      ansible.builtin.command:
-        cmd: "{{ collection_dir }}/.venv/bin/ade install -e ."
         chdir: "{{ collection_dir }}"
       changed_when: true
 
