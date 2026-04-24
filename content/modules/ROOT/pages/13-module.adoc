@@ -12,9 +12,9 @@ _A guide to adding a custom module to your Ansible collection and using it in a 
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** 
-* **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:**
+* **Prepares you for:** Module 2 (Test) and Module 3 (Deploy)
+* **Stage:** Create
+* **Estimated Time:** 15 - 20 minutes
 ****
 
 == Lab briefing
@@ -40,7 +40,7 @@ In this exercise, you will copy an existing Python module into your collection's
 
 First, you will create a new Python file and add the code for a simple `cowsay` module.
 
-.   **Create the module file.** In the VS Code file explorer on the left, expand the `plugins` directory, then right-click on the `modules` directory and select **New File**. Name the file `cowsay.py`.
+.   **Create the module file.** In the VS Code file explorer on the left, expand the `mynamespace.mycollection` > `plugins` > `modules` directory path, then right-click on `modules` and select **New File**. Name the file `cowsay.py`.
 
 .   **Add the Python code.** **Copy** the following Python code and **paste** it into the `cowsay.py` file you just created.
 +
@@ -76,13 +76,9 @@ if __name__ == '__main__':
 
 Now, you will switch to your playbook project folder and create a new playbook that calls your custom module.
 
-.   **Open the playbook project folder.** In the VS Code top menu, select **File** → **Open Folder...**.
+.   **Create a `playbooks` directory.** In the VS Code file explorer on the left, **right-click** on `mynamespace.mycollection` and select **New Folder**. Name it `playbooks`.
 
-.   **Enter the correct path.** In the prompt, **enter** the path `/home/rhel/myansibleproject` and **click** the blue **OK** button.
-+
-image::vscode-devtools-folder-myansibleproject.png[Open Ansible Playbook Project,link=self,window=blank, opts="border"]
-
-.   After the window reloads, **create a new playbook file.** In the file explorer on the left, **right-click** in the empty space below `site.yml` and select **New File**. Name the file `mycowsay.yml`.
+.   **Create a new playbook file.** **Right-click** on the newly created `playbooks` folder and select **New File**. Name the file `mycowsay.yml`.
 
 .   **Add the playbook content.** **Copy** and **paste** the following content into the `mycowsay.yml` file:
 +
@@ -113,7 +109,7 @@ image::vscode-devtools-extension-settings.png[Ansible Extension Settings,link=se
 
 .   **Enable the linter and auto-fix.** In the search bar at the top, type `lint` to filter the settings.
 * Make sure the checkbox for `Ansible › Validation › Lint: Enabled` is checked.
-* In the `Ansible › Validation › Lint: Arguments` field below, enter `--fix`. This tells the linter to automatically fix issues it finds.
+* Check the `Ansible › Validation › Lint: Auto Fix On Save` checkbox. This tells the linter to automatically fix issues when you save a file.
 +
 image::vscode-devtools-lint-fix.png[Ansible Lint settings,link=self,window=blank, opts="border"]
 
@@ -141,9 +137,40 @@ image::vscode-devtools-lint-fix.png[Ansible Lint settings,link=self,window=blank
 
 === Task 4: Run the playbook
 
-Now that your playbook is lint-free, let's run it using both `ansible-playbook` and `ansible-navigator`. Go back to the **VS Code file Explorer** view.
+Now that your playbook is lint-free, let's run it. Go back to the **VS Code file Explorer** view.
 
-.   **Run with `ansible-playbook`.** In the VS Code file explorer, **right-click** your `mycowsay.yml` playbook. From the context menu, select **Run Ansible Playbook**. The output in the terminal should display a friendly cow saying "Hello, Ansible!".
+.   **Run with `ansible-playbook`.** In the VS Code file explorer, **right-click** your `mycowsay.yml` playbook. From the context menu, select **Run Ansible Playbook**.
++
+The playbook will **fail** with an error similar to:
++
+[source,text]
+----
+No such file or directory: 'cowsay'
+----
++
+This is expected! Your module calls the `cowsay` command, but the Python package that provides it is not installed in your virtual environment yet.
+
+.   **Add the missing Python dependency.** Open the `requirements.txt` file in the collection root. This file declares the Python packages your collection needs. Add `cowsay` to it:
++
+[source,text,role=execute]
+----
+cowsay
+----
++
+Save the file.
++
+NOTE: The `requirements.txt` file is for **Python packages** that can be installed with `pip`. In the previous module you saw how `ade` handles **system packages** (installed with `dnf`). When a dependency is available as a Python package, prefer `requirements.txt` — it works in any environment, including containers where the system filesystem may be read-only.
+
+.   **Re-run `ade install` to pick up the new dependency:**
++
+[source,bash,role=execute]
+----
+ade install -e .
+----
++
+You should see `cowsay` included in the installed packages.
+
+.   **Run the playbook again.** **Right-click** your `mycowsay.yml` playbook and select **Run Ansible Playbook**. This time it should succeed and display a friendly cow saying "Hello, Ansible!".
 +
 image::vscode-devtools-cowsay-run1.png[Playbook output with cowsay message,link=self,window=blank, opts="border"]
 

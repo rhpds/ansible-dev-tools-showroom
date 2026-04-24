@@ -18,9 +18,9 @@
 
   vars:
     collection_dir: >-
-      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+      /projects/ansible-dev-tools-workspace/mynamespace.mycollection
     extensions_dir: >-
-      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/extensions
+      /projects/ansible-dev-tools-workspace/mynamespace.mycollection/extensions
 
   tasks:
     # =========================================================================
@@ -46,7 +46,7 @@
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-creator
           add plugin filter hello_world
-          --path {{ collection_dir }}
+          {{ collection_dir }}
         creates: "{{ collection_dir }}/plugins/filter/hello_world.py"
 
     # =========================================================================
@@ -59,6 +59,3 @@
           -s integration_hello_world
         chdir: "{{ extensions_dir }}"
       changed_when: true
-      environment:
-        ANSIBLE_COLLECTIONS_PATH: >-
-          /home/rhel/myansibleproject/collections

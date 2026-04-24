@@ -12,9 +12,9 @@ _Learn how to sign content by using ansible-sign and apply supply-chain security
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** Launching OpenShift Dev Spaces
-* **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:** 10 - 20 minutes
+* **Prepares you for:** Conclusion
+* **Stage:** Deploy
+* **Estimated Time:** 10 - 15 minutes
 ****
 
 == Learning objectives
@@ -95,40 +95,29 @@ gpg --list-secret-keys
 
 === Task 2: Set up the environment
 
-This task demonstrates how to cryptographically sign an Ansible Project using `ansible-sign`. We will be using `myansibleproject` and our `mycowsay.yml` playbook.
+This task demonstrates how to cryptographically sign an Ansible Project using `ansible-sign`. We will be using the `myplaybook` project directory — the playbook project you created earlier and where you copied your `mycowsay.yml` playbook in the previous module.
 
-. *Make sure you are in the `myansibleproject` directory:*
+. *Make sure you are in the playbook project directory:*
 +
 [source,bash,role=execute]
 ----
-cd /home/rhel/myansibleproject
+cd /projects/ansible-dev-tools-workspace/myplaybook
 ----
-
-. *Switch `ade` to standard mode:* Before we can sign our packages, we need to disable editable mode to remove the recursive symlinks. 
-+
-[source,bash,role=execute]
-----
-ade install /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
-----
-
 
 === Task 3: Create a MANIFEST.in file
 
-. *In VS Code, create a new file called `MANIFEST.in`* in the root of your project. Add the following content to it. We will be excluding a couple of directories and signing a README and playbook. This is only meant as an example, your needs might vary:
+. *In VS Code, create a new file called `MANIFEST.in`* in the `myplaybook` directory. This file controls which files are included in the checksum manifest that `ansible-sign` creates and verifies.
++
+For this lab, we will sign just two files to keep the output simple. In a production environment, you would include all project files to ensure full supply chain integrity.
 +
 [source,bash,role=execute]
 ----
-# Exclude .venv FIRST before any includes
-global-exclude .venv
-global-exclude .venv/*
-prune .venv
-
-# Exclude .git
+# Exclude development artifacts
 global-exclude .git
 global-exclude .git/*
 prune .git
 
-# Now include what you want to sign
+# Include files to sign
 include README.md
 include mycowsay.yml
 ----
@@ -175,13 +164,6 @@ ansible-sign project gpg-verify .
 [OK   ] GPG signature verification succeeded.
 [NOTE ] Checksum manifest: ./.ansible-sign/sha256sum.txt
 [NOTE ] GPG summary: valid signature
-----
-
-. *Switch `ade` back to editable mode:*
-+
-[source,bash,role=execute]
-----
-ade install --editable /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
 ----
 
 === Task 6: Enable verification in AAP executions

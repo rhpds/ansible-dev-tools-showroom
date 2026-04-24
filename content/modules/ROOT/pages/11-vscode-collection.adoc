@@ -12,9 +12,9 @@ _A guide to using the Ansible extension for Visual Studio Code to scaffold a new
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** 
-* **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:**  
+* **Prepares you for:** Labs 1.2, 1.3, and all subsequent modules
+* **Stage:** Create
+* **Estimated Time:** 10 - 15 minutes
 ****
 
 == Lab briefing
@@ -52,39 +52,33 @@ Lets start by running `ansible-creator` in the command line to scaffold a collec
 +
 image::vscode-devtools-terminal.png[VS Code terminal,link=self,window=blank, opts="border"]
 
-. **Scaffold a CLI collection with ansible-creator:** Using `ansible-creator` initialize a collection called `mynamespace.my_cli_collection` in the `/home/rhel/myansibleproject/collections/ansible_collections` directory:
+. **Scaffold a CLI collection with ansible-creator:** Using `ansible-creator` initialize a collection called `mynamespace.creatorcollection`:
 +
 [source,sh,role=execute]
 ----
-ansible-creator init collection mynamespace.my_cli_collection /home/rhel/myansibleproject/collections/ansible_collections
+ansible-creator init collection mynamespace.creatorcollection /projects/ansible-dev-tools-workspace/mynamespace.creatorcollection
 ----
 
 . **Inspect the generated collection structure and files:**
 +
 [source,sh,role=execute]
 ----
-ls -lha /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/my_cli_collection
+ls -lha /projects/ansible-dev-tools-workspace/mynamespace.creatorcollection
 ----
 +
 NOTE: You should see the scaffolded collection directory structure including files like `galaxy.yml`, `README.md`, `LICENSE`, and directories like `plugins/`, `tests/`, and `meta/`.
 
-. **Congrats:** You created a default collection. Move to the next tasks to see how to do this in VS Code and how to customize it.
+. **Congrats:** You created a default collection. This collection was created for demonstration purposes only — in the following tasks you will create the collection used throughout the rest of the lab.
 
 === Task 1: Explore the Ansible extension
 
 First, let's explore the Ansible extension for VS Code.
 
-.   **Check the installed extensions section in VS Code**, look for the Ansible extension and click the blue **Reload Window** button to update to the latest version if you didn't do it in the previous step.
-+
-image::vscode-devtools-extension-reload.png[Reload extensions in VS Code,link=self,window=blank, opts="border"]
-
-.   After the window reloads, locate and open the **Ansible extension icon on the sidebar of VS Code** and click on it. You will see the Ansible sidebar with 3 sections: (1) *Ansible Development Tools*, (2) *Ansible Lightspeed*, and (3) *Ansible Lightspeed Feedback*.
+.   Open the **Ansible extension icon** on the left sidebar of VS Code. You will see the *Ansible Development Tools* section with shortcuts and guided wizards to scaffold projects, manage execution environments, and perform other common Ansible development tasks.
 +
 image::vscode-devtools-ansible-icon.png[Ansible icon in VS Code sidebar,link=self,window=blank, opts="border"]
-
-.   **Collapse the Lightspeed sections** to simplify the view, as we won't be using Lightspeed features for this lab.
 +
-image::Apr-29-2025_at_13.49.45-image.png[Collapsing the Lightspeed sections,link=self,window=blank, opts="border"]
+TIP: The Ansible extension also supports AI-powered assistance through its *LLM settings*. You can configure this later to connect to Ansible Code Assistant or other language model services.
 
 === Task 2: Create a collection project
 
@@ -111,7 +105,7 @@ mycollection
 +
 [source,sh,role=execute]
 ----
-/home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+/projects/ansible-dev-tools-workspace/mynamespace.mycollection
 ----
 +
 * **Check** the box for `Install collection from source code (editable mode)`
@@ -123,18 +117,18 @@ image::vscode-devtools-collection-create.png[Collection creation form,link=self,
 [source,text]
 ----
 ------- ansible-creator logs ---------
-    Note: collection project created at /home/rhel/myansibleproject/collections/
-          ansible_collections/mynamespace/mycollection
+    Note: collection project created at /projects/ansible-dev-tools-workspace/
+          mynamespace.mycollection
 
 
 ------- ansible-dev-environment logs -------
-Note: Created virtual environment: /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/.venv
+Note: Created virtual environment: /projects/ansible-dev-tools-workspace/mynamespace.mycollection/.venv
 Note: Installed collections include: ansible.utils and mynamespace.mycollection
 Note: All python requirements are installed.
 Note: All required system packages are installed.
 Note: A virtual environment was specified but has not been activated.
 Note: Please activate the virtual environment:
-source /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/.venv/bin/activate
+source /projects/ansible-dev-tools-workspace/mynamespace.mycollection/.venv/bin/activate
 ----
 
 === Task 3: Create a playbook project
@@ -150,36 +144,34 @@ image::May-12-2025_at_18.31.56-image.png[Creating a Playbook project,link=self,w
 +
 [source,sh,role=execute]
 ----
-/home/rhel/myansibleproject
+/projects/ansible-dev-tools-workspace/myplaybook
 ----
-* **Namespace:** 
+* **Namespace:**
 +
 [source,sh,role=execute]
 ----
 mynamespace
 ----
-* **Collection:** 
+* **Collection:**
 +
 [source,sh,role=execute]
 ----
-mysecondcollection
+playbookcollection
 ----
 +
 image::vscode-devtools-playbook-create.png[Creating a Playbook project,link=self,window=blank, opts="border"]
-
-
 
 .   **Create the project** by clicking the **Create** button. After a couple of seconds, you should see a success message in the logs.
 +
 [source,text]
 ----
 --- ansible-creator logs ---
-Note: playbook project created at /home/rhel/myansibleproject
+Note: playbook project created at /projects/ansible-dev-tools-workspace/myplaybook
 ----
 
-=== Task 4: Open the mycollection folder
+=== Task 4: Open the collection folder and configure the Python environment
 
-Due to a lab infrastructure and VS Code limitation, you will now manually open the folder where your new collection content was created.
+Now you will open the collection folder in VS Code and configure the Python interpreter to use the virtual environment that was created with the collection.
 
 .   **Open the file Explorer** by clicking the Explorer icon (the icon with two files) in the VS Code left sidebar.
 +
@@ -189,7 +181,7 @@ image::Apr-29-2025_at_13.57.13-image.png[VS Code Explorer icon,link=self,window=
 +
 [source,sh,role=execute]
 ----
-/home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/
+/projects/ansible-dev-tools-workspace/mynamespace.mycollection/
 ----
 +
 image::May-12-2025_at_18.45.02-image.png[Opening a folder in VS Code,link=self,window=blank, opts="border"]
@@ -198,8 +190,15 @@ image::May-12-2025_at_18.45.02-image.png[Opening a folder in VS Code,link=self,w
 +
 image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Explorer view,link=self,window=blank, opts="border"]
 
+.   **Activate the Ansible extension** by clicking on the `galaxy.yml` file in the file explorer. This ensures VS Code recognizes the project as an Ansible collection and activates the Ansible language features.
 
-=== Task 5: Compare the CLI-generated with the VS Code–generated collections
+.   **Copy the virtual environment path.** In the file explorer sidebar, locate the `.venv` folder, **right-click** on it, and select **Copy Path**.
+
+.   **Open the Python interpreter selector** by clicking the Python version indicator in the bottom-right corner of the VS Code status bar.
+
+.   In the dropdown that appears at the top of the screen, select **Enter interpreter path...** and paste the `.venv` path you copied. This configures VS Code to use the collection's virtual environment, which includes all the Ansible development tools and dependencies.
+
+=== Task 5: Compare the CLI-generated with the VS Code-generated collections
 
 . **Same layout**
 . **Same defaults**

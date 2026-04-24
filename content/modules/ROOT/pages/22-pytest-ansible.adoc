@@ -12,9 +12,9 @@ _Learn how to do functional testing for your Ansible content using pytest-ansibl
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** 
-* **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:**
+* **Prepares you for:** Lab 2.3
+* **Stage:** Test
+* **Estimated Time:** 10 - 15 minutes
 ****
 
 == Learning objectives
@@ -103,11 +103,9 @@ MODULES_PATH = os.path.join(PROJECT_ROOT, 'plugins', 'modules')
 os.environ['ANSIBLE_LIBRARY'] = MODULES_PATH
 
 # 2. Set ANSIBLE_COLLECTIONS_PATH so Ansible can resolve the full namespace
-# This points to: .../myansibleproject/collections
-# We navigate up 3 levels from PROJECT_ROOT:
-#   mycollection -> mynamespace -> ansible_collections -> collections root
-# This allows Ansible to find modules using FQCN (mynamespace.mycollection.cowsay)
-COLLECTIONS_PATH = os.path.abspath(os.path.join(PROJECT_ROOT, '../../..'))
+# The 'collections/' directory is created by 'ade install -e .' inside the
+# collection root and contains symlinks for proper FQCN resolution.
+COLLECTIONS_PATH = os.path.join(PROJECT_ROOT, 'collections')
 os.environ['ANSIBLE_COLLECTIONS_PATH'] = COLLECTIONS_PATH
 
 # Optional: Uncomment to debug path configuration issues
@@ -186,15 +184,14 @@ This test validates both the module's execution (no failures, correct change sta
 . *Open the VS Code Terminal if you don't have one*
 
 
-. *Verify the VS Code Terminal is in the venv:*
+. *Make sure the VS Code terminal is in the collection directory:*
 +
-[source,ini,role=execute]
+[source,bash,role=execute]
 ----
-cd /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
-source .venv/bin/activate
+cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection
 ----
 
-. *From the root of the collection repository (`mycollection/`), run:*
+. *Run the tests:*
 +
 [source,bash,role=execute]
 ----

@@ -19,8 +19,8 @@
   become: false
 
   vars:
-    base_project_dir: /home/rhel/myansibleproject
-    collections_dir: "{{ base_project_dir }}/collections/ansible_collections"
+    base_project_dir: /projects/ansible-dev-tools-workspace
+    collections_dir: "{{ base_project_dir }}"
 
   tasks:
     # =========================================================================
@@ -32,17 +32,17 @@
         state: directory
         mode: "0755"
 
-    - name: "Task 0: Scaffold CLI collection mynamespace.my_cli_collection"
+    - name: "Task 0: Scaffold CLI collection mynamespace.creatorcollection"
       ansible.builtin.command:
         cmd: >-
-          ansible-creator init collection mynamespace.my_cli_collection
-          {{ collections_dir }}
-        creates: "{{ collections_dir }}/mynamespace/my_cli_collection/galaxy.yml"
+          ansible-creator init collection mynamespace.creatorcollection
+          {{ collections_dir }}/mynamespace.creatorcollection
+        creates: "{{ collections_dir }}/mynamespace.creatorcollection/galaxy.yml"
 
     # =========================================================================
     # Task 1: Explore the Ansible extension
-    # SKIPPED - Requires VS Code UI interaction (view extension sidebar,
-    # collapse Lightspeed sections). No CLI equivalent.
+    # SKIPPED - Requires VS Code UI interaction (view extension sidebar).
+    # No CLI equivalent.
     # =========================================================================
 
     # =========================================================================
@@ -54,13 +54,13 @@
       ansible.builtin.command:
         cmd: >-
           ansible-creator init collection mynamespace.mycollection
-          {{ collections_dir }}/mynamespace/mycollection
-        creates: "{{ collections_dir }}/mynamespace/mycollection/galaxy.yml"
+          {{ collections_dir }}/mynamespace.mycollection
+        creates: "{{ collections_dir }}/mynamespace.mycollection/galaxy.yml"
 
     - name: "Task 2: Install collection in editable mode with ade"
       ansible.builtin.command:
         cmd: ade install -e .
-        chdir: "{{ collections_dir }}/mynamespace/mycollection"
+        chdir: "{{ collections_dir }}/mynamespace.mycollection"
       changed_when: true
 
     # =========================================================================
@@ -68,14 +68,13 @@
     # The VS Code wizard creates a playbook project. The CLI equivalent
     # uses ansible-creator init playbook.
     # =========================================================================
-    - name: "Task 3: Scaffold playbook project with mysecondcollection"
+    - name: "Task 3: Scaffold playbook project with playbookcollection"
       ansible.builtin.command:
         cmd: >-
           ansible-creator init playbook
-          {{ base_project_dir }}
-          --scm-org mynamespace
-          --scm-project mysecondcollection
-        creates: "{{ base_project_dir }}/site.yml"
+          mynamespace.playbookcollection
+          {{ base_project_dir }}/myplaybook
+        creates: "{{ base_project_dir }}/myplaybook/site.yml"
 
     # =========================================================================
     # Task 4: Open the mycollection folder

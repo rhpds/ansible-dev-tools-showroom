@@ -11,9 +11,9 @@ _A guide to testing your Ansible collection using Ansible Molecule and a pre-con
 ****
 * **Before you start:**
 ** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** 
-* **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:** 
+* **Prepares you for:** Labs 2.2 and 2.3
+* **Stage:** Test
+* **Estimated Time:** 10 - 15 minutes
 ****
 
 == Learning objectives
@@ -79,10 +79,9 @@ Now, let's explore the test scenario that was automatically added to your collec
 
 When you created the collection in the previous modules, `ansible-creator` also generated a Molecule test scenario named `integration_hello_world`.
 
-.   **Locate the Molecule scenario.** In the VS Code file explorer, **expand** the following directory path: __collections > ansible_collections > mynamespace > mycollection > extensions > molecule
- > integration_hello_world__. 
+.   **Locate the Molecule scenario.** In the VS Code file explorer, **expand** the following directory path: __mynamespace.mycollection > extensions > molecule > integration_hello_world__. 
  
-NOTE: You can also copy and paste the path: `collections/ansible_collections/mynamespace/mycollection/extensions/molecule/integration_hello_world`.
+NOTE: You can also copy and paste the path: `mynamespace.mycollection/extensions/molecule/integration_hello_world`.
 
 .   **Examine the Molecule configuration.** Within the `integration_hello_world` directory, **open** the `molecule.yml` file. Molecule uses this file to define the settings and scenarios for testing the Ansible collection.
 +
@@ -116,7 +115,7 @@ This playbook runs during the **converge** stage of the Molecule lifecycle. It's
 
 Before running tests, let's understand what those tests actually verify. This is where assertion-based testing comes into play.
 
-.   **Navigate to the tests directory.** In the VS Code file explorer, **expand** the following path: __collections > ansible_collections > mynamespace > mycollection > tests > integration > targets > hello_world__.
+.   **Navigate to the tests directory.** In the VS Code file explorer, **expand** the following path: __mynamespace.mycollection > tests > integration > targets > hello_world__.
 
 .   **Examine the test tasks.** Within the `hello_world` directory, **open** the `tasks/main.yml` file. This file contains the actual test assertions that Molecule will execute during the verify stage.
 
@@ -160,7 +159,7 @@ image::May-12-2025_at_21.51.02-image.png[Creating a Collection plugin,link=self,
 +
 [source,text,role=execute]
 ----
-/home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/
+/projects/ansible-dev-tools-workspace/mynamespace.mycollection/
 ----
 +
 * **Plugin type:** `Filter`
@@ -184,7 +183,7 @@ Finally, you will use the command line to run the Molecule test scenario and obs
 +
 [source,bash,role=execute]
 ----
-cd /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/extensions/
+cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection/extensions/
 ----
 
 .   **Run a bare Molecule test.** First, run `molecule test` without specifying a scenario. 
@@ -246,7 +245,7 @@ Verify you're in the correct directory by running `pwd`. You should be in:
 +
 [source,bash]
 ----
-/home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection/extensions/
+/projects/ansible-dev-tools-workspace/mynamespace.mycollection/extensions/
 ----
 
 . **If you see "No scenario name provided" errors:**

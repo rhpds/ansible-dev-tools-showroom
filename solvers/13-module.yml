@@ -18,8 +18,8 @@
 
   vars:
     collection_dir: >-
-      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
-    project_dir: /home/rhel/myansibleproject
+      /projects/ansible-dev-tools-workspace/mynamespace.mycollection
+    project_dir: /projects/ansible-dev-tools-workspace
 
   tasks:
     # =========================================================================
@@ -63,11 +63,49 @@
         backup: true
 
     # =========================================================================
-    # Task 2: Create a playbook to use the new module
+    # Task 2: Create a playbook to use the new module (pre-lint form)
     # =========================================================================
-    - name: "Task 2: Create mycowsay.yml playbook (already lint-fixed)"
+    - name: "Task 2: Ensure playbooks directory exists"
+      ansible.builtin.file:
+        path: "{{ collection_dir }}/playbooks"
+        state: directory
+        mode: "0755"
+
+    - name: "Task 2: Create mycowsay.yml playbook (pre-lint version)"
       ansible.builtin.copy:
-        dest: "{{ project_dir }}/mycowsay.yml"
+        dest: "{{ collection_dir }}/playbooks/mycowsay.yml"
+        content: |
+          ---
+          - hosts: localhost
+            tasks:
+              - name: test the cowsay module
+                mynamespace.mycollection.cowsay:
+                  message: Hello, Ansible!
+                register: result
+
+              - name: Display the result
+                ansible.builtin.debug:
+                  msg: "{{ '{{' }} result.message {{ '}}' }}"
+        mode: "0644"
+        backup: true
+
+    # =========================================================================
+    # Task 3: Use ansible-lint to fix the playbook
+    # =========================================================================
+    - name: "Task 3: Run ansible-lint --fix on the playbook"
+      ansible.builtin.command:
+        cmd: >-
+          {{ collection_dir }}/.venv/bin/ansible-lint
+          --fix --nocolor
+          {{ collection_dir }}/playbooks/mycowsay.yml
+        chdir: "{{ collection_dir }}"
+      changed_when: true
+      failed_when: false
+      register: r_lint_fix
+
+    - name: "Task 3: Apply final manual fix (add play name)"
+      ansible.builtin.copy:
+        dest: "{{ collection_dir }}/playbooks/mycowsay.yml"
         content: |
           ---
           - name: Using our cowsay module
@@ -81,27 +119,40 @@
               - name: Display the result
                 ansible.builtin.debug:
                   msg: "{{ '{{' }} result.message {{ '}}' }}"
+                  verbosity: 0
         mode: "0644"
         backup: true
 
-    # =========================================================================
-    # Task 3: Use ansible-lint to fix the playbook
-    # SKIPPED - The playbook created above is already in its final lint-fixed
-    # form (includes play name, proper formatting). The VS Code lint settings
-    # configuration (enabling linter, adding --fix argument) is a UI action
-    # that doesn't require a solver.
-    # =========================================================================
+    - name: "Task 3: Verify playbook passes lint"
+      ansible.builtin.command:
+        cmd: >-
+          {{ collection_dir }}/.venv/bin/ansible-lint
+          --nocolor
+          {{ collection_dir }}/playbooks/mycowsay.yml
+        chdir: "{{ collection_dir }}"
+      changed_when: false
 
     # =========================================================================
     # Task 4: Run the playbook
-    # The VS Code UI right-click "Run Ansible Playbook" and "Run with
-    # Ansible Navigator" are UI actions. We run equivalent CLI commands.
+    # First run fails (cowsay not installed), then add to requirements.txt
+    # and re-run ade install, then run again successfully.
     # =========================================================================
+    - name: "Task 4: Add cowsay to requirements.txt"
+      ansible.builtin.lineinfile:
+        path: "{{ collection_dir }}/requirements.txt"
+        line: "cowsay"
+        create: true
+        mode: "0644"
+
+    - name: "Task 4: Re-run ade install to pick up cowsay dependency"
+      ansible.builtin.command:
+        cmd: "{{ collection_dir }}/.venv/bin/ade install -e ."
+        chdir: "{{ collection_dir }}"
+      changed_when: true
+
     - name: "Task 4: Run playbook with ansible-playbook"
       ansible.builtin.command:
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-playbook
-          {{ project_dir }}/mycowsay.yml
+          {{ collection_dir }}/playbooks/mycowsay.yml
       changed_when: false
-      environment:
-        ANSIBLE_COLLECTIONS_PATH: "{{ project_dir }}/collections"

@@ -18,7 +18,7 @@
 
   vars:
     collection_dir: >-
-      /home/rhel/myansibleproject/collections/ansible_collections/mynamespace/mycollection
+      /projects/ansible-dev-tools-workspace/mynamespace.mycollection
 
   tasks:
     # =========================================================================
@@ -63,6 +63,13 @@
           dependencies:
             "ansible.utils": "*"
             "ansible.posix": "*"
+
+          build_ignore:
+            - .gitignore
+            - changelogs/.plugin-cache.yaml
+            - .venv
+            - collections
+            - .tox
 
           repository: ""
           documentation: ""
@@ -116,6 +123,13 @@
             "ansible.utils": "*"
             "ansible.posix": "*"
             "ansible.netcommon": "*"
+
+          build_ignore:
+            - .gitignore
+            - changelogs/.plugin-cache.yaml
+            - .venv
+            - collections
+            - .tox
 
           repository: ""
           documentation: ""

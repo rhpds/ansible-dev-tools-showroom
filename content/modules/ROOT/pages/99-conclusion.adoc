@@ -10,11 +10,7 @@ _A summary of the Ansible development tools you've learned and resources for con
 
 [.sidebar]
 ****
-* **Before you start:**
-** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
-* **Prepares you for:** 
-* **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
-* **Estimated Time:** 
+* **Estimated Time:** 5 minutes
 ****
 
 == Congratulations! 🎉

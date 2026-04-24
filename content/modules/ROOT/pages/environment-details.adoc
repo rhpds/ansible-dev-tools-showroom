@@ -4,10 +4,10 @@
 
 Your instructor will provide the following details for your lab environment:
 
-* **OpenShift Console URL:** `{openshift_cluster_console_url}`
 * **Dev Spaces URL:** `https://devspaces.{openshift_cluster_ingress_domain}`
-* **Username:** Provided by instructor
-* **Password:** Provided by instructor
+// PLACEHOLDER: confirm RHDP variable names are wired up in the catalog item
+* **Username:** `{username}`
+* **Password:** `{user_password}`
 
 == Lab environment components
 
