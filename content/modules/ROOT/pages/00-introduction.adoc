@@ -47,11 +47,12 @@ Dev Spaces provides a VS Code environment configured by a link:https://devfile.i
 
 The lab environment includes:
 
-* Red Hat OpenShift cluster
-* Ansible Automation Platform
-* Red Hat OpenShift Dev Spaces (your development environment)
-* link:https://about.gitea.com[Gitea^] Git server
-* Lab instructions (this guide)
+* **Red Hat OpenShift Dev Spaces** — your browser-based VS Code development environment, powered by Eclipse Che
+* **Ansible Development Tools (adt)** — the bundled CLI suite including `ansible-creator`, `ade`, `ansible-lint`, `molecule`, `pytest-ansible`, `tox-ansible`, `ansible-builder`, `ansible-navigator`, and `ansible-sign`
+* **Ansible VS Code extension** — provides content scaffolding wizards, linting integration, and language support
+* **Podman** — container runtime for building Execution Environments and running Molecule tests
+* **Open VSX Registry** — on-premises registry serving VS Code extensions to Dev Spaces
+* **Lab instructions** — this guide (Showroom)
 
 == Lab tips
 
