@@ -75,23 +75,25 @@
     # =========================================================================
     # Task 3: Create a MANIFEST.in file
     # =========================================================================
+    - name: "Task 2: Copy mycowsay.yml to playbook project"
+      ansible.builtin.copy:
+        src: "{{ collection_dir }}/playbooks/mycowsay.yml"
+        dest: "{{ project_dir }}/myplaybook/mycowsay.yml"
+        remote_src: true
+        mode: "0644"
+
     - name: "Task 3: Create MANIFEST.in file"
       ansible.builtin.copy:
-        dest: "{{ collection_dir }}/MANIFEST.in"
+        dest: "{{ project_dir }}/myplaybook/MANIFEST.in"
         content: |
-          # Exclude .venv FIRST before any includes
-          global-exclude .venv
-          global-exclude .venv/*
-          prune .venv
-
-          # Exclude .git
+          # Exclude development artifacts
           global-exclude .git
           global-exclude .git/*
           prune .git
 
-          # Now include what you want to sign
+          # Include files to sign
           include README.md
-          include playbooks/mycowsay.yml
+          include mycowsay.yml
         mode: "0644"
         backup: true
 
@@ -101,7 +103,7 @@
     - name: "Task 4: Sign the project files"
       ansible.builtin.command:
         cmd: "{{ collection_dir }}/.venv/bin/ansible-sign project gpg-sign ."
-        chdir: "{{ collection_dir }}"
+        chdir: "{{ project_dir }}/myplaybook"
       changed_when: true
 
     # =========================================================================
@@ -109,13 +111,13 @@
     # =========================================================================
     - name: "Task 5: Display checksum manifest"
       ansible.builtin.slurp:
-        src: "{{ collection_dir }}/.ansible-sign/sha256sum.txt"
+        src: "{{ project_dir }}/myplaybook/.ansible-sign/sha256sum.txt"
       register: r_checksum_manifest
 
     - name: "Task 5: Verify signed content"
       ansible.builtin.command:
         cmd: "{{ collection_dir }}/.venv/bin/ansible-sign project gpg-verify ."
-        chdir: "{{ collection_dir }}"
+        chdir: "{{ project_dir }}/myplaybook"
       changed_when: false
 
 

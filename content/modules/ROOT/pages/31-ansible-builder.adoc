@@ -47,6 +47,19 @@ Although new features in the roadmap are coming to simplify the EE building expe
 
 We will define an Execution Environment configuration file by using the Ansible extension wizard in VS Code, then use  `ansible-galaxy` to package our collection, `ansible-builder create` to inspect the generated `Containerfile`, and finally `ansible-builder build` for building the custom EE image, and finish by testing it using Podman (the default container runtime).
 
+=== Task 0: Promote your playbook to the playbook project
+
+Now that your playbook and collection are working, it's time to prepare them for production. In a real workflow, the collection and the playbook project are distributed separately — the collection is packaged into an Execution Environment, while the playbook project is pushed to a Git repository and pulled by Ansible Automation Platform's Controller.
+
+Copy your working playbook from the collection into the `myplaybook` project directory you created in Lab 1.1. In VS Code, expand `mynamespace.mycollection` > `playbooks`, **right-click** on `mycowsay.yml` and select **Copy**. Then expand the `myplaybook` folder in the workspace root, **right-click** on it and select **Paste**.
+
+Alternatively, you can use the terminal:
+
+[source,bash,role=execute]
+----
+cp /projects/ansible-dev-tools-workspace/mynamespace.mycollection/playbooks/mycowsay.yml /projects/ansible-dev-tools-workspace/myplaybook/
+----
+
 === Task 1: Define the Execution Environment definition file
 
 The EE configuration is defined in `execution-environment.yml`. To access the features of modern Ansible tooling, we must explicitly declare `version: 3` in the definition file.
@@ -290,7 +303,7 @@ Use `ansible-navigator` to run your `mycowsay.yml` playbook with your newly crea
 +
 [source,bash,role=execute]
 ----
-ansible-navigator run /projects/ansible-dev-tools-workspace/mynamespace.mycollection/playbooks/mycowsay.yml --execution-environment-image mycollection-ee --pull-policy never
+ansible-navigator run /projects/ansible-dev-tools-workspace/myplaybook/mycowsay.yml --execution-environment-image mycollection-ee --pull-policy never
 ----
 
 . *Test the cowsay module documentation:*

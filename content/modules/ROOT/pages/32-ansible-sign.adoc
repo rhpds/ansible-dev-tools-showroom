@@ -95,34 +95,31 @@ gpg --list-secret-keys
 
 === Task 2: Set up the environment
 
-This task demonstrates how to cryptographically sign an Ansible Project using `ansible-sign`. We will be using the collection directory and our `mycowsay.yml` playbook.
+This task demonstrates how to cryptographically sign an Ansible Project using `ansible-sign`. We will be using the `myplaybook` project directory — the playbook project you created earlier and where you copied your `mycowsay.yml` playbook in the previous module.
 
-. *Make sure you are in the collection directory:*
+. *Make sure you are in the playbook project directory:*
 +
 [source,bash,role=execute]
 ----
-cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection
+cd /projects/ansible-dev-tools-workspace/myplaybook
 ----
 
 === Task 3: Create a MANIFEST.in file
 
-. *In VS Code, create a new file called `MANIFEST.in`* in the root of your project. Add the following content to it. We will be excluding a couple of directories and signing a README and playbook. This is only meant as an example, your needs might vary:
+. *In VS Code, create a new file called `MANIFEST.in`* in the `myplaybook` directory. This file controls which files are included in the checksum manifest that `ansible-sign` creates and verifies.
++
+For this lab, we will sign just two files to keep the output simple. In a production environment, you would include all project files to ensure full supply chain integrity.
 +
 [source,bash,role=execute]
 ----
-# Exclude .venv FIRST before any includes
-global-exclude .venv
-global-exclude .venv/*
-prune .venv
-
-# Exclude .git
+# Exclude development artifacts
 global-exclude .git
 global-exclude .git/*
 prune .git
 
-# Now include what you want to sign
+# Include files to sign
 include README.md
-include playbooks/mycowsay.yml
+include mycowsay.yml
 ----
 
 NOTE: Internally, ansible-sign makes use of the distlib.manifest module of Python’s distlib library, and thus MANIFEST.in must follow the syntax that this library specifies. Check the Python Packaging User Guide for an explanation of the MANIFEST.in file directives.
