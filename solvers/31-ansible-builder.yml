@@ -19,41 +19,55 @@
     collection_dir: >-
       /projects/ansible-dev-tools-workspace/mynamespace.mycollection
     project_dir: /projects/ansible-dev-tools-workspace
+    ee_dir: /projects/ansible-dev-tools-workspace/mycollection-ee
 
   tasks:
+    # =========================================================================
+    # Task 0: Promote your playbook to the playbook project
+    # =========================================================================
+    - name: "Task 0: Copy mycowsay.yml to myplaybook project"
+      ansible.builtin.copy:
+        src: "{{ collection_dir }}/playbooks/mycowsay.yml"
+        dest: "{{ project_dir }}/myplaybook/mycowsay.yml"
+        remote_src: true
+        mode: "0644"
+
     # =========================================================================
     # Task 1: Define the Execution Environment definition file
     # The VS Code wizard creates an EE project. We create the files directly
     # and run the equivalent CLI commands.
     # =========================================================================
+    - name: "Task 1: Create EE project directory"
+      ansible.builtin.file:
+        path: "{{ ee_dir }}"
+        state: directory
+        mode: "0755"
 
     - name: "Task 1: Build collection tarball with ansible-galaxy"
       ansible.builtin.command:
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-galaxy collection build
-          --output-path {{ project_dir }}/
+          --output-path {{ ee_dir }}/
         chdir: "{{ collection_dir }}"
       changed_when: true
 
-    # Create the execution-environment.yml with local tarball reference
     - name: "Task 1: Create execution-environment.yml"
       ansible.builtin.copy:
-        dest: "{{ project_dir }}/execution-environment.yml"
+        dest: "{{ ee_dir }}/execution-environment.yml"
         content: |
           ---
           version: 3
           images:
             base_image:
-              name: registry.redhat.io/ansible-automation-platform-25/ee-minimal-rhel8:latest
+              name: registry.redhat.io/ansible-automation-platform-26/ee-minimal-rhel9:latest
 
           dependencies:
-            ansible_core:
-              package_pip: ansible-core
-            ansible_runner:
-              package_pip: ansible-runner
+            python_interpreter:
+              python_path: /usr/bin/python3.12
+
             galaxy:
               collections:
-                # Tell Galaxy to look inside the local folder
+                # Tell Galaxy to look inside the local folder we created below
                 - name: collection_tarballs/mynamespace-mycollection-1.0.0.tar.gz
                   type: file
             python:
@@ -77,7 +91,7 @@
     - name: "Task 2: Run ansible-builder create to generate Containerfile"
       ansible.builtin.command:
         cmd: "{{ collection_dir }}/.venv/bin/ansible-builder create"
-        chdir: "{{ project_dir }}"
+        chdir: "{{ ee_dir }}"
       changed_when: true
 
     # =========================================================================
@@ -88,7 +102,7 @@
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-builder build
           -t mynamespace/mycollection-ee:latest -vvv
-        chdir: "{{ project_dir }}"
+        chdir: "{{ ee_dir }}"
       changed_when: true
       timeout: 600
 
@@ -113,7 +127,7 @@
           --execution-environment-image mycollection-ee
           --pull-policy never
           --mode stdout
-        chdir: "{{ project_dir }}"
+        chdir: "{{ ee_dir }}"
       changed_when: false
 
     - name: "Task 3: Test cowsay module documentation inside the EE"

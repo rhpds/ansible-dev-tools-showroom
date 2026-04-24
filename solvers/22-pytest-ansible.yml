@@ -69,11 +69,9 @@
           os.environ['ANSIBLE_LIBRARY'] = MODULES_PATH
 
           # 2. Set ANSIBLE_COLLECTIONS_PATH so Ansible can resolve the full namespace
-          # This points to: .../ansible-dev-tools-workspace
-          # We navigate up 3 levels from PROJECT_ROOT:
-          #   mycollection -> mynamespace -> ansible_collections -> collections root
-          # This allows Ansible to find modules using FQCN (mynamespace.mycollection.cowsay)
-          COLLECTIONS_PATH = os.path.abspath(os.path.join(PROJECT_ROOT, '../../..'))
+          # The 'collections/' directory is created by 'ade install -e .' inside the
+          # collection root and contains symlinks for proper FQCN resolution.
+          COLLECTIONS_PATH = os.path.join(PROJECT_ROOT, 'collections')
           os.environ['ANSIBLE_COLLECTIONS_PATH'] = COLLECTIONS_PATH
         mode: "0644"
         backup: true
@@ -138,8 +136,6 @@
         cmd: "{{ collection_dir }}/.venv/bin/pytest"
         chdir: "{{ collection_dir }}"
       changed_when: false
-      environment:
-        ANSIBLE_COLLECTIONS_PATH: /projects/ansible-dev-tools-workspace/collections
 
     # =========================================================================
     # Task 5: Verify the test results
@@ -149,5 +145,3 @@
         cmd: "{{ collection_dir }}/.venv/bin/pytest -v -s"
         chdir: "{{ collection_dir }}"
       changed_when: false
-      environment:
-        ANSIBLE_COLLECTIONS_PATH: /projects/ansible-dev-tools-workspace/collections

@@ -64,6 +64,13 @@
             "ansible.utils": "*"
             "ansible.posix": "*"
 
+          build_ignore:
+            - .gitignore
+            - changelogs/.plugin-cache.yaml
+            - .venv
+            - collections
+            - .tox
+
           repository: ""
           documentation: ""
           homepage: ""
@@ -116,6 +123,13 @@
             "ansible.utils": "*"
             "ansible.posix": "*"
             "ansible.netcommon": "*"
+
+          build_ignore:
+            - .gitignore
+            - changelogs/.plugin-cache.yaml
+            - .venv
+            - collections
+            - .tox
 
           repository: ""
           documentation: ""

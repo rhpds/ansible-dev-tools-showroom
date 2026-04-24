@@ -57,7 +57,7 @@ First, you will activate the Python virtual environment (`.venv`) that `ansible-
 
 .   **Open the `galaxy.yml` file** by clicking on it in the left sidebar.
 
-.   **Activate the Python virtual environment** by clicking the banner that reads `Python: Select Interpreter` in the bottom status bar of VS Code. From the dropdown menu that appears at the top, select the recommended option: **Python 3.11.11 ('.venv': venv)**.
+.   **Activate the Python virtual environment** by clicking the banner that reads `Python: Select Interpreter` in the bottom status bar of VS Code. From the dropdown menu that appears at the top, select the recommended option: **Python 3.12.12 ('.venv': venv)**.
 +
 image::vscode-devtools-python-env.png[Selecting the Python virtual environment in VS Code,link=self,window=blank, opts="border"]
 
@@ -120,7 +120,7 @@ Let's check the versions of the Ansible development tools installed in your envi
 
 .   **Check the tool versions** by running the following command to see the versions of all installed tools:
 +
-[source,bash]
+[source,bash,role=execute]
 ----
 adt --version
 ----
@@ -134,18 +134,18 @@ The output should look similar to this:
 +
 [source,text]
 ----
-(.venv) [rhel@vscode mycollection]$ adt --version
+$ adt --version
 ansible-builder                          3.1.1
-ansible-core                             2.19.5
-ansible-creator                          25.12.0
-ansible-dev-environment                  25.12.2
-ansible-dev-tools                        26.1.0
-ansible-lint                             26.1.1
-ansible-navigator                        26.1.1
-ansible-sign                             0.1.4
-molecule                                 25.12.0
-pytest-ansible                           25.12.0
-tox-ansible                              26.1.0
+ansible-core                             2.20.5
+ansible-creator                          26.4.2
+ansible-dev-environment                  26.4.0
+ansible-dev-tools                        26.4.5
+ansible-lint                             26.4.0
+ansible-navigator                        26.4.0
+ansible-sign                             0.1.5
+molecule                                 26.4.0
+pytest-ansible                           26.4.0
+tox-ansible                              26.3.0
 ----
 +
 NOTE: Versions might differ, don't worry. The list above is an example.
@@ -161,7 +161,7 @@ Now you will use `ade` to install the dependencies you declared in `galaxy.yml`.
 Notice the `-e .` with a dot at the end of the command. This tells `ade` to perform an *editable* (the `-e`) install, creating a link from the virtual env into your working directory (the `.`).
 ====
 +
-[source,bash]
+[source,bash,role=execute]
 ----
 ade install -e .
 ----

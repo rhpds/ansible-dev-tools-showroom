@@ -77,7 +77,7 @@ The plugin uses `tox-ansible.ini` to control which Python versions and Ansible v
 .   **Open the `tox-ansible.ini` file** in the collection root and replace its contents with:
 
 +
-[source,ini]
+[source,ini,role=execute]
 ----
 [ansible]
 skip =

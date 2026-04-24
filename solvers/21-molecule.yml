@@ -59,6 +59,3 @@
           -s integration_hello_world
         chdir: "{{ extensions_dir }}"
       changed_when: true
-      environment:
-        ANSIBLE_COLLECTIONS_PATH: >-
-          /projects/ansible-dev-tools-workspace/collections
