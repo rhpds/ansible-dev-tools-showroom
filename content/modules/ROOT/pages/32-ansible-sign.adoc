@@ -11,7 +11,9 @@ _Learn how to sign content by using ansible-sign and apply supply-chain security
 [.sidebar]
 ****
 * **Before you start:**
-** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
+** https://devspaces.{openshift_cluster_ingress_domain}[OpenShift Dev Spaces^]
+** **Username:** `{user}`
+** **Password:** `{password}`
 * **Prepares you for:** Conclusion
 * **Stage:** Deploy
 * **Estimated Time:** 10 - 15 minutes

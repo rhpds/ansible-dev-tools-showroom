@@ -3,7 +3,9 @@
 [.sidebar]
 ****
 * **Before you start:**
-** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
+** https://devspaces.{openshift_cluster_ingress_domain}[OpenShift Dev Spaces^]
+** **Username:** `{user}`
+** **Password:** `{password}`
 * **Prepares you for:** All subsequent labs
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
 * **Estimated Time:** 10 - 20 minutes

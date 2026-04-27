@@ -11,7 +11,9 @@ _A guide to adding a custom module to your Ansible collection and using it in a 
 [.sidebar]
 ****
 * **Before you start:**
-** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
+** https://devspaces.{openshift_cluster_ingress_domain}[OpenShift Dev Spaces^]
+** **Username:** `{user}`
+** **Password:** `{password}`
 * **Prepares you for:** Module 2 (Test) and Module 3 (Deploy)
 * **Stage:** Create
 * **Estimated Time:** 15 - 20 minutes

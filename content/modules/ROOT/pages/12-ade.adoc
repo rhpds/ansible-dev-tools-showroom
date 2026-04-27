@@ -11,7 +11,9 @@ _A guide to exploring what `ansible-creator` and `ade` (Ansible Dev Environment)
 [.sidebar]
 ****
 * **Before you start:**
-** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
+** https://devspaces.{openshift_cluster_ingress_domain}[OpenShift Dev Spaces^]
+** **Username:** `{user}`
+** **Password:** `{password}`
 * **Prepares you for:** Lab 1.3 and all subsequent modules
 * **Stage:** Create
 * **Estimated Time:** 10 - 15 minutes
