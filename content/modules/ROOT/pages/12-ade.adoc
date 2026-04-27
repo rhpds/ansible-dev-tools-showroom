@@ -33,7 +33,7 @@ Ansible Dev Environment (`ade`) is a management tool for Ansible content develop
 - Providing configurable workspace isolation
 
 
-In this challenge, you will explore the content that was automatically generated for the collection you just created and learn how to customize your requirements using `ade`.
+In this section, you will explore the content that was automatically generated for the collection you just created and learn how to customize your requirements using `ade`.
 
 == Learning objectives
 
@@ -204,7 +204,7 @@ image::12-netcommon-system-packages-error.png[Command failure showing missing sy
 
 .   **Install the system dependencies** by running the following command in the VS Code terminal to install the missing OS packages:
 +
-[source,bash]
+[source,bash,role=execute]
 ----
 sudo dnf install -y python3-cffi python3-cryptography python3-lxml python3-pycparser
 ----
