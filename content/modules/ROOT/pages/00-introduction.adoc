@@ -80,7 +80,7 @@ image::00-introduction/showroom-split-toolbar.png[Showroom floating toolbar with
 // PLACEHOLDER: improve screenshot
 image::00-introduction/devspaces-login-openshift.png[Dev Spaces login page showing the Log in with OpenShift button,link=self,window=blank]
 
-. Enter your credentials from the xref:environment-details.adoc[Environment Details] page (`{username}` / `{user_password}`) and click **Sign In**.
+. Enter your credentials from the xref:environment-details.adoc[Environment Details] page (`{user}` / `{password}`) and click **Sign In**.
 +
 // PLACEHOLDER: improve screenshot
 image::00-introduction/devspaces-sso-login.png[SSO sign-in form with username and password fields,link=self,window=blank]

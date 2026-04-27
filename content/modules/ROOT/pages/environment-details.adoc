@@ -6,8 +6,8 @@ Your instructor will provide the following details for your lab environment:
 
 * **Dev Spaces URL:** `https://devspaces.{openshift_cluster_ingress_domain}`
 // PLACEHOLDER: confirm RHDP variable names are wired up in the catalog item
-* **Username:** `{username}`
-* **Password:** `{user_password}`
+* **Username:** `{user}`
+* **Password:** `{password}`
 
 == Lab environment components
 
