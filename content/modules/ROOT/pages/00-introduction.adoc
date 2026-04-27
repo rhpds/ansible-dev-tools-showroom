@@ -3,7 +3,9 @@
 [.sidebar]
 ****
 * **Before you start:**
-** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
+** https://devspaces.{openshift_cluster_ingress_domain}[OpenShift Dev Spaces^]
+** **Username:** `{user}`
+** **Password:** `{password}`
 * **Prepares you for:** All subsequent labs
 * **Lab Type:** Foundational (_activities in this lab prepare you for the remaining labs_)
 * **Estimated Time:** 10 - 20 minutes
@@ -80,7 +82,7 @@ image::00-introduction/showroom-split-toolbar.png[Showroom floating toolbar with
 // PLACEHOLDER: improve screenshot
 image::00-introduction/devspaces-login-openshift.png[Dev Spaces login page showing the Log in with OpenShift button,link=self,window=blank]
 
-. Enter your credentials from the xref:environment-details.adoc[Environment Details] page (`{username}` / `{user_password}`) and click **Sign In**.
+. Enter your credentials from the xref:environment-details.adoc[Environment Details] page (`{user}` / `{password}`) and click **Sign In**.
 +
 // PLACEHOLDER: improve screenshot
 image::00-introduction/devspaces-sso-login.png[SSO sign-in form with username and password fields,link=self,window=blank]
@@ -126,7 +128,7 @@ The majority of the exercises in this lab will be performed using the VS Code te
 
 . Open a new terminal by selecting the VS Code menu starting with the hamburger (3 horizontal lines) in the top left, then selecting **Terminal** -> **New Terminal**
 +
-image::11-platform-dev-spaces/intro7.png[VS Code terminal interface showing basic command line operations in the Dev Spaces environment,link=self,window=blank]
+image::00-introduction/devspaces-terminal.png[VS Code terminal interface showing basic command line operations in the Dev Spaces environment,link=self,window=blank]
 
 . Verify the container OS release:
 +

@@ -11,7 +11,9 @@ _A guide to exploring what `ansible-creator` and `ade` (Ansible Dev Environment)
 [.sidebar]
 ****
 * **Before you start:**
-** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
+** https://devspaces.{openshift_cluster_ingress_domain}[OpenShift Dev Spaces^]
+** **Username:** `{user}`
+** **Password:** `{password}`
 * **Prepares you for:** Lab 1.3 and all subsequent modules
 * **Stage:** Create
 * **Estimated Time:** 10 - 15 minutes
@@ -41,7 +43,7 @@ After completing this module, you will be able to:
 * Use `ade` to install and manage collection dependencies
 * Understand how `ade` tracks Python and system-level requirements
 
-image::May-06-2025_at_21.58.21-image.png[Scaffolded collection files in the Explorer view,link=self,window=blank, opts="border"]
+image::11-collection-explorer-view.png[Scaffolded collection files in the Explorer view,link=self,window=blank, opts="border"]
 
 ---
 
@@ -59,7 +61,7 @@ First, you will activate the Python virtual environment (`.venv`) that `ansible-
 
 .   **Activate the Python virtual environment** by clicking the banner that reads `Python: Select Interpreter` in the bottom status bar of VS Code. From the dropdown menu that appears at the top, select the recommended option: **Python 3.12.12 ('.venv': venv)**.
 +
-image::vscode-devtools-python-env.png[Selecting the Python virtual environment in VS Code,link=self,window=blank, opts="border"]
+image::12-python-env-selector.png[Selecting the Python virtual environment in VS Code,link=self,window=blank, opts="border"]
 
 NOTE: This is a convenient alternative to manually running `source .venv/bin/activate` in the terminal.
 
@@ -197,7 +199,7 @@ dependencies:
 [WARNING]
 ====
 The command will fail. Don't panic! This is expected. `ade` has detected that `ansible.netcommon` requires certain system-level packages that are not installed on your workstation's operating system.
-image::vscode-devtools-netcommon-system-packages.png[Command failure showing missing system packages,link=self,window=blank, opts="border"]
+image::12-netcommon-system-packages-error.png[Command failure showing missing system packages,link=self,window=blank, opts="border"]
 ====
 
 .   **Install the system dependencies** by running the following command in the VS Code terminal to install the missing OS packages:

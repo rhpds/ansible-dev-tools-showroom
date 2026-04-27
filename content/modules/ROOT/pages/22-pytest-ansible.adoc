@@ -11,7 +11,9 @@ _Learn how to do functional testing for your Ansible content using pytest-ansibl
 [.sidebar]
 ****
 * **Before you start:**
-** Access to OpenShift Dev Spaces in xref:environment-details.adoc[Environment Details]
+** https://devspaces.{openshift_cluster_ingress_domain}[OpenShift Dev Spaces^]
+** **Username:** `{user}`
+** **Password:** `{password}`
 * **Prepares you for:** Lab 2.3
 * **Stage:** Test
 * **Estimated Time:** 10 - 15 minutes
