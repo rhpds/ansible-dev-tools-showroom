@@ -21,7 +21,7 @@ _A guide to adding a custom module to your Ansible collection and using it in a 
 
 == Lab briefing
 
-In this challenge, you will be adding content in the form of a Ansible **module plugin** to the collection you created, and then using the module for a new playbook, which you will fix with `ansible-lint` before running it with `ansible-navigator`.
+In this section, you will be adding content in the form of an Ansible **module plugin** to the collection you created, and then using the module for a new playbook, which you will fix with `ansible-lint` before running it with `ansible-navigator`.
 
 == Learning objectives
 
@@ -36,7 +36,7 @@ After completing this module, you will be able to:
 
 == Lab guide: Hands-on tasks
 
-In this exercise, you will copy an existing Python module into your collection's `plugins/modules` directory. While you can develop your own modules from scratch, we will use a pre-written one for simplicity.
+In this section, you will copy an existing Python module into your collection's `plugins/modules` directory. While you can develop your own modules from scratch, we will use a pre-written one for simplicity.
 
 === Task 1: Add a custom module to the collection
 

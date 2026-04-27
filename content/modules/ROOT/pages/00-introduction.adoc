@@ -68,7 +68,9 @@ Before we begin, here are some tips to improve your lab experience:
 
 * The lab consists of several **Modules**. Each module contains one or more **Tasks**. When you finish a module, click the **Next** button at the bottom of the instructions sidebar to proceed.
 
-== Task 1: Launch the Dev Spaces workspace
+== Lab guide: Hands-on tasks
+
+=== Task 1: Launch the Dev Spaces workspace
 
 Red Hat OpenShift Dev Spaces gives you a full VS Code environment running in your browser, with all Ansible development tools pre-installed and configured. Instead of spending time installing tools locally, every participant gets an identical, ready-to-use workspace backed by an enterprise container platform.
 
@@ -113,7 +115,7 @@ TIP: Keep both tabs open throughout the lab — you will switch between the inst
 . Click the **Yes, I trust the Authors** button to trust the workspace authors.
 . Wait a few moments until the Ansible extension icon appears on the left sidebar.
 
-== Task 2: Explore the Ansible extension
+=== Task 2: Explore the Ansible extension
 
 . Click on the **Ansible** extension icon (the "A" logo) in the left activity bar to open the Ansible panel. You will see the **Ansible Development Tools** section with shortcuts and guided wizards to scaffold projects, manage execution environments, and perform other common Ansible development tasks. You will use several of these throughout the lab.
 
@@ -122,7 +124,7 @@ TIP: Keep both tabs open throughout the lab — you will switch between the inst
 // PLACEHOLDER: screenshot of the Ansible Development Tools welcome page
 image::00-introduction/ansible-getting-started.png[Ansible Development Tools welcome page showing available tools and walkthroughs,link=self,window=blank]
 
-== Task 3: Verify the development environment
+=== Task 3: Verify the development environment
 
 The majority of the exercises in this lab will be performed using the VS Code terminal.
 
@@ -151,7 +153,7 @@ adt --version
 +
 NOTE: The output will show the versions of all installed Ansible development tools. Versions may differ from the examples in the lab, this is expected.
 
-== Conclusion
+== Summary
 
 In this module, you have:
 
@@ -161,6 +163,6 @@ In this module, you have:
 
 This foundation prepares you for the remaining labs where you will create, test, and deploy Ansible automation content.
 
-== Contributing to this lab
+== Next steps
 
-If you see an error in this lab, fork and submit a pull request against link:https://github.com/rhpds/ansible-dev-tools-showroom[https://github.com/rhpds/ansible-dev-tools-showroom^]
+Please click the **Next** button below to proceed to xref:11-vscode-collection.adoc[Lab 1.1 - Creating a Collection with the VS Code Extension].

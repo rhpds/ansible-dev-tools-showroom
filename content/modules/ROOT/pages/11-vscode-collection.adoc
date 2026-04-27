@@ -25,7 +25,7 @@ _A guide to using the Ansible extension for Visual Studio Code to scaffold a new
 
 `ansible-creator` is also integrated into the VS Code user interface through the Ansible extension for VS Code for even a smoother experience when developing content.
 
-In this exercise, you will create an Ansible collection and a playbook using the Ansible extension's wizard in VS Code.
+In this section, you will create an Ansible collection and a playbook using the Ansible extension's wizard in VS Code.
 
 == Learning objectives
 
@@ -41,7 +41,7 @@ image::11-vscode-editor-overview.png[VS Code editor inside the lab environment,l
 
 == Lab guide: Hands-on tasks
 
-In this exercise you will learn how to create, test, and deploy an Ansible collection using the `ansible-creator` tool through the Ansible extension for VS Code.
+In this section you will learn how to create, test, and deploy an Ansible collection using the `ansible-creator` tool through the Ansible extension for VS Code.
 
 For this lab, all necessary tools and dependencies are pre-installed and configured for you.
 
@@ -56,14 +56,14 @@ image::11-vscode-terminal.png[VS Code terminal,link=self,window=blank, opts="bor
 
 . **Scaffold a CLI collection with ansible-creator:** Using `ansible-creator` initialize a collection called `mynamespace.creatorcollection`:
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 ansible-creator init collection mynamespace.creatorcollection /projects/ansible-dev-tools-workspace/mynamespace.creatorcollection
 ----
 
 . **Inspect the generated collection structure and files:**
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 ls -lha /projects/ansible-dev-tools-workspace/mynamespace.creatorcollection
 ----
@@ -93,19 +93,19 @@ image::11-collection-create-dialog.png[Creating a Collection project,link=self,w
 .   **Fill out the collection details** in the new tab that opens. Use the following information:
 * **Namespace:** 
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 mynamespace
 ----
 * **Collection:**
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 mycollection
 ----
 * **Init path:**
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 /projects/ansible-dev-tools-workspace/mynamespace.mycollection
 ----
@@ -144,19 +144,19 @@ image::11-playbook-create-dialog.png[Creating a Playbook project,link=self,windo
 .   **Fill out the playbook project details** in the new tab. Use the following information:
 * **Destination directory:**
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 /projects/ansible-dev-tools-workspace/myplaybook
 ----
 * **Namespace:**
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 mynamespace
 ----
 * **Collection:**
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 playbookcollection
 ----
@@ -181,7 +181,7 @@ image::11-explorer-icon.png[VS Code Explorer icon,link=self,window=blank, opts="
 
 .   **Open the collection folder** by clicking the **(1) Open Folder** button. In the path field, paste the following path **(2)** and click the blue **OK** button **(3)**.
 +
-[source,sh,role=execute]
+[source,bash,role=execute]
 ----
 /projects/ansible-dev-tools-workspace/mynamespace.mycollection/
 ----
