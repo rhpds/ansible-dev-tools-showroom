@@ -70,7 +70,7 @@ The EE configuration is defined in `execution-environment.yml`. To access the fe
 +
 Open the **Ansible extension** in the VS Code sidebar and click the **Execution environment project** option under the "INITIALIZE" menu.
 +
-image::vscode-devtools-ee-sidebar.png[EE wizard creator in VS Code,link=self,window=blank, opts="border"]
+image::31-ee-wizard-sidebar.png[EE wizard creator in VS Code,link=self,window=blank, opts="border"]
 
 .   **Fill out the Execution environment project details**. Use the following information:
 * **Destination path:**
@@ -107,7 +107,7 @@ mycollection-ee
 * **Leave all the other fields as they are**
 * Click the blue **Build** button. You might need to scroll down to find it.
 +
-image::vscode-devtools-ee-create.png[Creating an EE project,link=self,window=blank, opts="border"]
+image::31-ee-create-project.png[Creating an EE project,link=self,window=blank, opts="border"]
 +
 TIP: The CLI equivalent of this wizard is: `ansible-creator init execution_env --ee-base-image registry.redhat.io/ansible-automation-platform-26/ee-minimal-rhel9:latest --ee-collections mynamespace.mycollection --ee-python-deps cowsay --ee-name mycollection-ee /projects/ansible-dev-tools-workspace/mycollection-ee`
 

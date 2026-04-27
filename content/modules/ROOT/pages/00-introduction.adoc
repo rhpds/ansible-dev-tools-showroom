@@ -128,7 +128,7 @@ The majority of the exercises in this lab will be performed using the VS Code te
 
 . Open a new terminal by selecting the VS Code menu starting with the hamburger (3 horizontal lines) in the top left, then selecting **Terminal** -> **New Terminal**
 +
-image::11-platform-dev-spaces/intro7.png[VS Code terminal interface showing basic command line operations in the Dev Spaces environment,link=self,window=blank]
+image::00-introduction/devspaces-terminal.png[VS Code terminal interface showing basic command line operations in the Dev Spaces environment,link=self,window=blank]
 
 . Verify the container OS release:
 +

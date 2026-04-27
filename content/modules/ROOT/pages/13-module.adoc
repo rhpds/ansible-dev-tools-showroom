@@ -103,17 +103,17 @@ Now, you will switch to your playbook project folder and create a new playbook t
 
 You will notice red curly lines under parts of your playbook. These are warnings from `ansible-lint`. You will now use its auto-fix capabilities.
 
-image::May-06-2025_at_22.28.04-image.png[Ansible Lint warnings in VS Code,link=self,window=blank, opts="border"]
+image::13-lint-warnings.png[Ansible Lint warnings in VS Code,link=self,window=blank, opts="border"]
 
 .   **Open the Ansible extension settings**. Click the **Ansible** icon in the left sidebar then the **Settings** option in the menu.
 +
-image::vscode-devtools-extension-settings.png[Ansible Extension Settings,link=self,window=blank, opts="border"]
+image::13-extension-settings.png[Ansible Extension Settings,link=self,window=blank, opts="border"]
 
 .   **Enable the linter and auto-fix.** In the search bar at the top, type `lint` to filter the settings.
 * Make sure the checkbox for `Ansible › Validation › Lint: Enabled` is checked.
 * Check the `Ansible › Validation › Lint: Auto Fix On Save` checkbox. This tells the linter to automatically fix issues when you save a file.
 +
-image::vscode-devtools-lint-fix.png[Ansible Lint settings,link=self,window=blank, opts="border"]
+image::13-lint-settings-fix.png[Ansible Lint settings,link=self,window=blank, opts="border"]
 
 .   **Trigger the auto-fix.** Go back to the `mycowsay.yml` playbook tab and **save the file** (`Ctrl + S` or `Cmd + S`). Wait a few seconds for `ansible-lint` to run. It should automatically fix several formatting issues.
 
@@ -174,18 +174,18 @@ You should see `cowsay` included in the installed packages.
 
 .   **Run the playbook again.** **Right-click** your `mycowsay.yml` playbook and select **Run Ansible Playbook**. This time it should succeed and display a friendly cow saying "Hello, Ansible!".
 +
-image::vscode-devtools-cowsay-run1.png[Playbook output with cowsay message,link=self,window=blank, opts="border"]
+image::13-cowsay-playbook-output.png[Playbook output with cowsay message,link=self,window=blank, opts="border"]
 
 .   **Run with `ansible-navigator`.** **Right-click** the playbook again, but this time select **Run with Ansible Navigator**. This will launch the Terminal User Interface (TUI).
 +
-image::vscode-devtools-cowsay-run2.png[Ansible Navigator TUI,link=self,window=blank, opts="border"]
+image::13-cowsay-navigator-tui.png[Ansible Navigator TUI,link=self,window=blank, opts="border"]
 
 .   **Explore the Navigator output.** You are now inside the `ansible-navigator` TUI.
 * To the left of the play name, you will see the number `0`. **Press `0`** to drill down into the details for that play.
 * You can now see the 3 tasks from your playbook. **Press `2`** to see the output of the final "Display the result" task.
 * You may need to scroll down to find the cow message.
 +
-image::vscode-devtools-cowsay-navigator.png[Viewing task output in Ansible Navigator,link=self,window=blank, opts="border"]
+image::13-cowsay-navigator-task-output.png[Viewing task output in Ansible Navigator,link=self,window=blank, opts="border"]
 
 .   **Exit Ansible Navigator.** **Press** the `ESC` key 3 times to exit the TUI and return to the normal terminal prompt.
 
