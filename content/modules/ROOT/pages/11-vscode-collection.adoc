@@ -72,6 +72,8 @@ NOTE: You should see the scaffolded collection directory structure including fil
 
 . **Congrats:** You created a default collection. This collection was created for demonstration purposes only — in the following tasks you will create the collection used throughout the rest of the lab.
 
+. Close the terminal by clicking the trash can icon on the terminal panel or by typing `exit` in the terminal.
+
 === Task 1: Explore the Ansible extension
 
 First, let's explore the Ansible extension for VS Code.
@@ -171,34 +173,19 @@ image::11-playbook-create-form.png[Creating a Playbook project,link=self,window=
 Note: playbook project created at /projects/ansible-dev-tools-workspace/myplaybook
 ----
 
-=== Task 4: Open the collection folder and configure the Python environment
+=== Task 4: Open the collection folder
 
-Now you will open the collection folder in VS Code and configure the Python interpreter to use the virtual environment that was created with the collection.
+Now you will explore the collection files that were generated for you.
 
 .   **Open the file Explorer** by clicking the Explorer icon (the icon with two files) in the VS Code left sidebar.
 +
 image::11-explorer-icon.png[VS Code Explorer icon,link=self,window=blank, opts="border"]
 
-.   **Open the collection folder** by clicking the **(1) Open Folder** button. In the path field, paste the following path **(2)** and click the blue **OK** button **(3)**.
-+
-[source,bash,role=execute]
-----
-/projects/ansible-dev-tools-workspace/mynamespace.mycollection/
-----
-+
-image::11-open-folder-dialog.png[Opening a folder in VS Code,link=self,window=blank, opts="border"]
-
-.   **View the scaffolded files** once the VS Code screen reloads. You will see the complete directory structure and all the files created by the Ansible extension for your new collection in the left sidebar.
+.   **View the scaffolded files.** In the file explorer sidebar, expand the `mynamespace.mycollection` folder. You will see the complete directory structure and all the files created by the Ansible extension for your new collection.
 +
 image::11-collection-explorer-view.png[Scaffolded collection files in the Explorer view,link=self,window=blank, opts="border"]
 
 .   **Activate the Ansible extension** by clicking on the `galaxy.yml` file in the file explorer. This ensures VS Code recognizes the project as an Ansible collection and activates the Ansible language features.
-
-.   **Copy the virtual environment path.** In the file explorer sidebar, locate the `.venv` folder, **right-click** on it, and select **Copy Path**.
-
-.   **Open the Python interpreter selector** by clicking the Python version indicator in the bottom-right corner of the VS Code status bar.
-
-.   In the dropdown that appears at the top of the screen, select **Enter interpreter path...** and paste the `.venv` path you copied. This configures VS Code to use the collection's virtual environment, which includes all the Ansible development tools and dependencies.
 
 === Task 5: Compare the CLI-generated with the VS Code-generated collections
 

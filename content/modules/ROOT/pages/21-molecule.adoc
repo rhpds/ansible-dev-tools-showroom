@@ -188,7 +188,25 @@ Finally, you will use the command line to run the Molecule test scenario and obs
 cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection/extensions/
 ----
 
-.   **Run a bare Molecule test.** First, run `molecule test` without specifying a scenario. 
+.   **Create a default Molecule configuration.** In the VS Code Explorer sidebar, **right-click** on the `molecule/` folder inside `extensions/` and select **New File**. Name it:
++
+[source]
+----
+default/molecule.yml
+----
++
+VS Code will create the `default/` directory automatically. **Paste** the following content into the new file and **save** it:
++
+[source,yaml]
+----
+---
+scenario:
+  name: default
+----
++
+This empty default scenario prevents Molecule from showing a warning when no default configuration is found.
+
+.   **Run a bare Molecule test.** First, run `molecule test` without specifying a scenario.
 +
 [source,bash,role=execute]
 ----
