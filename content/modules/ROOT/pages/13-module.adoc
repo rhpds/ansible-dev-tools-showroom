@@ -192,4 +192,4 @@ image::13-cowsay-navigator-task-output.png[Viewing task output in Ansible Naviga
 ---
 == Next steps
 
-You have successfully added and tested a custom module in your collection. Please click the **Next** button below to proceed to the next module.
+You have successfully added and tested a custom module in your collection. Please click the **Next** button below to proceed to xref:21-molecule.adoc[Lab 2.1 - Testing a Collection with Ansible Molecule].

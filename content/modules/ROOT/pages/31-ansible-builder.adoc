@@ -330,4 +330,4 @@ IMPORTANT: This command should display the documentation for your custom module,
 ---
 == Next steps
 
-You have successfully packaged your automation content into an Execution Environment using `ansible-builder` and VS Code. This image is now ready for upload to an Automation Hub or deployment via Automation Controller. Please click the **Next** button below to proceed to the next module.
+You have successfully packaged your automation content into an Execution Environment using `ansible-builder` and VS Code. This image is now ready for upload to an Automation Hub or deployment via Automation Controller. Please click the **Next** button below to proceed to xref:32-ansible-sign.adoc[Lab 3.2 - Introducing supply chain security with ansible-sign].
