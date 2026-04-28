@@ -47,7 +47,7 @@ Using ansible-sign together with the Automation Hub collection signing feature a
 
 NOTE: In this lab we will only cover the workstation side of the content signing. You can apply what you learned here to verify content on your own AAP instance later.
 
-=== Task 1: Create a GPG key 
+=== Task 1: Create a GPG key
 
 To use `ansible-sign` your workstation needs to have a GNU Privacy Guard (GPG) key available to cryptographically sign the content. Although it exceeds the scope of this workshop, we will create one quickly to show the end to end steps.
 
@@ -55,14 +55,20 @@ To use `ansible-sign` your workstation needs to have a GNU Privacy Guard (GPG) k
 +
 [source,bash,role=execute]
 ----
- sudo dnf install pinentry-curses -y
+sudo dnf install pinentry-curses -y
 ----
 
-. *Create a gpg.txt file with the following content:*
+. *Create a GPG batch file in VS Code:* In the VS Code file explorer sidebar, **right-click** on the workspace root (`ansible-dev-tools-workspace`) and select **New File**. Name it:
 +
 [source,bash,role=execute]
 ----
-cat >~/gpg.txt <<EOF
+gpg.txt
+----
++
+Paste the following content:
++
+[source,text,role=execute]
+----
 %echo Generating a basic OpenPGP key
 Key-Type: default
 Key-Length: 4096
@@ -74,18 +80,17 @@ Name-Email: student@localhost
 Expire-Date: 0
 %no-ask-passphrase
 %no-protection
-# Do a commit here, so that we can later print "done" :-)
 %commit
 %echo done
-EOF
 ----
-
++
+Save the file.
 
 .  *Generate the gpg key:*
 +
 [source,bash,role=execute]
 ----
-gpg --batch --gen-key ~/gpg.txt
+gpg --batch --gen-key /projects/ansible-dev-tools-workspace/gpg.txt
 ----
 
 . *Verify the key is created:*
@@ -95,20 +100,40 @@ gpg --batch --gen-key ~/gpg.txt
 gpg --list-secret-keys
 ----
 
-=== Task 2: Set up the environment
+=== Task 2: Prepare the project for signing
 
-This task demonstrates how to cryptographically sign an Ansible Project using `ansible-sign`. We will be using the `myplaybook` project directory — the playbook project you created earlier and where you copied your `mycowsay.yml` playbook in the previous module.
+`ansible-sign` checksums every file in the project directory and compares them against the `MANIFEST.in`. To keep the signing clean and avoid checksum mismatches from development artifacts, we will create a dedicated directory with only the files we want to sign.
 
-. *Make sure you are in the playbook project directory:*
+. *Create the signed playbook directory.* In the VS Code file explorer sidebar, **right-click** on the workspace root (`ansible-dev-tools-workspace`) and select **New Folder**. Name it:
 +
 [source,bash,role=execute]
 ----
-cd /projects/ansible-dev-tools-workspace/myplaybook
+mysignedplaybook
+----
+
+. *Copy the playbook file.* In the VS Code file explorer, expand `mynamespace.mycollection` > `playbooks`, **right-click** on `mycowsay.yml` and select **Copy**. Then **right-click** on the `mysignedplaybook` folder and select **Paste**.
+
+. *Create a README.md file.* **Right-click** on the `mysignedplaybook` folder and select **New File**. Name it `README.md` and add a short description:
++
+[source,text,role=execute]
+----
+# My Signed Playbook
+
+This project contains the signed mycowsay playbook.
+----
++
+Save the file.
+
+. *Navigate to the signed playbook directory:*
++
+[source,bash,role=execute]
+----
+cd /projects/ansible-dev-tools-workspace/mysignedplaybook
 ----
 
 === Task 3: Create a MANIFEST.in file
 
-. *In VS Code, create a new file called `MANIFEST.in`* in the `myplaybook` directory. This file controls which files are included in the checksum manifest that `ansible-sign` creates and verifies.
+. *In VS Code, create a new file called `MANIFEST.in`* in the `mysignedplaybook` directory by **right-clicking** on the folder and selecting **New File**. This file controls which files are included in the checksum manifest that `ansible-sign` creates and verifies.
 +
 For this lab, we will sign just two files to keep the output simple. In a production environment, you would include all project files to ensure full supply chain integrity.
 +
