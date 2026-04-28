@@ -43,9 +43,9 @@ In this workshop, you will use these tools through a consistent development work
 
 == Lab environment
 
-For this workshop, your development environment runs in link:https://access.redhat.com/products/red-hat-openshift-dev-spaces/[Red Hat OpenShift Dev Spaces^], which provides consistent, reproducible development environments based on the open-source project link:https://eclipse.dev/che/[Eclipse Che^].
+For this workshop, your development environment runs in Red Hat OpenShift Dev Spaces, which provides consistent, reproducible development environments based on the open-source project Eclipse Che.
 
-Dev Spaces provides a VS Code environment configured by a link:https://devfile.io[devfile^], a YAML file that defines the entire workspace as code, including all necessary tools, runtimes, and project source. This ensures every participant has an identical setup.
+Dev Spaces provides a VS Code environment configured by a devfile, a YAML file that defines the entire workspace as code, including all necessary tools, runtimes, and project source. This ensures every participant has an identical setup.
 
 The lab environment includes:
 
@@ -152,6 +152,8 @@ adt --version
 ----
 +
 NOTE: The output will show the versions of all installed Ansible development tools. Versions may differ from the examples in the lab, this is expected.
+
+. Close the terminal by clicking the trash can icon on the terminal panel or by typing `exit` in the terminal.
 
 == Summary
 

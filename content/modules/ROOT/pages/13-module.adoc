@@ -141,7 +141,7 @@ image::13-lint-settings-fix.png[Ansible Lint settings,link=self,window=blank, op
 
 Now that your playbook is lint-free, let's run it. Go back to the **VS Code file Explorer** view.
 
-.   **Run with `ansible-playbook`.** In the VS Code file explorer, **right-click** your `mycowsay.yml` playbook. From the context menu, select **Run Ansible Playbook**.
+.   **Run with `ansible-playbook`.** In the VS Code file explorer, **click** on `mycowsay.yml` to open it in the editor, then **right-click** the file in the explorer. From the context menu, select **Run Ansible Playbook**.
 +
 The playbook will **fail** with an error similar to:
 +
@@ -172,11 +172,11 @@ ade install -e .
 +
 You should see `cowsay` included in the installed packages.
 
-.   **Run the playbook again.** **Right-click** your `mycowsay.yml` playbook and select **Run Ansible Playbook**. This time it should succeed and display a friendly cow saying "Hello, Ansible!".
+.   **Run the playbook again.** Make sure `mycowsay.yml` is open in the editor, then **right-click** it in the file explorer and select **Run Ansible Playbook**. This time it should succeed and display a friendly cow saying "Hello, Ansible!".
 +
 image::13-cowsay-playbook-output.png[Playbook output with cowsay message,link=self,window=blank, opts="border"]
 
-.   **Run with `ansible-navigator`.** **Right-click** the playbook again, but this time select **Run with Ansible Navigator**. This will launch the Terminal User Interface (TUI).
+.   **Run with `ansible-navigator`.** With `mycowsay.yml` still open in the editor, **right-click** the file in the explorer again, but this time select **Run with Ansible Navigator**. This will launch the Terminal User Interface (TUI).
 +
 image::13-cowsay-navigator-tui.png[Ansible Navigator TUI,link=self,window=blank, opts="border"]
 

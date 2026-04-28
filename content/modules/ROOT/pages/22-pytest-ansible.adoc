@@ -69,7 +69,7 @@ In this task, we will test the custom `cowsay` module developed earlier in the c
 
 === Task 1: Create the test inventory
 
-. *Create the `inventory` file inside the `mycollection/tests` directory:*
+. *Create the `inventory` file inside the `mynamespace.mycollection/tests` directory:*
 +
 [source,ini,role=execute]
 ----
@@ -81,7 +81,7 @@ localhost ansible_connection=local ansible_python_interpreter=python3
 
 === Task 2: Create the test configuration
 
-. *Inside the `mycollection/tests/` directory*, create a `conftest.py` file with the following content:
+. *Inside the `mynamespace.mycollection/tests/` directory*, create a `conftest.py` file with the following content:
 +
 [source,python,role=execute]
 ----
@@ -125,7 +125,7 @@ The `conftest.py` file is a special pytest configuration file that runs before a
 
 === Task 3: Create the test file
 
-. *Inside the `mycollection/tests/` directory*, create a `test_cowsay.py` file and add the following content:
+. *Inside the `mynamespace.mycollection/tests/` directory*, create a `test_cowsay.py` file and add the following content:
 +
 [source,python,role=execute]
 ----
@@ -193,6 +193,23 @@ This test validates both the module's execution (no failures, correct change sta
 cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection
 ----
 
+. *Suppress upstream warnings.* Open the `pyproject.toml` file in the collection root and update the `filterwarnings` list in the `[tool.pytest.ini_options]` section to include the additional filters. The result should look like this:
++
+[source,toml,role=execute]
+----
+[tool.pytest.ini_options]
+addopts = ["-vvv", "-n", "2", "--log-level", "WARNING", "--color", "yes"]
+filterwarnings = [
+    "ignore:AnsibleCollectionFinder has already been configured",
+    "ignore::DeprecationWarning:pytest_ansible",
+    "ignore::UserWarning:pytest_ansible",
+    "ignore::DeprecationWarning:multiprocessing",
+]
+testpaths = ["tests"]
+----
++
+This filters out known deprecation and host management warnings from `pytest-ansible` that are not relevant to your tests. Save the file.
+
 . *Run the tests:*
 +
 [source,bash,role=execute]
@@ -204,20 +221,17 @@ pytest
 +
 [source,text]
 ----
- tests/integration/test_integration.py::test_integration[NOTSET] s                                                   33% ███▍      
-[gw0] SKIPPED tests/integration/test_integration.py 
- tests/unit/test_basic.py::test_basic ✓                                                                              67% ██████▋   
-[gw0] PASSED tests/unit/test_basic.py 
+ tests/integration/test_integration.py::test_integration[NOTSET] s                                                   33% ███▍
+[gw0] SKIPPED tests/integration/test_integration.py
+ tests/unit/test_basic.py::test_basic ✓                                                                              67% ██████▋
+[gw0] PASSED tests/unit/test_basic.py
  tests/test_cowsay.py::test_cowsay_module ✓                                                                         100% ██████████
-[gw1] PASSED tests/test_cowsay.py 
-
-[... warnings here ...]
+[gw1] PASSED tests/test_cowsay.py
 
 Results (1.15s):
        2 passed
        1 skipped
 ----
-NOTE: You might see warnings between the Results and PASSED tests/test_cowsay.py. That's ok. 
 
 
 ---

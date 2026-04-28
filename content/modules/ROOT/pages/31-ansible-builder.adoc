@@ -66,6 +66,8 @@ cp /projects/ansible-dev-tools-workspace/mynamespace.mycollection/playbooks/myco
 
 The EE configuration is defined in `execution-environment.yml`. To access the features of modern Ansible tooling, we must explicitly declare `version: 3` in the definition file.
 
+. *Create the destination directory.* The VS Code wizard requires the destination directory to exist before creating the project. In the VS Code file explorer sidebar, **right-click** on the workspace root (`ansible-dev-tools-workspace`) and select **New Folder**. Name it `mycollection-ee`.
+
 . *Create the Execution environment project in VS Code:*
 +
 Open the **Ansible extension** in the VS Code sidebar and click the **Execution environment project** option under the "INITIALIZE" menu.
@@ -80,9 +82,14 @@ image::31-ee-wizard-sidebar.png[EE wizard creator in VS Code,link=self,window=bl
 /projects/ansible-dev-tools-workspace/mycollection-ee
 ----
 +
-* **Base image:** Select the `registry.redhat.io` option from the dropdown to use the Red Hat supported image.
+* **Base image:** In the dropdown, select **Other** and enter the following community base image:
 +
-NOTE: This will require to be logged in to the registry before building the image. For the lab this is not required.
+[source,bash,role=execute]
+----
+ghcr.io/ansible-community/community-ee-base:2.20.5-1
+----
++
+NOTE: For this lab we use the community EE base image to avoid registry authentication and to show the different alternatives available. In production, you would typically use the Red Hat supported base image (`registry.redhat.io/ansible-automation-platform-26/ee-minimal-rhel9:latest`), which is the same image you will find in AAP when deploying to production and requires authentication to the Red Hat registry.
 * **Additional collections:**
 +
 [source,bash,role=execute]
@@ -109,7 +116,7 @@ mycollection-ee
 +
 image::31-ee-create-project.png[Creating an EE project,link=self,window=blank, opts="border"]
 +
-TIP: The CLI equivalent of this wizard is: `ansible-creator init execution_env --ee-base-image registry.redhat.io/ansible-automation-platform-26/ee-minimal-rhel9:latest --ee-collections mynamespace.mycollection --ee-python-deps cowsay --ee-name mycollection-ee /projects/ansible-dev-tools-workspace/mycollection-ee`
+TIP: The CLI equivalent of this wizard is: `ansible-creator init execution_env --ee-base-image ghcr.io/ansible-community/community-ee-base:2.20.5-1 --ee-collections mynamespace.mycollection --ee-python-deps cowsay --ee-name mycollection-ee /projects/ansible-dev-tools-workspace/mycollection-ee`
 
 . *Open the `execution-environment.yml` file:*
 +
@@ -125,11 +132,11 @@ This configuration defines the base image, includes the collection dependencies,
 version: 3
 images:
   base_image:
-    name: registry.redhat.io/ansible-automation-platform-26/ee-minimal-rhel9:latest
+    name: ghcr.io/ansible-community/community-ee-base:2.20.5-1
 
 dependencies:
   python_interpreter:
-    python_path: /usr/bin/python3.12
+    python_path: /usr/bin/python3
 
   python:
     - cowsay
@@ -139,7 +146,6 @@ dependencies:
       - name: mynamespace.mycollection
 
 options:
-  package_manager_path: /usr/bin/microdnf
   tags:
     - mycollection-ee
 ----
@@ -158,11 +164,11 @@ Replace the contents of `execution-environment.yml` with:
 version: 3
 images:
   base_image:
-    name: registry.redhat.io/ansible-automation-platform-26/ee-minimal-rhel9:latest
+    name: ghcr.io/ansible-community/community-ee-base:2.20.5-1
 
 dependencies:
   python_interpreter:
-    python_path: /usr/bin/python3.12
+    python_path: /usr/bin/python3
 
   galaxy:
     collections:
@@ -180,15 +186,13 @@ additional_build_files:
 options:
   tags:
     - mycollection-ee
-  package_manager_path: /usr/bin/microdnf
 ----
 +
 **Understanding the customizations:**
 +
-* `python_interpreter.python_path`: The AAP 26 base image ships with Python 3.12 — this tells `ansible-builder` to use it instead of the default Python 3.9.
+* `python_interpreter.python_path`: Uses `/usr/bin/python3` to match whatever Python version the base image ships.
 * `additional_build_files`: Copies the collection tarball into the build context under `collection_tarballs/`.
 * `type: file` in the `galaxy` section: Tells `ansible-galaxy` to install the collection from the local tarball instead of downloading it from Galaxy.
-* `package_manager_path`: The base image uses `microdnf` as the package manager.
 
 . *Save the file.*
 
@@ -199,6 +203,10 @@ Before building the EE, we need to package the collection. The `build_ignore` en
 [source,bash,role=execute]
 ----
 cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection
+----
++
+[source,bash,role=execute]
+----
 ansible-galaxy collection build --output-path /projects/ansible-dev-tools-workspace/mycollection-ee/
 ----
 

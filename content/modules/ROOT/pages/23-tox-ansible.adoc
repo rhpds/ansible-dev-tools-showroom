@@ -50,6 +50,13 @@ Before we configure anything, let's verify that `tox` and the plugin are install
 
 .   **Open the VS Code Terminal.**
 
+.   **Navigate to your collection root:**
++
+[source,bash,role=execute]
+----
+cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection/
+----
+
 .   **Check the tox version and plugins:**
 +
 [source,bash,role=execute]
@@ -59,16 +66,17 @@ tox --version
 +
 **Output analysis:**
 You should see output similar to:
-`tox 4.x.x from ... with tox-ansible-2.x.x`
 +
-Crucially, look for **`with tox-ansible`**. This confirms the plugin is active.
-
-.   **Navigate to your collection root:**
+[source,text]
+----
+$ tox --version
+ROOT: No loadable tox.ini or setup.cfg or pyproject.toml or tox.toml found, assuming empty tox.ini at /projects/ansible-dev-tools-workspace/mynamespace.mycollection
+4.53.0 from /projects/ansible-dev-tools-workspace/mynamespace.mycollection/.venv/lib64/python3.12/site-packages/tox/__init__.py
+registered plugins:
+    tox-ansible-26.3.0 at /projects/ansible-dev-tools-workspace/mynamespace.mycollection/.venv/lib64/python3.12/site-packages/tox_ansible/plugin.py
+----
 +
-[source,bash,role=execute]
-----
-cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection/
-----
+The `ROOT: No loadable tox.ini` message is expected — tox-ansible uses its own `tox-ansible.ini` file instead of `tox.ini`. Look for **`tox-ansible`** in the registered plugins list. This confirms the plugin is active.
 
 === Task 2: Configure tox-ansible
 
@@ -142,13 +150,31 @@ Now we let tox orchestrate the execution. Remember to always pass `--ansible -c 
 tox --ansible -c tox-ansible.ini -e sanity-py3.12-2.20
 ----
 +
-Tox creates a virtual environment, installs the required dependencies, and runs `ansible-test sanity` against your collection.
+Tox creates a virtual environment, installs the required dependencies, and runs `ansible-test sanity` against your collection. When it finishes, you should see:
++
+[source,text]
+----
+  sanity-py3.12-2.20: OK (38.48=setup[4.34]+cmd[28.34,0.02,5.78] seconds)
+  congratulations :) (38.58 seconds)
+----
 
 .   **Run Unit Tests:**
 +
 [source,bash,role=execute]
 ----
 tox --ansible -c tox-ansible.ini -e unit-py3.12-2.20
+----
++
+Expected output:
++
+[source,text]
+----
+tests/unit/test_basic.py::test_basic
+[gw0] [100%] PASSED tests/unit/test_basic.py::test_basic
+
+============================================================== 1 passed in 0.74s ==============================================================
+  unit-py3.12-2.20: OK (32.74=setup[9.41]+cmd[22.03,1.30] seconds)
+  congratulations :) (32.84 seconds)
 ----
 
 .   **Run Integration Tests (Molecule):**
@@ -158,6 +184,17 @@ tox --ansible -c tox-ansible.ini -e unit-py3.12-2.20
 ----
 tox --ansible -c tox-ansible.ini -e integration-py3.12-2.20
 ----
++
+Expected output:
++
+[source,text]
+----
+============================================================= 1 skipped in 0.69s ==============================================================
+  integration-py3.12-2.20: OK (32.88=setup[9.27]+cmd[22.34,1.28] seconds)
+  congratulations :) (32.98 seconds)
+----
++
+NOTE: The `1 skipped` result is expected — the scaffolded `test_integration.py` is a placeholder. The actual integration tests run through Molecule scenarios.
 +
 This automatically:
     1.  Creates a fresh virtual environment.
@@ -174,6 +211,16 @@ The `galaxy` environment builds your collection tarball and runs `galaxy-importe
 [source,bash,role=execute]
 ----
 tox --ansible -c tox-ansible.ini -e galaxy
+----
++
+Expected output:
++
+[source,text]
+----
+...ansible-lint run complete
+Collection loading complete
+  galaxy: OK (22.00=setup[8.21]+cmd[13.79] seconds)
+  congratulations :) (22.10 seconds)
 ----
 
 

@@ -59,7 +59,12 @@ First, you will activate the Python virtual environment (`.venv`) that `ansible-
 
 .   **Open the `galaxy.yml` file** by clicking on it in the left sidebar.
 
-.   **Activate the Python virtual environment** by clicking the banner that reads `Python: Select Interpreter` in the bottom status bar of VS Code. From the dropdown menu that appears at the top, select the recommended option: **Python 3.12.12 ('.venv': venv)**.
+.   **Activate the Python virtual environment.** The `.venv` created by `ansible-creator` needs to be set as the active Python interpreter for VS Code:
++
+.. In the VS Code file explorer sidebar, **right-click** on the `.venv` folder and select **Copy Path**.
+.. Click the **Python version** shown in the bottom status bar of VS Code (it may say `Python: Select Interpreter` or show a system Python version). A dropdown will appear at the top of the editor.
+.. Select **Enter interpreter path...** from the dropdown.
+.. **Paste** the path you copied and press **Enter**.
 +
 image::12-python-env-selector.png[Selecting the Python virtual environment in VS Code,link=self,window=blank, opts="border"]
 
@@ -182,6 +187,20 @@ The output should look like this:
     Note: All required system packages are installed.
 ----
 
+.   **Update `build_ignore` in `galaxy.yml`.** When `ade` manages your collection, it creates directories like `.venv` and `collections` inside the collection root. These are development artifacts that should not be included when building the collection tarball. The `build_ignore` field in `galaxy.yml` tells `ansible-galaxy collection build` to exclude them. Open `galaxy.yml` and update the `build_ignore` section to:
++
+[source,yaml]
+----
+build_ignore:
+  - .gitignore
+  - changelogs/.plugin-cache.yaml
+  - .venv
+  - collections
+  - .tox
+----
++
+This ensures that development tooling directories are excluded from the packaged collection artifact. The `.venv` and `collections` entries prevent `ade`-managed content from bloating the tarball, and `.tox` excludes test runner artifacts from `tox-ansible`. We are adding these entries manually due to a known bug — in a future version, `ade` is expected to handle this automatically.
+
 .   **Check the dependency tree** by running `ade tree -v` to see the installed dependencies.
 
 .   **Add another collection dependency** by going back to the `galaxy.yml` file and adding `"ansible.netcommon": "*"` to the `dependencies:` list. Save the file. The result should look like this:
@@ -212,20 +231,6 @@ sudo dnf install -y python3-cffi python3-cryptography python3-lxml python3-pycpa
 .   **Re-run the `ade` installation.** Now, run `ade install -e .` one more time in the terminal. It should succeed.
 
 .   **Check the new dependency tree.** Finally, run `ade tree -v` again. The output will now show that `ade` has successfully added the `ansible.netcommon` collection to your environment, along with its Python requirements.
-
-.   **Update `build_ignore` in `galaxy.yml`.** When `ade` manages your collection, it creates directories like `.venv` and `collections` inside the collection root. These are development artifacts that should not be included when building the collection tarball. The `build_ignore` field in `galaxy.yml` tells `ansible-galaxy collection build` to exclude them. Open `galaxy.yml` and update the `build_ignore` section to:
-+
-[source,yaml]
-----
-build_ignore:
-  - .gitignore
-  - changelogs/.plugin-cache.yaml
-  - .venv
-  - collections
-  - .tox
-----
-+
-This ensures that development tooling directories are excluded from the packaged collection artifact. The `.venv` and `collections` entries prevent `ade`-managed content from bloating the tarball, and `.tox` excludes test runner artifacts from `tox-ansible`. We are adding these entries manually due to a known bug — in a future version, `ade` is expected to handle this automatically.
 
 NOTE: Remember the "Install collection from source code (editable mode)" option you selected during the Collection creation wizard? That option used `ade install -e` to automatically create the virtual environment (`.venv`) that you are using now.
 
