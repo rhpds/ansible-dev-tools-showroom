@@ -336,3 +336,9 @@ Common issues:
 * *Module not found*: Check that `conftest.py` paths are correct and your collection structure matches expectations
 * *Assertion failures*: Use `-s` to see the actual output and verify what the module returned
 * *Import errors*: Ensure pytest-ansible is installed and your Python environment is activated
+
+---
+
+== Next steps
+
+You have successfully tested your custom module using pytest-ansible. Please click the **Next** button below to proceed to xref:23-tox-ansible.adoc[Lab 2.3 - Orchestrating Tests with tox-ansible].

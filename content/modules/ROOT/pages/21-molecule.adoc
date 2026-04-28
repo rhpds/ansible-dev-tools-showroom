@@ -329,6 +329,4 @@ The skills you've learned in this module - understanding test scenarios, writing
 
 == Next steps
 
-You have successfully used Molecule to test your collection. In the next module, you'll explore additional development tools and recommended practices for maintaining production-ready Ansible content. 
-
-Please click the **Next** button below to proceed to the next module.
+You have successfully used Molecule to test your collection. Please click the **Next** button below to proceed to xref:22-pytest-ansible.adoc[Lab 2.2 - Functional testing with pytest-ansible].

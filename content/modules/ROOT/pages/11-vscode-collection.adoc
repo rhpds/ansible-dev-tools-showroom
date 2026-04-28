@@ -189,12 +189,16 @@ image::11-collection-explorer-view.png[Scaffolded collection files in the Explor
 
 === Task 5: Compare the CLI-generated with the VS Code-generated collections
 
-. **Same layout**
-. **Same defaults**
-. **Same metadata files**
+Take a moment to compare the two collections you created — `mynamespace.creatorcollection` (CLI) and `mynamespace.mycollection` (VS Code). Expand both folders in the VS Code file explorer and notice:
+
+. **Same layout** — both collections have the same directory structure (`plugins/`, `tests/`, `meta/`, etc.)
+. **Same defaults** — both contain the same default files (`galaxy.yml`, `README.md`, `LICENSE`)
+. **Same metadata files** — both use the same `galaxy.yml` format and `meta/runtime.yml`
+
+The VS Code wizard and the CLI produce identical scaffolding — choose whichever fits your workflow.
 
 ---
 
 == Next steps
 
-You have successfully explored how ansible-creator and VS Code work together to scaffold a collection. Please click the **Next** button below to proceed to the next module.
+You have successfully explored how ansible-creator and VS Code work together to scaffold a collection. Please click the **Next** button below to proceed to xref:12-ade.adoc[Lab 1.2 - Using the Ansible Development Environment tool].

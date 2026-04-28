@@ -239,5 +239,5 @@ NOTE: Remember the "Install collection from source code (editable mode)" option 
 
 == Next steps
 
-You have successfully explored how Ansible Dev Tools (`adt`) and Ansible Dev Environment (`ade`) work. Please click the **Next** button below to proceed to the next module.
+You have successfully explored how Ansible Dev Tools (`adt`) and Ansible Dev Environment (`ade`) work. Please click the **Next** button below to proceed to xref:13-module.adoc[Lab 1.3 - Adding a Module to a Collection].
 

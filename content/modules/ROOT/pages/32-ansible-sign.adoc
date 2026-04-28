@@ -205,4 +205,4 @@ ansible-sign project gpg-verify .
 ---
 == Next steps
 
-You have successfully signed and verified your playbook, this ensured that it can't be tampered with and continue to run unnoticed. Please click the **Next** button below to proceed to the next module.
+You have successfully signed and verified your playbook, ensuring that it can't be tampered with and continue to run unnoticed. Please click the **Next** button below to proceed to the xref:99-conclusion.adoc[Conclusion].
