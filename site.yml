@@ -1,6 +1,6 @@
 ---
 site:
-  title: Getting Started with Ansible Development Tools: From Workstation to Production
+  title: Introduction to Ansible Development Tools
   url: https://github.com/rhpds/ansible-dev-tools-showroom
   start_page: modules::index.adoc
 
@@ -11,7 +11,7 @@ content:
 
 ui:
   bundle:
-    url: https://github.com/rhpds/rhdp_showroom_theme/releases/download/summit-2026/ui-bundle.zip
+    url: https://github.com/rhpds/rhdp_showroom_theme/releases/download/patternfly-6/ui-bundle.zip
     snapshot: true
   supplemental_files:
     - path: ./content/supplemental-ui
