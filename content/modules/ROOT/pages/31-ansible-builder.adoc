@@ -82,14 +82,14 @@ image::31-ee-wizard-sidebar.png[EE wizard creator in VS Code,link=self,window=bl
 /projects/ansible-dev-tools-workspace/mycollection-ee
 ----
 +
-* **Base image:** In the dropdown, select **Other** and enter the following community base image:
+* **Base image:** In the dropdown, select **Other** and enter the following base image:
 +
 [source,bash,role=execute]
 ----
-ghcr.io/ansible-community/community-ee-base:2.20.5-1
+image-registry.openshift-image-registry.svc:5000/openshift/ee-minimal-rhel9:latest
 ----
 +
-NOTE: For this lab we use the community EE base image to avoid registry authentication and to show the different alternatives available. In production, you would typically use the Red Hat supported base image (`registry.redhat.io/ansible-automation-platform-26/ee-minimal-rhel9:latest`), which is the same image you will find in AAP when deploying to production and requires authentication to the Red Hat registry.
+NOTE: This is the Red Hat supported `ee-minimal` base image, pre-loaded into the cluster's internal registry. It is the same image used by Ansible Automation Platform in production.
 * **Additional collections:**
 +
 [source,bash,role=execute]
@@ -116,7 +116,7 @@ mycollection-ee
 +
 image::31-ee-create-project.png[Creating an EE project,link=self,window=blank, opts="border"]
 +
-TIP: The CLI equivalent of this wizard is: `ansible-creator init execution_env --ee-base-image ghcr.io/ansible-community/community-ee-base:2.20.5-1 --ee-collections mynamespace.mycollection --ee-python-deps cowsay --ee-name mycollection-ee /projects/ansible-dev-tools-workspace/mycollection-ee`
+TIP: The CLI equivalent of this wizard is: `ansible-creator init execution_env --ee-base-image image-registry.openshift-image-registry.svc:5000/openshift/ee-minimal-rhel9:latest --ee-collections mynamespace.mycollection --ee-python-deps cowsay --ee-name mycollection-ee /projects/ansible-dev-tools-workspace/mycollection-ee`
 
 . *Open the `execution-environment.yml` file:*
 +
@@ -132,7 +132,7 @@ This configuration defines the base image, includes the collection dependencies,
 version: 3
 images:
   base_image:
-    name: ghcr.io/ansible-community/community-ee-base:2.20.5-1
+    name: image-registry.openshift-image-registry.svc:5000/openshift/ee-minimal-rhel9:latest
 
 dependencies:
   python_interpreter:
@@ -164,7 +164,7 @@ Replace the contents of `execution-environment.yml` with:
 version: 3
 images:
   base_image:
-    name: ghcr.io/ansible-community/community-ee-base:2.20.5-1
+    name: image-registry.openshift-image-registry.svc:5000/openshift/ee-minimal-rhel9:latest
 
 dependencies:
   python_interpreter:
