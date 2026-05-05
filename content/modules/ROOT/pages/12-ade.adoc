@@ -163,7 +163,14 @@ NOTE: Versions might differ, don't worry. The list above is an example.
 
 Now you will use `ade` to install the dependencies you declared in `galaxy.yml`.
 
-.   **Install the collection dependencies** by running the following command in the VS Code terminal. This will install your collection and its dependencies into the virtual environment.
+.   **Navigate to the collection directory** in the VS Code terminal:
++
+[source,bash,role=execute]
+----
+cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection
+----
+
+.   **Install the collection dependencies** by running the following command. This will install your collection and its dependencies into the virtual environment.
 +
 [IMPORTANT]
 ====
@@ -179,12 +186,10 @@ The output should look like this:
 +
 [source,text]
 ----
-(.venv) [rhel@vscode mycollection]$ ade install -e .
-    Note: Installed collections include: ansible.posix, ansible.utils, and
-          mynamespace.mycollection
- Warning: No git repository found, using heuristic filtering
-    Note: Note: If you add new root-level directories or files to your
-          collection, you will need to re-run 'ade install -e .' to include them in the editable install.
+$ ade install -e .
+    Note: Installed collections include: ansible.posix, ansible.utils, and mynamespace.mycollection
+    Note: Note: If you add new root-level directories or files to your collection, you will need to re-run 'ade install -e .'
+          to include them in the editable install.
     Note: All python requirements are installed.
     Note: All required system packages are installed.
 ----
@@ -220,6 +225,21 @@ dependencies:
 [WARNING]
 ====
 The command will fail. Don't panic! This is expected. `ade` has detected that `ansible.netcommon` requires certain system-level packages that are not installed on your workstation's operating system.
+
+[source,text]
+----
+$ ade install -e .
+    Note: Installed collections include: ansible.posix, ansible.utils, and mynamespace.mycollection
+    Note: Note: If you add new root-level directories or files to your collection, you will need to re-run 'ade install -e .'
+          to include them in the editable install.
+    Note: All python requirements are installed.
+ Warning: Required system packages are missing. Please use the system package manager to install them.
+          - python3-cffi
+          - python3-cryptography
+          - python3-lxml
+          - python3-pycparser
+----
+
 image::12-netcommon-system-packages-error.png[Command failure showing missing system packages,link=self,window=blank, opts="border"]
 ====
 
@@ -233,6 +253,16 @@ sudo dnf install -y python3-cffi python3-cryptography python3-lxml python3-pycpa
 NOTE: If you see an `Error: Transaction failed` message, you can safely dismiss it. The `dnf install` step is designed for workstation users (pip/rpm/devcontainer workflows). In Dev Spaces environments, system-level dependencies are managed through the container image — no action is needed. Ask us about it if you are interested to learn more!
 
 .   **Re-run the `ade` installation.** Now, run `ade install -e .` one more time in the terminal. It should succeed.
++
+[source,text]
+----
+$ ade install -e .
+    Note: Installed collections include: ansible.netcommon, ansible.posix, ansible.utils, and mynamespace.mycollection
+    Note: Note: If you add new root-level directories or files to your collection, you will need to re-run 'ade install -e .'
+          to include them in the editable install.
+    Note: All python requirements are installed.
+    Note: All required system packages are installed.
+----
 
 .   **Check the new dependency tree.** Finally, run `ade tree -v` again. The output will now show that `ade` has successfully added the `ansible.netcommon` collection to your environment, along with its Python requirements.
 
