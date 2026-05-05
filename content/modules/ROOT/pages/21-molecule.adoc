@@ -81,8 +81,8 @@ Now, let's explore the test scenario that was automatically added to your collec
 
 When you created the collection in the previous modules, `ansible-creator` also generated a Molecule test scenario named `integration_hello_world`.
 
-.   **Locate the Molecule scenario.** In the VS Code file explorer, **expand** the following directory path: __mynamespace.mycollection > extensions > molecule > integration_hello_world__. 
- 
+.   **Locate the Molecule scenario.** In the VS Code file explorer, **expand** the following directory path: __mynamespace.mycollection > extensions > molecule > integration_hello_world__.
++
 NOTE: You can also copy and paste the path: `mynamespace.mycollection/extensions/molecule/integration_hello_world`.
 
 .   **Examine the Molecule configuration.** Within the `integration_hello_world` directory, **open** the `molecule.yml` file. Molecule uses this file to define the settings and scenarios for testing the Ansible collection.

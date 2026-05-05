@@ -60,13 +60,15 @@ The lab environment includes:
 
 Before we begin, here are some tips to improve your lab experience:
 
-* The **instructions sidebar** (where you are reading this) can be resized by dragging its border. This is useful if you need extra space for the main panel.
+* **Screenshots** in this lab guide are provided as visual guidance. Your environment may look slightly different due to version updates or display settings — always follow the written instructions.
+
+* The **instructions panel** (where you are reading this) can be resized by dragging its border. This is useful if you need extra space for the main panel.
 
 * If you receive any **VS Code notification pop-ups**, you can safely ignore and dismiss them by clicking `x`, `Dismiss`, or `Ignore`, unless otherwise noted.
 
 * **Copy and pasting into the VS Code Terminal**: The key combo **Ctrl + Shift + V** (Mac: **Cmd + Shift + V**) should work for pasting. If using Firefox, you can also use the right-click menu for *Paste* into the Terminal.
 
-* The lab consists of several **Modules**. Each module contains one or more **Tasks**. When you finish a module, click the **Next** button at the bottom of the instructions sidebar to proceed.
+* The lab consists of several **Modules**. Each module contains one or more **Tasks**. When you finish a module, click the **Next** button at the bottom of the instructions to proceed.
 
 == Lab guide: Hands-on tasks
 
@@ -90,7 +92,7 @@ image::00-introduction/devspaces-sso-login.png[SSO sign-in form with username an
 +
 image::00-introduction/devspaces-authorize-access.png[Authorize Access page requesting permissions for the Dev Spaces client,link=self,window=blank]
 
-. Once logged in, you will see the Dev Spaces dashboard. Paste the following Git repository URL into the **Import from Git** field:
+. Once logged in, you will see the Dev Spaces dashboard. In the **Import from Git** section, paste the following Git repository URL into the **Git Repo URL** field:
 +
 [source,text]
 ----
@@ -105,7 +107,9 @@ image::00-introduction/devspaces-create-workspace.png[Dev Spaces dashboard showi
 +
 image::00-introduction/devspaces-workspace-starting.png[Dev Spaces workspace starting progress page,link=self,window=blank]
 
-. Once the workspace is ready, the VS Code interface will load. You will be prompted to trust the extension publishers. Click the **Trust Publishers & Install** button.
+. Once the workspace is ready, the VS Code interface will load. You may see a popup asking **"Do you trust the authors of the files in this workspace?"**. Click **Continue** to proceed.
+
+. You will be prompted to trust the extension publishers. Click the **Trust Publishers & Install** button.
 +
 image::00-introduction/devspaces-trust-publishers.png[Trust Publishers and Install dialog for VS Code extensions,link=self,window=blank]
 
@@ -132,6 +136,8 @@ image::00-introduction/ansible-getting-started.png[Ansible Development Tools wel
 The majority of the exercises in this lab will be performed using the VS Code terminal.
 
 . Open a new terminal by selecting the VS Code menu starting with the hamburger (3 horizontal lines) in the top left, then selecting **Terminal** -> **New Terminal**
++
+image::00-introduction/new-terminal.png[Opening a new terminal from the VS Code menu,link=self,window=blank]
 
 . Verify the container OS release:
 +
@@ -155,6 +161,8 @@ adt --version
 NOTE: The output will show the versions of all installed Ansible development tools. Versions may differ from the examples in the lab, this is expected.
 
 . Close the terminal by clicking the trash can icon on the terminal panel or by typing `exit` in the terminal.
++
+image::00-introduction/adt-version-output.png[Terminal output showing adt version with all installed tool versions,link=self,window=blank]
 
 == Summary
 
