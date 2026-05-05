@@ -153,9 +153,7 @@ options:
 +
 . *Customize the EE blueprint for local development:*
 +
-Since our collection is not yet published to Ansible Galaxy or Automation Hub, we need to tell `ansible-builder` to use a local tarball instead.
-+
-We will make two modifications: first, add an `additional_build_files` section to copy the collection tarball into the build context; second, modify the `galaxy` section to point to the tarball path using `type: file`.
+Since our collection is not yet published to Ansible Galaxy or Automation Hub, we need to customize the EE definition for local development. We will replace the wizard-generated dependencies with an explicit Python interpreter path, add an `additional_build_files` section to copy the collection tarball into the build context, modify the `galaxy` section to point to the tarball path using `type: file`, and set the package manager path to `microdnf`.
 +
 Replace the contents of `execution-environment.yml` with:
 +
@@ -169,7 +167,7 @@ images:
 
 dependencies:
   python_interpreter:
-    python_path: /usr/bin/python3
+    python_path: /usr/bin/python3.12
 
   galaxy:
     collections:
@@ -187,13 +185,15 @@ additional_build_files:
 options:
   tags:
     - mycollection-ee
+  package_manager_path: /usr/bin/microdnf
 ----
 +
 **Understanding the customizations:**
 +
-* `python_interpreter.python_path`: Uses `/usr/bin/python3` to match whatever Python version the base image ships.
+* `python_interpreter.python_path`: Uses `/usr/bin/python3.12` to match the Python version shipped in the `ee-minimal-rhel9` base image.
 * `additional_build_files`: Copies the collection tarball into the build context under `collection_tarballs/`.
 * `type: file` in the `galaxy` section: Tells `ansible-galaxy` to install the collection from the local tarball instead of downloading it from Galaxy.
+* `package_manager_path`: Uses `microdnf`, the package manager available in the `ee-minimal-rhel9` base image.
 
 . *Save the file.*
 
