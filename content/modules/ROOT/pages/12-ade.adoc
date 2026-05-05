@@ -70,7 +70,7 @@ image::12-role-main-yml.png[Opening main.yml in the roles run tasks directory to
 +
 image::12-python-interpreter-selector.png[Selecting the Python interpreter path in VS Code,link=self,window=blank, opts="border"]
 
-NOTE: This is a convenient alternative to manually running `source .venv/bin/activate` in the terminal.
+NOTE: This is an alternative to manually running `source .venv/bin/activate` in the terminal.
 
 === Task 2: Add collection dependencies
 

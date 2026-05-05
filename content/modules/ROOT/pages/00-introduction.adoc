@@ -159,10 +159,10 @@ adt --version
 ----
 +
 NOTE: The output will show the versions of all installed Ansible development tools. Versions may differ from the examples in the lab, this is expected.
-+
-image::00-introduction/adt-version-output.png[Terminal output showing adt version with all installed tool versions,link=self,window=blank]
 
 . Close the terminal by clicking the trash can icon on the terminal panel or by typing `exit` in the terminal.
++
+image::00-introduction/adt-version-output.png[Terminal output showing adt version with all installed tool versions,link=self,window=blank]
 
 == Summary
 
