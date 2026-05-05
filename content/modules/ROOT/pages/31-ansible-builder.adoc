@@ -82,7 +82,8 @@ image::31-ee-wizard-sidebar.png[EE wizard creator in VS Code,link=self,window=bl
 /projects/ansible-dev-tools-workspace/mycollection-ee
 ----
 +
-* **Base image:** In the dropdown, select **Other** and enter the following base image:
+* **Base image:** Leave the dropdown as **-- Select Base Image --**.
+* **Custom base image:** Enter the following base image:
 +
 [source,bash,role=execute]
 ----
@@ -135,15 +136,15 @@ images:
     name: image-registry.openshift-image-registry.svc:5000/openshift/ee-minimal-rhel9:latest
 
 dependencies:
-  python_interpreter:
-    python_path: /usr/bin/python3
-
-  python:
-    - cowsay
-
+  ansible_core:
+    package_pip: ansible-core
+  ansible_runner:
+    package_pip: ansible-runner
   galaxy:
     collections:
       - name: mynamespace.mycollection
+  python:
+    - cowsay
 
 options:
   tags:

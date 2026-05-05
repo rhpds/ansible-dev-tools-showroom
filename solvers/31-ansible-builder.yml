@@ -63,7 +63,7 @@
 
           dependencies:
             python_interpreter:
-              python_path: /usr/bin/python3.12
+              python_path: /usr/bin/python3
 
             galaxy:
               collections:
