@@ -35,8 +35,6 @@ After completing this module, you will be able to:
 * Use the Ansible VS Code extension to create collection and playbook projects
 * Compare CLI-generated and VS Code-generated collection structures
 
-image::11-vscode-editor-overview.png[VS Code editor inside the lab environment,link=self,window=blank, opts="border"]
-
 ---
 
 == Lab guide: Hands-on tasks
@@ -49,6 +47,10 @@ For this lab, all necessary tools and dependencies are pre-installed and configu
 === Task 0: Create a collection using the ansible-creator CLI
 
 Lets start by running `ansible-creator` in the command line to scaffold a collection, with the directory structure and several file templates to speed up our content development. In the following tasks we will do the same using the Ansible extension in VS Code.
+
+.   If you don't see the menu bar at the top of VS Code, **right-click** on the free space on the top bar and select **Menu Bar** to enable it.
++
+image::11-menu-bar-toggle.png[Right-click context menu on the top bar showing the Menu Bar option,link=self,window=blank, opts="border"]
 
 .   **Open the VS Code Terminal** by clicking the **Terminal** on the top VS Code menu, then **New Terminal** option. If you already have a Terminal open in VS Code you can reuse that one.
 +
@@ -91,6 +93,8 @@ Next, you will scaffold a new Ansible collection.
 .   **Open the Collection project creator** by clicking the **Collection project** link in the *Ansible Development Tools* section.
 +
 image::11-collection-create-dialog.png[Creating a Collection project,link=self,window=blank, opts="border"]
++
+NOTE: Paths shown in screenshots may differ from your environment — always follow the written instructions.
 
 .   **Fill out the collection details** in the new tab that opens. Use the following information:
 * **Namespace:** 
@@ -142,6 +146,8 @@ Now, you will create a separate playbook project.
 .   **Open the Playbook project creator** by clicking the **Playbook project** link in the Ansible extension sidebar.
 +
 image::11-playbook-create-dialog.png[Creating a Playbook project,link=self,window=blank, opts="border"]
++
+NOTE: Paths shown in screenshots may differ from your environment — always follow the written instructions.
 
 .   **Fill out the playbook project details** in the new tab. Use the following information:
 * **Destination directory:**
@@ -184,6 +190,8 @@ image::11-explorer-icon.png[VS Code Explorer icon,link=self,window=blank, opts="
 .   **View the scaffolded files.** In the file explorer sidebar, expand the `mynamespace.mycollection` folder. You will see the complete directory structure and all the files created by the Ansible extension for your new collection.
 +
 image::11-collection-explorer-view.png[Scaffolded collection files in the Explorer view,link=self,window=blank, opts="border"]
++
+NOTE: Paths shown in screenshots may differ from your environment — always follow the written instructions.
 
 .   **Activate the Ansible extension** by clicking on the `galaxy.yml` file in the file explorer. This ensures VS Code recognizes the project as an Ansible collection and activates the Ansible language features.
 

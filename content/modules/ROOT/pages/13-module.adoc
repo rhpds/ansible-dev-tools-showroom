@@ -43,6 +43,8 @@ In this section, you will copy an existing Python module into your collection's 
 First, you will create a new Python file and add the code for a simple `cowsay` module.
 
 .   **Create the module file.** In the VS Code file explorer on the left, expand the `mynamespace.mycollection` > `plugins` > `modules` directory path, then right-click on `modules` and select **New File**. Name the file `cowsay.py`.
++
+image::13-cowsay-module-file.png[The cowsay.py module file created in the plugins modules directory,link=self,window=blank, opts="border"]
 
 .   **Add the Python code.** **Copy** the following Python code and **paste** it into the `cowsay.py` file you just created.
 +
@@ -133,7 +135,6 @@ image::13-lint-settings-fix.png[Ansible Lint settings,link=self,window=blank, op
     - name: Display the result
       ansible.builtin.debug:
         msg: "{{ result.message }}"
-        verbosity: 0
 
 ----
 
@@ -153,6 +154,8 @@ No such file or directory: 'cowsay'
 This is expected! Your module calls the `cowsay` command, but the Python package that provides it is not installed in your virtual environment yet.
 
 .   **Add the missing Python dependency.** Open the `requirements.txt` file in the collection root. This file declares the Python packages your collection needs. Add `cowsay` to it:
++
+image::13-requirements-cowsay.png[Adding cowsay to requirements.txt and seeing the playbook failure in the terminal,link=self,window=blank, opts="border"]
 +
 [source,text,role=execute]
 ----
