@@ -184,8 +184,6 @@ Note: playbook project created at /projects/ansible-dev-tools-workspace/myplaybo
 Now you will explore the collection files that were generated for you.
 
 .   **Open the file Explorer** by clicking the Explorer icon (the icon with two files) in the VS Code left sidebar.
-+
-image::11-explorer-icon.png[VS Code Explorer icon,link=self,window=blank, opts="border"]
 
 .   **View the scaffolded files.** In the file explorer sidebar, expand the `mynamespace.mycollection` folder. You will see the complete directory structure and all the files created by the Ansible extension for your new collection.
 +
