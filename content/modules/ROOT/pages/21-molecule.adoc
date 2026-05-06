@@ -15,7 +15,7 @@ _A guide to testing your Ansible collection using Ansible Molecule and a pre-con
 ** **Password:** `{password}`
 * **Prepares you for:** Labs 2.2 and 2.3
 * **Stage:** Test
-* **Estimated Time:** 10 - 15 minutes
+* **Estimated Time:** 15 - 25 minutes
 ****
 
 == Learning objectives
@@ -25,6 +25,7 @@ After completing this module, you will be able to:
 * Describe the Molecule test lifecycle and its stages
 * Configure a Molecule test scenario using `molecule.yml`
 * Write assertion-based integration tests for Ansible content
+* Create an integration test and Molecule scenario for a new plugin
 * Run and troubleshoot Molecule test scenarios from the command line
 
 == Lab briefing
@@ -108,7 +109,7 @@ The `molecule.yml` file is the heart of your test scenario. Understanding its st
 +
 image::21-molecule-converge-playbook.png[Converge playbook for the Molecule test,link=self,window=blank, opts="border"]
 +
-This playbook runs during the **converge** stage of the Molecule lifecycle. It's the "system under test" - the playbook that exercises your collection's functionality. Notice how it references the integration tests that will validate the behavior.
+This playbook runs during the **converge** stage of the Molecule lifecycle. It's the "system under test" - the playbook that exercises your collection's functionality. Notice how it dynamically derives the test target name from the scenario name by stripping the `integration_` prefix — this convention is how Molecule knows which integration test to run.
 
 ---
 
@@ -140,7 +141,9 @@ Assertion-based testing is a common pattern in Ansible testing. Think of asserti
 * Tasks that exercise the functionality being tested
 * Assertion tasks that validate the results
 +
-This setup → execute → verify pattern is fundamental to effective testing.
+This setup -> execute -> verify pattern is fundamental to effective testing.
+
+.   **Understand the naming convention.** Notice how the integration test target directory is named `hello_world` and corresponds to the Molecule scenario named `integration_hello_world`. This naming convention is how Molecule's shared converge playbook maps a scenario to its test target. When you create a new plugin, you will need to create both a test target and a matching scenario.
 
 
 ---
@@ -148,7 +151,7 @@ This setup → execute → verify pattern is fundamental to effective testing.
 
 === Task 3: Create a filter plugin
 
-Now that you understand how tests work, let's add a new filter plugin to your collection. This demonstrates how new components integrate with the existing Molecule test framework - when you add functionality, you can immediately test it.
+Now that you understand how tests work, let's add a new filter plugin to your collection and then write a proper test for it.
 
 .   **Open the Collection plugin creator.** In the VS Code sidebar, **click** the Ansible extension icon. In the *ADD* section, **click** **Collection plugin**.
 +
@@ -164,22 +167,73 @@ image::21-molecule-create-plugin.png[Creating a Collection plugin,link=self,wind
 /projects/ansible-dev-tools-workspace/mynamespace.mycollection/
 ----
 +
-* **Plugin type:** `Filter`
-* **Plugin name:** `hello_world`
+* **Plugin type:** Select `Filter` from the dropdown.
+* **Plugin name:**
++
+[source,text,role=execute]
+----
+myfilter
+----
 
 .   **Create the plugin** by clicking the blue **Create** button.
+
+.   **Verify the plugin was created.** In the VS Code file explorer, **expand** __mynamespace.mycollection > plugins > filter__ and confirm that `myfilter.py` now exists alongside the scaffolded `sample_filter.py`.
 +
-[TIP]
+image::21-myfilter-plugin-created.png[myfilter.py created in the plugins filter directory,link=self,window=blank, opts="border"]
++
+TIP: The CLI equivalent of this wizard is: `ansible-creator add plugin filter myfilter /projects/ansible-dev-tools-workspace/mynamespace.mycollection`
+
+---
+
+
+=== Task 4: Write an integration test for the new plugin
+
+The scaffolded collection includes a test for the default `sample_filter` plugin, but your new `myfilter` plugin doesn't have one yet. In a real development workflow, every new plugin should have a corresponding test. Let's create one.
+
+.   **Create the test target directory and file.** In the VS Code Explorer sidebar, **right-click** on the `targets` directory inside __mynamespace.mycollection > tests > integration > targets__ and select **New Folder**. Name it `myfilter`. Then, **right-click** on the new `myfilter` folder, select **New Folder** again, and name it `tasks`. Finally, **right-click** on `tasks` and select **New File**, naming it `main.yml`.
++
+Alternatively, you can use the terminal:
++
+[source,bash,role=execute]
+----
+mkdir -p /projects/ansible-dev-tools-workspace/mynamespace.mycollection/tests/integration/targets/myfilter/tasks
+----
+
+.   **Write the test assertions.** Open the new `main.yml` file and **paste** the following content:
++
+[source,yaml,role=execute]
+----
+---
+- name: Test the myfilter filter plugin
+  ansible.builtin.set_fact:
+    msg: "{{ 'ansible-creator' | mynamespace.mycollection.myfilter }}"
+
+- name: Assert that the filter worked
+  ansible.builtin.assert:
+    that:
+      - msg == 'Hello, ansible-creator'
+----
++
+This test applies the `myfilter` filter to the string `'ansible-creator'` and asserts that the result is `'Hello, ansible-creator'` — matching the default behavior of the scaffolded filter plugin.
+
+.   **Create the Molecule scenario.** Each integration test target needs a matching Molecule scenario. The scenario configuration is identical to the existing one — only the directory name changes. Copy the existing scenario:
++
+[source,bash,role=execute]
+----
+cp -r /projects/ansible-dev-tools-workspace/mynamespace.mycollection/extensions/molecule/integration_hello_world /projects/ansible-dev-tools-workspace/mynamespace.mycollection/extensions/molecule/integration_myfilter
+----
++
+[NOTE]
 ====
-The Ansible extension creates the plugin structure automatically, including the skeleton code and proper file placement. In a real development workflow, you would then write tests for this new plugin and verify them with Molecule before considering the feature complete.
+The shared `converge.yml` playbook automatically derives the test target name from the scenario directory name by stripping the `integration_` prefix. So `integration_myfilter` maps to `tests/integration/targets/myfilter/` — no code changes needed in the scenario configuration.
 ====
 
 ---
 
 
-=== Task 4: Run the Molecule test
+=== Task 5: Run the Molecule tests
 
-Finally, you will use the command line to run the Molecule test scenario and observe the complete test lifecycle in action.
+Now you will use the command line to run the Molecule test scenarios and observe the complete test lifecycle in action.
 
 .   **Navigate to the correct directory.** In the VS Code Terminal, **change** to the `extensions/` sub-directory of your collection:
 +
@@ -188,7 +242,7 @@ Finally, you will use the command line to run the Molecule test scenario and obs
 cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection/extensions/
 ----
 
-.   **Create a default Molecule configuration.** In the VS Code Explorer sidebar, **right-click** on the `molecule/` folder inside `extensions/` and select **New File**. Name it:
+.   **Create a default Molecule configuration.** In the VS Code Explorer sidebar, **expand** the `extensions/` folder, then **right-click** on the `molecule/` folder inside it and select **New File**. Name it:
 +
 [source]
 ----
@@ -206,20 +260,11 @@ scenario:
 +
 This empty default scenario prevents Molecule from showing a warning when no default configuration is found.
 
-.   **Run a bare Molecule test.** First, run `molecule test` without specifying a scenario.
+.   **Run the test for your new filter plugin.** Run `molecule test` specifying the scenario for your new `myfilter` plugin:
 +
 [source,bash,role=execute]
 ----
-molecule test
-----
-+
-WARNING: You will see error messages, which is expected because you must provide a scenario name when multiple scenarios exist or when no default scenario is configured.
-
-.   **Run the test with the correct scenario.** Now, **run** the command again, this time specifying the scenario with the `-s` flag:
-+
-[source,bash,role=execute]
-----
-molecule test -s integration_hello_world
+molecule test -s integration_myfilter
 ----
 
 .   **Understand the Molecule test sequence.** As the test runs, you'll see Molecule execute the stages we discussed earlier. Watch the output carefully and observe:
@@ -230,19 +275,28 @@ molecule test -s integration_hello_world
 * **Create:** Setting up the test environment (typically creating containers)
 * **Prepare:** Configuring the test environment with any prerequisites
 * **Converge:** Running the playbook being tested against the test environment
-* **Verify:** Executing the test assertions you examined in Task 2
+* **Verify:** Executing the test assertions you wrote in Task 4
 * **Cleanup & Destroy:** Cleaning up and tearing down the test infrastructure
 +
 Each stage must complete successfully for the overall test to pass. If any stage fails, Molecule stops and reports the failure.
 
-.   **Observe the successful test run.** Success! You can see Molecule running the included tests and confirming that all assertions passed. Notice the output from the verify stage showing which assertions were evaluated and their results.
+.   **Observe the successful test run.** Success! You can see Molecule running your integration test and confirming that all assertions passed. The test validates that your `myfilter` plugin correctly transforms the input string into the expected greeting.
 +
 image::21-molecule-test-passed.png[Successful Molecule test output in the terminal,link=self,window=blank, opts="border"]
 +
 [NOTE]
 ====
-A passing Molecule test means your collection has been validated in an automated, reproducible way. This gives you confidence that your code works as expected and can be safely shared or deployed.
+A passing Molecule test means your new plugin has been validated in an automated, reproducible way. This gives you confidence that your code works as expected and can be safely shared or deployed.
 ====
+
+.   **Run the scaffolded test.** You can also run the pre-existing test that was generated when you created the collection. This test validates the scaffolded `sample_filter` plugin:
++
+[source,bash,role=execute]
+----
+molecule test -s integration_hello_world
+----
++
+Both tests should pass, confirming that your collection's filter plugins are working correctly.
 
 ====
 **Useful Molecule Commands**:
@@ -270,7 +324,7 @@ Verify you're in the correct directory by running `pwd`. You should be in:
 
 . **If you see "No scenario name provided" errors:**
 +
-Make sure you're using the `-s integration_hello_world` flag when running molecule commands.
+Make sure you're using the `-s integration_myfilter` flag when running molecule commands.
 
 . **If the test fails during the verify stage:**
 +
@@ -310,6 +364,7 @@ In this lab, you have:
 * Examined Molecule configuration files (`molecule.yml`) and learned how they define test behavior
 * Reviewed integration test files to understand assertion-based testing patterns
 * Created a new filter plugin using the Ansible VS Code extension
+* Written an integration test and Molecule scenario for the new plugin
 * Successfully executed the complete Molecule test lifecycle for an Ansible collection
 * Observed how Molecule validates collection functionality automatically through multiple stages
 * Learned troubleshooting techniques for common Molecule issues

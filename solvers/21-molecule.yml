@@ -7,7 +7,8 @@
 # - Task 1: Explore the Molecule scenario (reading exercise - no solver)
 # - Task 2: Examine the integration tests (reading exercise - no solver)
 # - Task 3: Create a filter plugin (VS Code wizard -> CLI equivalent)
-# - Task 4: Run the Molecule test
+# - Task 4: Write an integration test for the new plugin
+# - Task 5: Run the Molecule test
 #
 # =============================================================================
 
@@ -41,18 +42,72 @@
     # The VS Code wizard creates a filter plugin. The CLI equivalent
     # uses ansible-creator add plugin.
     # =========================================================================
-    - name: "Task 3: Create hello_world filter plugin via ansible-creator"
+    - name: "Task 3: Create myfilter filter plugin via ansible-creator"
       ansible.builtin.command:
         cmd: >-
           {{ collection_dir }}/.venv/bin/ansible-creator
-          add plugin filter hello_world
+          add plugin filter myfilter
           {{ collection_dir }}
-        creates: "{{ collection_dir }}/plugins/filter/hello_world.py"
+        creates: "{{ collection_dir }}/plugins/filter/myfilter.py"
 
     # =========================================================================
-    # Task 4: Run the Molecule test
+    # Task 4: Write an integration test for the new plugin
     # =========================================================================
-    - name: "Task 4: Run Molecule test with integration_hello_world scenario"
+    - name: "Task 4: Create integration test target directory"
+      ansible.builtin.file:
+        path: "{{ collection_dir }}/tests/integration/targets/myfilter/tasks"
+        state: directory
+        mode: "0755"
+
+    - name: "Task 4: Create integration test for myfilter"
+      ansible.builtin.copy:
+        dest: "{{ collection_dir }}/tests/integration/targets/myfilter/tasks/main.yml"
+        content: |
+          ---
+          - name: Test the myfilter filter plugin
+            ansible.builtin.set_fact:
+              msg: "{{ '{{' }} 'ansible-creator' | mynamespace.mycollection.myfilter {{ '}}' }}"
+
+          - name: Assert that the filter worked
+            ansible.builtin.assert:
+              that:
+                - msg == 'Hello, ansible-creator'
+        mode: "0644"
+
+    - name: "Task 4: Copy Molecule scenario for myfilter"
+      ansible.builtin.copy:
+        src: "{{ extensions_dir }}/molecule/integration_hello_world/"
+        dest: "{{ extensions_dir }}/molecule/integration_myfilter/"
+        remote_src: true
+        mode: "0755"
+
+    # =========================================================================
+    # Task 5: Run the Molecule tests
+    # =========================================================================
+    - name: "Task 5: Create default Molecule scenario directory"
+      ansible.builtin.file:
+        path: "{{ extensions_dir }}/molecule/default"
+        state: directory
+        mode: "0755"
+
+    - name: "Task 5: Create default Molecule scenario config"
+      ansible.builtin.copy:
+        dest: "{{ extensions_dir }}/molecule/default/molecule.yml"
+        content: |
+          ---
+          scenario:
+            name: default
+        mode: "0644"
+
+    - name: "Task 5: Run Molecule test for myfilter"
+      ansible.builtin.command:
+        cmd: >-
+          {{ collection_dir }}/.venv/bin/molecule test
+          -s integration_myfilter
+        chdir: "{{ extensions_dir }}"
+      changed_when: true
+
+    - name: "Task 5: Run Molecule test for scaffolded hello_world"
       ansible.builtin.command:
         cmd: >-
           {{ collection_dir }}/.venv/bin/molecule test
