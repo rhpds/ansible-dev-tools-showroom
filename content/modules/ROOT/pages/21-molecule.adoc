@@ -167,12 +167,19 @@ image::21-molecule-create-plugin.png[Creating a Collection plugin,link=self,wind
 /projects/ansible-dev-tools-workspace/mynamespace.mycollection/
 ----
 +
-* **Plugin type:** `Filter`
-* **Plugin name:** `myfilter`
+* **Plugin type:** Select `Filter` from the dropdown.
+* **Plugin name:**
++
+[source,text,role=execute]
+----
+myfilter
+----
 
 .   **Create the plugin** by clicking the blue **Create** button.
 
 .   **Verify the plugin was created.** In the VS Code file explorer, **expand** __mynamespace.mycollection > plugins > filter__ and confirm that `myfilter.py` now exists alongside the scaffolded `sample_filter.py`.
++
+image::21-myfilter-plugin-created.png[myfilter.py created in the plugins filter directory,link=self,window=blank, opts="border"]
 +
 TIP: The CLI equivalent of this wizard is: `ansible-creator add plugin filter myfilter /projects/ansible-dev-tools-workspace/mynamespace.mycollection`
 
@@ -235,7 +242,7 @@ Now you will use the command line to run the Molecule test scenarios and observe
 cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection/extensions/
 ----
 
-.   **Create a default Molecule configuration.** In the VS Code Explorer sidebar, **right-click** on the `molecule/` folder inside `extensions/` and select **New File**. Name it:
+.   **Create a default Molecule configuration.** In the VS Code Explorer sidebar, **expand** the `extensions/` folder, then **right-click** on the `molecule/` folder inside it and select **New File**. Name it:
 +
 [source]
 ----
