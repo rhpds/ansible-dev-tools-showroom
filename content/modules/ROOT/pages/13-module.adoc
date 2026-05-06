@@ -155,8 +155,6 @@ This is expected! Your module calls the `cowsay` command, but the Python package
 
 .   **Add the missing Python dependency.** Open the `requirements.txt` file in the collection root. This file declares the Python packages your collection needs. Add `cowsay` to it:
 +
-image::13-requirements-cowsay.png[Adding cowsay to requirements.txt and seeing the playbook failure in the terminal,link=self,window=blank, opts="border"]
-+
 [source,text,role=execute]
 ----
 cowsay
@@ -164,9 +162,16 @@ cowsay
 +
 Save the file.
 +
+image::13-requirements-cowsay.png[Adding cowsay to requirements.txt and seeing the playbook failure in the terminal,link=self,window=blank, opts="border"]
++
 NOTE: The `requirements.txt` file is for **Python packages** that can be installed with `pip`. In the previous module you saw how `ade` handles **system packages** (installed with `dnf`). When a dependency is available as a Python package, prefer `requirements.txt` — it works in any environment, including containers where the system filesystem may be read-only.
 
-.   **Re-run `ade install` to pick up the new dependency:**
+.   **Re-run `ade install` to pick up the new dependency.** Make sure you are in the collection directory first:
++
+[source,bash,role=execute]
+----
+cd /projects/ansible-dev-tools-workspace/mynamespace.mycollection
+----
 +
 [source,bash,role=execute]
 ----
@@ -175,7 +180,9 @@ ade install -e .
 +
 You should see `cowsay` included in the installed packages.
 
-.   **Run the playbook again.** Make sure `mycowsay.yml` is open in the editor, then **right-click** it in the file explorer and select **Run Ansible Playbook**. This time it should succeed and display a friendly cow saying "Hello, Ansible!".
+.   **Open `mycowsay.yml`** in the editor by clicking on it in the VS Code file explorer.
+
+.   **Run the playbook again.** **Right-click** `mycowsay.yml` in the file explorer and select **Run Ansible Playbook**. This time it should succeed and display a friendly cow saying "Hello, Ansible!".
 +
 image::13-cowsay-playbook-output.png[Playbook output with cowsay message,link=self,window=blank, opts="border"]
 
